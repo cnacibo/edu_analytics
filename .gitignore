@@ -1,0 +1,5 @@
+**/.idea/
+.venv/
+.env
+*.egg-info/
+.ruff_cache/
