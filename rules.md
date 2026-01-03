@@ -15,8 +15,15 @@
 
 ---
 
-![Логотип проекта 1]( https://i.pinimg.com/1200x/3e/95/ea/3e95ea9fe26b6532ab129effcf15c6ed.jpg)
-![Логотип проекта 1]( https://i.pinimg.com/1200x/eb/e8/50/ebe850381dab5db731d38988aabdc656.jpg)
+<div align="center">
+  <img src="https://i.pinimg.com/1200x/3e/95/ea/3e95ea9fe26b6532ab129effcf15c6ed.jpg" width="90%">
+</div>
+
+<div align="center">
+  <img src="https://i.pinimg.com/1200x/eb/e8/50/ebe850381dab5db731d38988aabdc656.jpg" width="90%">
+</div>
+
+---
 
 ## 🥂 Git команды
 - `git status` - статус репозитория
