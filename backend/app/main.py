@@ -1,4 +1,5 @@
 import uvicorn
+from app.api import hse_analysis, vuzopedia_analysis
 from fastapi import FastAPI
 
 app = FastAPI(
@@ -6,8 +7,11 @@ app = FastAPI(
     description="Веб-приложение для анализа образовательных программ",
 )
 
+app.include_router(hse_analysis.router, prefix="/hse", tags=["HSE Analysis"])
+app.include_router(vuzopedia_analysis.router, prefix="/vuzopedia", tags=["Vuzopedia Analysis"])
 
-@app.get("/health")
+
+@app.get("/health", tags=["Health"])
 async def health_check():
     """Проверка здоровья сервиса"""
     return {"status": "healthy", "service": "edu-analytics-backend"}
