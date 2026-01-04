@@ -5,19 +5,8 @@ from fastapi import APIRouter, Query
 router = APIRouter()
 
 
-@router.get("/universities")
-async def get_all_universities():
-    """Получить список всех университетов"""
-    universities = [
-        {"title": "university 1", "city": "Moscow"},
-        {"title": "university 2", "city": "Vladimir"},
-    ]
-
-    return {"count": len(universities), "universities": universities}
-
-
 @router.get("/search")
-async def search_programs(
+async def search_vuzopedia_programs(
     q: Optional[str] = Query("", description="Поисковый запрос"),
     university: Optional[str] = Query(None, description="Фильтр по университету"),
     min_score: Optional[int] = Query(None, description="Минимальный проходной балл"),
@@ -42,14 +31,14 @@ async def search_programs(
     return {"query": q, "count": len(programs), "programs": programs, "filters": filters}
 
 
-@router.get("/universities/{university_name}")
-async def get_university_programs(university_name: str):
-    """Получить все программы конкретного университета"""
-    # programs = vuzopedia_service.get_programs_by_university(university_name)
-    programs = [{"title": "program 1", "price": 100}, {"title": "program 2", "price": 50}]
+@router.get("/visualise")
+async def visualise_vuzopedia_program_feature(program_id: int, feature: str):
+    """Визуализация метрики образовательной программы"""
+    return {"visualisation": "complete"}
 
-    return {
-        "university": university_name,
-        "total_programs": len(programs),
-        "programs": programs,
-    }
+
+@router.get("/{program_id}")
+async def get_vuzopedia_program_by_id(program_id: int):
+    """Получить программу из Vuzopedia по ID"""
+    program = {"title": "program 1", "price": 100}
+    return program
