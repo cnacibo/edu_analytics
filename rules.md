@@ -42,7 +42,7 @@ git checkout ... # переключаемся на нашу ветку
 
 git fetch origin # получаем последние изменения из удаленного репозитория
 
-git merge origin/main # мерджим изменения из main в нашу ветку
+git merge origin/main -m "merge message" # мерджим изменения из main в нашу ветку
 ```
 
 #### Рещение конфликтов при `merge`:
