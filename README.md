@@ -21,14 +21,11 @@ edu_analytics/
 │   ├── app/
 │   │   ├── api/
 │   │   ├── services/
+│   │   ├── db/
+│   │   ├── schemas.py
+│   │   ├── config.py
 │   │   └── main.py
 │   ├── tests/
-│   └── Dockerfile
-├── db/
-│   ├── base.py
-│   ├── models.py
-│   ├── session.py
-│   ├── database.py
 │   └── Dockerfile
 ├── ml/
 │   ├── data/
