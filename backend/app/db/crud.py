@@ -77,6 +77,7 @@ async def get_hse_programs(
 
 
 async def get_hse_program_by_id(db: AsyncSession, program_id: int) -> Optional[HseProgram]:
+    """Получить программу ВШЭ ФКН по ID"""
     stmt = select(HseProgram).where(HseProgram.id == program_id)
     result = await db.execute(stmt)
     return result.scalars().first()
@@ -88,6 +89,7 @@ async def get_hse_courses(
     page: int = 1,
     size: int = 100,
 ) -> List[HseCourse]:
+    """Получить все дисциплины программы ВШЭ ФКН по ID программы"""
     stmt = select(HseCourse).where(HseCourse.program_id == program_id)
     offset = (page - 1) * size
     stmt = stmt.offset(offset).limit(size)
@@ -96,6 +98,7 @@ async def get_hse_courses(
 
 
 async def get_hse_course_by_id(db: AsyncSession, course_id: int) -> HseCourse:
+    """Получить дисциплину ВШЭ ФКН по ID дисциплины"""
     stmt = select(HseCourse).where(HseCourse.id == course_id)
     result = await db.execute(stmt)
     return result.scalars().first()
