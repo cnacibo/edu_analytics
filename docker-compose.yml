@@ -1,44 +1,48 @@
-#services:
-#  backend:
-#    build:
-#      context: .
-#      dockerfile: ./backend/Dockerfile
-#    container_name: edu-analytics-backend
-#    depends_on:
-#      postgres:
-#        condition: service_healthy
-#    environment:
-#      DATABASE_URL: postgresql://${POSTGRES_USER:-edu_user}:${POSTGRES_PASSWORD:-edu_password}@postgres:5432/${POSTGRES_DB:-edu_analytics}
-#      APP_ENV: ${APP_ENV:-production}
-#    ports:
-#      - "8000:8000"
-#    volumes:
-#      - ./backend:/app/backend
-#      - ./pyproject.toml:/app/pyproject.toml
-#    networks:
-#      - edu-net
-#    command: uvicorn backend.app.main:app --host 0.0.0.0 --port 8000 --reload
-#
-#  postgres:
-#    build: ./db
-#    container_name: edu-analytics-db
-#    environment:
-#      POSTGRES_USER: ${POSTGRES_USER:-edu_user}
-#      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-edu_password}
-#      POSTGRES_DB: ${POSTGRES_DB:-edu_analytics}
-#    volumes:
-#      - postgres_data:/var/lib/postgresql/data
-#      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
-#    ports:
-#      - "5434:5432"
-#    networks:
-#      - edu-net
-#    healthcheck:
-#      test: [ "CMD-SHELL", "pg_isready -U edu_user" ]
-#      interval: 10s
-#      timeout: 5s
-#      retries: 5
-#
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: ./backend/Dockerfile
+    container_name: edu-analytics-backend
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      PYTHONPATH: /app
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./backend/app:/app/app
+      - ./backend/alembic.ini:/app/alembic.ini
+      - ./backend/alembic:/app/alembic
+      - ./pyproject.toml:/app/pyproject.toml
+    networks:
+      - edu-net
+
+  postgres:
+    image: postgres:latest
+    container_name: edu-analytics-db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - edu-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-edu_user} -d ${POSTGRES_DB:-edu_analytics}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
 #  frontend:
 #    build: ./frontend
 #    container_name: edu-analytics-frontend
@@ -86,13 +90,12 @@
 #    networks:
 #      - edu-net
 #    command: python parser/run.py
-#
-#networks:
-#  edu-net:
-#    driver: bridge
-#
-#volumes:
-#  postgres_data:
+
+networks:
+  edu-net:
+    driver: bridge
+
+volumes:
+  postgres_data:
 #    driver: local
-#  ml_data:
-#    driver: local
+#  ml_d

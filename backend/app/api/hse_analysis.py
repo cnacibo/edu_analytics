@@ -1,57 +1,61 @@
-from typing import List, Optional
+from typing import Optional
 
-from fastapi import APIRouter, Query
+from app.db.session import get_db
+from app.services import hse_service
+from fastapi import APIRouter, Depends, Query
+from sqlalchemy.ext.asyncio import AsyncSession
 
 router = APIRouter()
 
 
 @router.get("/")
 async def get_hse_programs(
-    min_cost: Optional[int] = Query(None, description="Минимальная стоимость"),
+    db: AsyncSession = Depends(get_db),
     max_cost: Optional[int] = Query(None, description="Максимальная стоимость"),
+    q: Optional[str] = Query(None, description="Поисковый запрос"),
+    page: int = Query(1, description="Номер страницы"),
+    size: int = Query(100, description="Размер страницы"),
 ):
     """Получить все программы НИУ ВШЭ с фильтрацией"""
-    filters = {}
-    if min_cost:
-        filters["min_cost"] = min_cost
-    if max_cost:
-        filters["max_cost"] = max_cost
 
-    programs = [{"title": "program 1", "price": 100}, {"title": "program 2", "price": 50}]
-
-    return {"count": len(programs), "programs": programs, "filters_applied": filters}
-
-
-@router.get("/compare_coures")
-async def compare_hse_programs(
-    program_ids: List[int] = Query(..., description="ID программ для сравнения")
-):
-    """Сравнить две программы НИУ ВШЭ"""
-    return {"comparison": "complete"}
-
-
-@router.get("/analyse_coures")
-async def analyse_hse_program(program_id: int):
-    """Провести анализ ПУДа программы НИУ ВШЭ"""
-    return {"analysis": "complete"}
+    return await hse_service.get_hse_programs_service(
+        db=db,
+        max_cost=max_cost,
+        q=q,
+        page=page,
+        size=size,
+    )
 
 
 @router.get("/{program_id}")
-async def get_hse_program_by_id(program_id: int):
+async def get_hse_program_by_id(
+    program_id: int,
+    db: AsyncSession = Depends(get_db),
+):
     """Получить программу НИУ ВШЭ по ID"""
-    program = {"title": "program 1", "price": 100}
-    return program
+    return await hse_service.get_hse_program_by_id_service(program_id=program_id, db=db)
 
 
 @router.get("/{program_id}/courses")
-async def get_hse_program_courses(program_id: int):
+async def get_hse_program_courses(
+    program_id: int,
+    db: AsyncSession = Depends(get_db),
+    page: int = Query(1, description="Номер страницы"),
+    size: int = Query(100, description="Размер страницы"),
+):
     """Получить все дисциплины программы НИУ ВШЭ по ее ID"""
-    courses = [{"title": "course 1"}, {"title": "course 2"}]
-    return courses
+    return await hse_service.get_hse_program_courses_service(
+        db=db,
+        program_id=program_id,
+        page=page,
+        size=size,
+    )
 
 
 @router.get("/courses/{course_id}")
-async def get_hse_course_by_id(course_id: int):
+async def get_hse_course_by_id(
+    course_id: int,
+    db: AsyncSession = Depends(get_db),
+):
     """Получить данные о дисциплине НИУ ВШЭ по ID"""
-    course = {"title": "course 1", "year": 1}
-    return course
+    return await hse_service.get_hse_course_by_id_service(course_id=course_id, db=db)
