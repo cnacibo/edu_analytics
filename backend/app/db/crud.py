@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from models import HseCourse, HseProgram, VuzopediaProgram
+from app.db.models import HseCourse, HseProgram, VuzopediaProgram
 from sqlalchemy import and_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -18,7 +18,7 @@ async def get_vuzopedia_programs(
     filters = []
 
     if q:
-        filters.append(VuzopediaProgram.name.ilike(f"%{q}%"))  # поиск по названию case insensitive
+        filters.append(VuzopediaProgram.name.ilike(f"%{q}%"))
 
     if min_score is not None:
         filters.append(VuzopediaProgram.min_budget_score >= min_score)
@@ -50,7 +50,6 @@ async def get_hse_programs(
     page: int = 1,
     size: int = 100,
     q: Optional[str] = None,
-    min_score: Optional[int] = None,
     max_cost: Optional[float] = None,
 ) -> List[HseProgram]:
     """Получить программы ВШЭ ФКН с фильтрацией"""
@@ -58,10 +57,7 @@ async def get_hse_programs(
     filters = []
 
     if q:
-        filters.append(HseProgram.name.ilike(f"%{q}%"))  # поиск по названию case insensitive
-
-    if min_score is not None:
-        filters.append(HseProgram.min_budget_score <= min_score)
+        filters.append(HseProgram.name.ilike(f"%{q}%"))
 
     if max_cost is not None:
         filters.append(HseProgram.cost <= max_cost)
@@ -83,7 +79,7 @@ async def get_hse_program_by_id(db: AsyncSession, program_id: int) -> Optional[H
     return result.scalars().first()
 
 
-async def get_hse_courses(
+async def get_hse_program_courses(
     db: AsyncSession,
     program_id: int,
     page: int = 1,
