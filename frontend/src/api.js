@@ -9,6 +9,7 @@ class ApiService {
         const url = new URL(`${this.base_url}/${endpoint}`)
         Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
         const response = await fetch(url, {
+            method: 'GET',
             mode: 'cors',
             credentials: 'omit',
             headers: {
