@@ -5,7 +5,7 @@ class ApiService {
         this.base_url = API_BASE_URL;
     }
 
-    async get(endpoint, params) {
+    async get(endpoint, params = {}) {
         const url = new URL(`${this.base_url}/${endpoint}`)
         Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
         const response = await fetch(url, {

@@ -1,14 +1,16 @@
 import ProgramList from './../components/programs/ProgramList';
 import FilterBar from "../components/programs/FilterBar";
+import './styles/ProgramsPage.css'
 import {hseApi, vuzopediaApi} from "../api";
 import {useEffect, useState} from "react";
 const ProgramsPage = () => {
     const [programs, setPrograms] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [sourceHSE, setSourceHSE] = useState(true);
     const [pagination, setPagination] = useState({
         page: 1,
-        size: 2,
+        size: 4,
         total: 0,
         pages: 0
     });
@@ -21,81 +23,88 @@ const ProgramsPage = () => {
 
     useEffect(() => {
         fetchPrograms();
-    }, ['vuzopedia', pagination.page, filters]);
+    }, [pagination.page, filters, sourceHSE]);
 
     const fetchPrograms = async () => {
         setLoading(true);
         setError(null);
+        setPrograms([]);
         try {
             const params = {
                 page: pagination.page,
                 size: pagination.size,
             };
+
+            if (filters.q) {
+                params.q = filters.q;
+            }
+
+            if (filters.max_cost) {
+                params.max_cost = filters.max_cost;
+            }
+
+            if (!sourceHSE && filters.min_score) {
+                params.min_score = filters.min_score;
+            }
+
             Object.keys(params).forEach(key => {
                 if (params[key] === '') delete params[key];
             });
-            let responseVuzopedia = await vuzopediaApi.getPrograms(params);
-            let responseHse = await hseApi.getPrograms(params);
-            console.log('Setting programs:', responseVuzopedia);
 
-            let programsData = [
-                ...responseHse.programs.map(program => ({
-                    ...program,
-                    id: `hse-${program.id}`,
-                    source: 'hse'
-                })),
-                ...responseVuzopedia.programs.map(program => ({
-                    ...program,
-                    id: `vuz-${program.id}`,
-                    source: 'vuzopedia'
-                }))
-            ];
+            console.log('Отправляем запрос с params:', params);
 
-            console.log('Setting programs:', programsData);
+            let response;
+            if (sourceHSE) {
+                response = await hseApi.getPrograms(params);
+            } else {
+                response = await vuzopediaApi.getPrograms(params);
+            }
+
+            console.log('ответ 1: ', response);
+
+            const programsData = response.programs || []
+
+            console.log('ответ: ', programsData);
+
             setPrograms(programsData);
 
             setPagination(prev => ({
                 ...prev,
-                total: responseVuzopedia.total + responseHse.total || responseVuzopedia.items?.length || 0,
-                pages: responseVuzopedia.pages || Math.ceil((responseVuzopedia.total || 0) / prev.size)
+                total: response.total || 0,
+                pages: response.total_pages || 0
             }));
 
         } catch (error) {
             setError(error.message);
             console.error('Error fetching programs:', error);
-            setPrograms(getMockPrograms());
         } finally {
             setLoading(false);
         }
     }
 
-    const getMockPrograms = () => {
-        const programNames = [
-            'Computer Science',
-            'Data Analytics',
-            'Software Engineering',
-            'Artificial Intelligence',
-            'Cybersecurity',
-            'Web Development',
-            'Machine Learning',
-            'Cloud Computing',
-            'Mobile Development',
-            'Database Management'
-        ];
-        return Array.from({ length: 20 }, (_, i) => ({
-          id: i + 1,
-          name: programNames[i] || `Educational Program ${i + 1}`,
-          study_type: i % 2 === 0 ? 'Бакалаврская программа' : 'Магистратура',
-          code: `${1000 + i}`,
-          cost: i * 100000 + i * 30,
+    const handleSearch = (searchQuery) => {
+        setFilters(prev => ({
+            ...prev,
+            q: searchQuery
         }));
-      };
-
-    const handleSearch = (e) => {
-        e.preventDefault();
-        setFilters(prev => ({ ...prev, q: e.target.search.value }));
         setPagination(prev => ({ ...prev, page: 1 }));
     };
+
+    const handleFilterChange = (newFilters) => {
+        setFilters(prev => ({
+            ...prev,
+            ...newFilters
+        }));
+        setPagination(prev => ({
+            ...prev,
+            page: 1
+        }));
+    };
+
+    const handleSourceChange = (newSourceValue) => {
+        setSourceHSE(newSourceValue)
+        setPagination(prev => ({ ...prev, page: 1 }));
+    }
 
     const handlePageChange = (newPage) => {
         setPagination(prev => ({ ...prev, page: newPage }));
@@ -104,7 +113,7 @@ const ProgramsPage = () => {
 
     if (loading) {
         return (
-            <div className="program-list-container">
+            <div className="program-container">
                 <div className="loading-container">
                     <div className="loading-spinner"></div>
                     <p>Загрузка программ...</p>
@@ -115,11 +124,10 @@ const ProgramsPage = () => {
 
     if (error && programs.length === 0) {
         return (
-            <div className="program-list-container">
+            <div className="program-container">
                 <div className="error-container">
                     <div className="error-icon">❌</div>
                     <h3>Ошибка загрузки</h3>
-                    <p>{error}</p>
                     <button onClick={fetchPrograms} className="retry-btn">
                         Повторить
                     </button>
@@ -127,9 +135,15 @@ const ProgramsPage = () => {
             </div>
         );
     }
+
 return (
     <div className="programs-page">
-        <FilterBar></FilterBar>
+        <FilterBar
+        onSearch={handleSearch}
+        onSourceChange={handleSourceChange}
+                    onFilterChange={handleFilterChange}
+                    filters={filters}
+        source={sourceHSE}></FilterBar>
         <ProgramList
         programs={programs}
         loading={loading}
@@ -139,22 +153,22 @@ return (
         {pagination.pages > 1 && (
             <div className="pagination">
                 <button
-                                onClick={() => setPagination(prev => ({ ...prev, page: prev.page - 1 }))}
-                                disabled={pagination.page === 1}
-                                className="pagination-btn"
-                            >
-                    ⬅️Предыдущая
+                    onClick={() => setPagination(prev => ({ ...prev, page: prev.page - 1 }))}
+                    disabled={pagination.page === 1}
+                    className="pagination-btn"
+                >
+                    ⬅️ Предыдущая
                 </button>
                 <span className="page-info">
-                                Страница {pagination.page} из {pagination.pages}
-                            </span>
-                            <button
-                                onClick={() => setPagination(prev => ({ ...prev, page: prev.page + 1 }))}
-                                disabled={pagination.page === pagination.pages}
-                                className="pagination-btn"
-                            >
-                                Следующая ➡️
-                            </button>
+                    Страница {pagination.page} из {pagination.pages}
+                </span>
+                <button
+                    onClick={() => setPagination(prev => ({ ...prev, page: prev.page + 1 }))}
+                    disabled={pagination.page === pagination.pages}
+                    className="pagination-btn"
+                >
+                    Следующая ➡️
+                </button>
             </div>
         )}
     </div>

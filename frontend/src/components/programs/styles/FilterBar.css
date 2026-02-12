@@ -7,7 +7,7 @@
 }
 
 .search-container {
-  flex: 1;
+  flex: 3;
   min-width: 300px;
 }
 
@@ -62,7 +62,8 @@
 }
 
 .primary-btn,
-.secondary-btn {
+.secondary-btn,
+.source-btn{
   padding: 12px 24px;
   border-radius: 8px;
   font-size: 14px;
@@ -102,4 +103,86 @@
 
 .btn-icon {
   font-size: 16px;
+}
+
+.filters {
+  display: flex;
+  box-sizing: border-box;
+  padding: 0 5px;
+  border-left: 2px solid #ADB5BD;
+  border-right: 2px solid #ADB5BD;
+  height: 50px;
+}
+
+.filters-row {
+  display: flex;
+  flex: 1.5;
+  flex-wrap: nowrap;
+}
+
+.filter-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  padding: 4px 10px;
+  transition: all 0.2s;
+}
+
+.filter-item label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #555;
+  white-space: nowrap;
+  min-width: auto;
+}
+
+.filter-input {
+  flex: 1;
+  padding: 8px 10px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 13px;
+  transition: all 0.2s;
+  background: white;
+  width: 100%;
+  min-width: 130px;
+}
+
+.filter-input::placeholder {
+  color: #aaa;
+  font-size: 13px;
+}
+
+.filter-input[type="number"]::-webkit-inner-spin-button,
+.filter-input[type="number"]::-webkit-outer-spin-button {
+  opacity: 0.8;
+  height: 300px;
+}
+
+.choose-source {
+  display: flex;
+  align-items: center;
+}
+
+.choose-source button {
+  padding: 8px 12px;
+  background: #f16a8c;
+  justify-content: center;
+  color: white;
+  border: 2px solid #f16a8c;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.2s;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-sizing: border-box;
+  margin: 5px 5px;
+}
+
+.choose-source button:hover {
+  opacity: 0.9;
+  border-color: #dd2d4a;
 }
