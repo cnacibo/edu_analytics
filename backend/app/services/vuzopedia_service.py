@@ -33,7 +33,7 @@ async def get_vuzopedia_programs_service(
     if q:
         validated_q = validate_search_query(q)
 
-    programs = await get_vuzopedia_programs(
+    response = await get_vuzopedia_programs(
         db=db,
         page=page,
         size=size,
@@ -41,11 +41,16 @@ async def get_vuzopedia_programs_service(
         max_cost=max_cost,
     )
 
+    programs = response["programs"]
+    total = response["total"]
+
     return {
-        "count": len(programs),
         "programs": programs,
         "page": page,
         "size": size,
+        "count": len(programs),
+        "total": total,
+        "total_pages": (total + size - 1) // size if total else 0,
     }
 
 
