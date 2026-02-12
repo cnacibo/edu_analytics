@@ -34,7 +34,7 @@ async def get_hse_programs_service(
     if q:
         validated_q = validate_search_query(q)
 
-    programs = await get_hse_programs(
+    response = await get_hse_programs(
         db=db,
         page=page,
         size=size,
@@ -42,11 +42,16 @@ async def get_hse_programs_service(
         max_cost=max_cost,
     )
 
+    programs = response["programs"]
+    total = response["total"]
+
     return {
-        "count": len(programs),
         "programs": programs,
         "page": page,
         "size": size,
+        "count": len(programs),
+        "total": total,
+        "total_pages": (total + size - 1) // size if total else 0,
     }
 
 
@@ -80,20 +85,23 @@ async def get_hse_program_courses_service(
     if not program:
         raise HTTPException(status_code=404, detail=f"Программа с ID {program_id} не найдена")
 
-    courses = await get_hse_program_courses(
+    response = await get_hse_program_courses(
         db=db,
         program_id=program_id,
         page=page,
         size=size,
     )
 
+    courses = response["courses"]
+    total = response["total"]
+
     return {
-        "program_id": program_id,
-        "program_name": program.name,
-        "count": len(courses),
         "courses": courses,
         "page": page,
         "size": size,
+        "count": len(courses),
+        "total": total,
+        "total_pages": (total + size - 1) // size if total else 0,
     }
 
 
