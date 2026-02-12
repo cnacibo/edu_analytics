@@ -24,7 +24,7 @@ services:
       - edu-net
 
   postgres:
-    image: postgres:latest
+    image: postgres:16
     container_name: edu-analytics-db
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
