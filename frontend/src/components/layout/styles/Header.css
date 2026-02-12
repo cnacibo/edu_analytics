@@ -1,0 +1,25 @@
+.app-header {
+  width: 100%;
+  background: white;
+  color: black;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
+
+.header-content {
+  max-width: 100%;
+  padding: 30px 40px;
+  position: relative;
+}
+
+.page-title {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  position: relative;
+}
