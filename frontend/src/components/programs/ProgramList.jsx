@@ -1,16 +1,15 @@
 import './styles/ProgramList.css'
 import ProgramCard from "./ProgramCard";
+import EmptyResult from "../common/EmptyResult";
 
 const ProgramList = ({programs}) => {
 
     return (
         <div className="program-list-container">
             {programs.length === 0 ? (
-                <div className="no-results">
-                    <div className="no-results-icon">📭</div>
-                    <h3>Ничего не найдено</h3>
-                    <p>Попробуйте изменить запрос или фильтры</p>
-                </div>
+                <EmptyResult
+                    message="Попробуйте изменить запрос или фильтры">
+                </EmptyResult>
             ) : (
                 <>
                     <div className="programs-grid">

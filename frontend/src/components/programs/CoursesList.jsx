@@ -1,33 +1,33 @@
 import './styles/CoursesList.css'
 import CourseCard from "./CourseCard";
+import LoadingSpinner from "../common/LoadingSpinner";
+import Error from "../common/Error";
+import EmptyResult from "../common/EmptyResult";
 
 const CoursesList = ({courses, loading, error}) => {
 
     if (loading) {
         return (
-            <div className="loading-container">
-                    <div className="loading-spinner"></div>
-                <p>Загрузка курсов...</p>
-            </div>
+            <LoadingSpinner
+                input="курсов">
+            </LoadingSpinner>
         );
     }
 
     if (error) {
         return (
-            <div className="error-container">
-                    <div className="error-icon">❌</div>
-                    <h3>Ошибка загрузки курсов</h3>
-                </div>
+            <Error
+            message="Не удалось загрузить дисциплины">
+            </Error>
         );
     }
 
     return (
         <div className="courses-list-container">
             {courses.length === 0 ? (
-                <div className="no-results">
-                    <div className="no-results-icon">📭</div>
-                    <h3>Дисциплины не найдены</h3>
-                </div>
+                <EmptyResult
+                    header="Дисциплины не найдены">
+                </EmptyResult>
             ) : (
                 <>
                     <div className="cl-grid">

@@ -4,6 +4,9 @@ import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import "./styles/ProgramDetailsPage.css";
 import "./styles/ProgramsPage.css";
+import Pagination from "../components/common/Pagination";
+import LoadingSpinner from "../components/common/LoadingSpinner";
+import Error from "../components/common/Error";
 
 const ProgramDetailsPage = () => {
     const location = useLocation();
@@ -36,6 +39,11 @@ const ProgramDetailsPage = () => {
             fetchCoursesByProgramId();
         }
     }, [pagination.page, program, programId]);
+
+    const handlePageChange = (newPage) => {
+        setPagination(prev => ({ ...prev, page: newPage }));
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
 
     const fetchProgramById = async () => {
         setLoading(true);
@@ -90,12 +98,14 @@ const ProgramDetailsPage = () => {
 
     if (loading) {
         return (
-            <div className="program-container">
-                <div className="loading-container">
-                    <div className="loading-spinner"></div>
-                    <p>Загрузка программы...</p>
-                </div>
-            </div>
+            <>
+            <button className="pdp-back-button" onClick={() => navigate('/programs')}>
+                    Назад к списку
+                </button>
+            <LoadingSpinner
+                input="программы">
+            </LoadingSpinner>
+            </>
         );
     }
 
@@ -105,13 +115,10 @@ const ProgramDetailsPage = () => {
                 <button className="pdp-back-button" onClick={() => navigate('/programs')}>
                     Назад к списку
                 </button>
-                <div className="error-container">
-                    <div className="error-icon">❌</div>
-                    <h3>Ошибка загрузки</h3>
-                    <button onClick={fetchProgramById} className="retry-btn">
-                        Повторить
-                    </button>
-                </div>
+                <Error
+                onRetry={fetchProgramById}
+                message="Не удалось загрузить программу">
+                </Error>
             </div>
         );
     }
@@ -225,34 +232,17 @@ const ProgramDetailsPage = () => {
                         loading={loadingCourses}
                         error={coursesError}
                     />
-                    {pagination.pages > 1 && (
-                    <div className="pagination">
-                        <button
-                            onClick={() => setPagination(prev => ({ ...prev, page: prev.page - 1 }))}
-                            disabled={pagination.page === 1}
-                            className="pagination-btn"
-                        >
-                            ⬅️ Предыдущая
-                        </button>
-                        <span className="page-info">
-                            Страница {pagination.page} из {pagination.pages}
-                        </span>
-                        <button
-                            onClick={() => setPagination(prev => ({ ...prev, page: prev.page + 1 }))}
-                            disabled={pagination.page === pagination.pages}
-                            className="pagination-btn"
-                        >
-                            Следующая ➡️
-                        </button>
-                    </div>
-                )}
+                    <Pagination
+                    currentPage={pagination.page}
+                    totalPages={pagination.pages}
+                    onPageChange={handlePageChange}>
+                    </Pagination>
                 </div>
             ) : (
                 <div className="pdp-courses-section pdp-no-courses">
                     <p>Информация о курсах доступна только для программ НИУ ВШЭ</p>
                 </div>
             )}
-
 
         </div>
     )

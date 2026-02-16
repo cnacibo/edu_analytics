@@ -3,14 +3,21 @@ import FilterBar from "../components/programs/FilterBar";
 import './styles/ProgramsPage.css'
 import {hseApi, vuzopediaApi} from "../api";
 import {useEffect, useState} from "react";
+import Pagination from "../components/common/Pagination";
+import LoadingSpinner from "../components/common/LoadingSpinner";
+import Error from "../components/common/Error";
+import {exportPrograms} from "../utils/export/exportPrograms";
+import FormatMenu from "../components/programs/FormatMenu";
+
 const ProgramsPage = () => {
     const [programs, setPrograms] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [sourceHSE, setSourceHSE] = useState(true);
+    const [showMenu, setShowMenu] = useState(false);
     const [pagination, setPagination] = useState({
         page: 1,
-        size: 4,
+        size: 10,
         total: 0,
         pages: 0
     });
@@ -109,28 +116,65 @@ const ProgramsPage = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
+    const handleSaveToFile = async (format) => {
+        if (programs && programs.length > 0) {
+            try {
+                const params = {
+                    page: 1,
+                    size: pagination.total,
+                };
+
+                if (filters.q) {
+                    params.q = filters.q;
+                }
+
+                if (filters.max_cost) {
+                    params.max_cost = filters.max_cost;
+                }
+
+                if (!sourceHSE && filters.min_score) {
+                    params.min_score = filters.min_score;
+                }
+
+                Object.keys(params).forEach(key => {
+                    if (params[key] === '') delete params[key];
+                });
+                let response;
+                if (sourceHSE) {
+                    response = await hseApi.getPrograms(params);
+                } else {
+                    response = await vuzopediaApi.getPrograms(params);
+                }
+                exportPrograms(response.programs, sourceHSE ? 'hse' : 'vuz', filters, pagination.total, format)
+                setShowMenu(false);
+
+            } catch (error) {
+                console.error('Ошибка при сохранении файла:', error);
+                alert('Не удалось сохранить файл!');
+            }
+
+        }
+
+    }
+
+    const toggleMenu = () => {
+        setShowMenu(!showMenu);
+    };
+
     if (loading) {
         return (
-            <div className="program-container">
-                <div className="loading-container">
-                    <div className="loading-spinner"></div>
-                    <p>Загрузка программ...</p>
-                </div>
-            </div>
+            <LoadingSpinner
+                input="программ">
+            </LoadingSpinner>
         );
     }
 
     if (error && programs.length === 0) {
         return (
-            <div className="program-container">
-                <div className="error-container">
-                    <div className="error-icon">❌</div>
-                    <h3>Ошибка загрузки</h3>
-                    <button onClick={fetchPrograms} className="retry-btn">
-                        Повторить
-                    </button>
-                </div>
-            </div>
+            <Error
+            onRetry={fetchPrograms}
+            message="Не удалось загрузить программы">
+            </Error>
         );
     }
 
@@ -142,33 +186,33 @@ return (
                     onFilterChange={handleFilterChange}
                     filters={filters}
         source={sourceHSE}></FilterBar>
+        <div className="save-button-container" >
+            {programs.length > 0 && (
+                <button
+                        className="save-button"
+                        onClick={toggleMenu}
+                        disabled={programs.length === 0}
+                    >
+                        <span className="save-icon">💾</span>
+                        Сохранить в файл
+                    </button>
+            )}
+            {showMenu && (
+                        <FormatMenu onSave={handleSaveToFile} />
+                    )}
+        </div>
+
         <ProgramList
         programs={programs}
         loading={loading}
         error={error}
         >
         </ProgramList>
-        {pagination.pages > 1 && (
-            <div className="pagination">
-                <button
-                    onClick={() => setPagination(prev => ({ ...prev, page: prev.page - 1 }))}
-                    disabled={pagination.page === 1}
-                    className="pagination-btn"
-                >
-                    ⬅️ Предыдущая
-                </button>
-                <span className="page-info">
-                    Страница {pagination.page} из {pagination.pages}
-                </span>
-                <button
-                    onClick={() => setPagination(prev => ({ ...prev, page: prev.page + 1 }))}
-                    disabled={pagination.page === pagination.pages}
-                    className="pagination-btn"
-                >
-                    Следующая ➡️
-                </button>
-            </div>
-        )}
+        <Pagination
+        currentPage={pagination.page}
+        totalPages={pagination.pages}
+        onPageChange={handlePageChange}>
+        </Pagination>
     </div>
 );
 }

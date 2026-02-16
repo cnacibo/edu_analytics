@@ -102,7 +102,9 @@ const FilterBar = ({ onSearch, onSourceChange, onFilterChange, filters, source }
                                 max="10000000"
                             />
                         </div>
-                        <div className="filter-item">
+                        {/*починить*/}
+                        {!localSource && (
+                            <div className="filter-item">
                             <label htmlFor="min_score">Мин. балл:</label>
                             <input
                                 type="number"
@@ -117,6 +119,7 @@ const FilterBar = ({ onSearch, onSourceChange, onFilterChange, filters, source }
                                 max="500"
                             />
                         </div>
+                        )}
                     </div>
                     <div className="choose-source">
                         <button className="source-btn" onClick={changeSource}>
