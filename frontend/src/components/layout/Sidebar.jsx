@@ -5,8 +5,8 @@ const Sidebar = ({ onItemClick, onToggle }) => {
   const [isOpen, setIsOpen] = useState(false); // change
 
   const menuItems = [
-    { text: 'Dashboard', icon: '📊' },
-    { text: 'All Programs', icon: '📚' },
+    { text: 'Dashboard', icon: '📊', path: '/' },
+    { text: 'Programs', icon: '📚', path: '/programs'},
   ];
 
   const toggleSidebar = () => {
@@ -16,6 +16,7 @@ const Sidebar = ({ onItemClick, onToggle }) => {
         onToggle(newState);
     }
   };
+
 
   return (
     <div className={`sidebar ${isOpen ? 'open' : 'closed'}`}>

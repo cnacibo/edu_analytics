@@ -1,0 +1,199 @@
+.program-details-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.pdp-back-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    margin-bottom: 24px;
+    background: none;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    color: #555;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.pdp-back-button:hover {
+    background: #f5f5f5;
+    border-color: #999;
+}
+
+.pdp-header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 32px;
+    padding: 24px;
+    background: #f16a8c;
+    border-radius: 16px;
+    color: white;
+    box-shadow: 0 4px 20px rgba(135, 14, 29, 0.15);
+}
+
+.pdp-icon {
+    width: 80px;
+    height: 80px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.pdp-title-wrapper {
+    flex: 1;
+}
+
+.pdp-title {
+    margin: 0 0 12px 0;
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.pdp-meta {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.pdp-type {
+    padding: 6px 16px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 500;
+}
+.pdp-badge {
+    padding: 4px 12px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    font-size: 13px;
+}
+
+.pdp-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.pdp-card {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+    border: 1px solid #f0f0f0;
+}
+
+.pdp-card-title {
+    margin: 0 0 16px 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.pdp-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.pdp-info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 8px 0;
+    border-bottom: 1px dashed #f0f0f0;
+}
+
+.pdp-info-row:last-child {
+    border-bottom: none;
+}
+
+.pdp-info-label {
+    font-size: 14px;
+    color: #666;
+    font-weight: 500;
+}
+
+.pdp-info-value {
+    font-size: 15px;
+    color: #333;
+    font-weight: 600;
+    text-align: right;
+}
+
+.pdp-info-code {
+    font-family: 'Monaco', 'Consolas', monospace;
+    color: #667eea;
+}
+
+.pdp-info-cost {
+    color: #28a745;
+    font-size: 16px;
+}
+
+.pdp-info-highlight {
+    background: #fff3cd;
+    padding: 4px 12px;
+    border-radius: 20px;
+    color: #856404;
+}
+
+.pdp-info-career .pdp-info-value {
+    max-width: 60%;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+.pdp-courses-section {
+    margin-top: 32px;
+}
+
+.pdp-section-title {
+    margin: 0 0 20px 0;
+    font-size: 22px;
+    font-weight: 600;
+    color: #333;
+}
+
+.pdp-no-courses {
+    text-align: center;
+    padding: 48px;
+    background: #f8f9fa;
+    border-radius: 16px;
+    color: #666;
+}
+
+.pdp-graph-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: white;
+    border: none;
+    border-radius: 30px;
+    color: #870e1d;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    white-space: nowrap;
+}
+
+.pdp-graph-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}

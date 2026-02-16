@@ -109,12 +109,12 @@ const FilterBar = ({ onSearch, onSourceChange, onFilterChange, filters, source }
                                 id="min_score"
                                 name="min_score"
                                 className="filter-input"
-                                placeholder="От 0 до 100"
+                                placeholder="От 0 до 500"
                                 value={selectedFilters.min_score}
                                 onChange={handleFilterChange}
                                 min="0"
                                 step="10"
-                                max="100"
+                                max="500"
                             />
                         </div>
                     </div>

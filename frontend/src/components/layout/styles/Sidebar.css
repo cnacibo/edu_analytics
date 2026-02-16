@@ -46,7 +46,7 @@
 
 .sidebar-header h3 {
   margin: 0;
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 700;
 }
 
@@ -94,6 +94,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: 500;
 }
 
 .sidebar-footer {

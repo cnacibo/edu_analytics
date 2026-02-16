@@ -17,7 +17,7 @@
 }
 
 .card-header {
-  background: #cbeef3;
+  background: rgba(203, 238, 243, 0.5);
   color: black;
   padding: 20px;
   display: flex;

@@ -51,8 +51,6 @@ const ProgramsPage = () => {
                 if (params[key] === '') delete params[key];
             });
 
-            console.log('Отправляем запрос с params:', params);
-
             let response;
             if (sourceHSE) {
                 response = await hseApi.getPrograms(params);
@@ -60,11 +58,11 @@ const ProgramsPage = () => {
                 response = await vuzopediaApi.getPrograms(params);
             }
 
-            console.log('ответ 1: ', response);
+            const programsData = (response.programs || []).map(program => ({
+                ...program,
+                source: sourceHSE ? 'hse' : 'vuz'
+            }))
 
-            const programsData = response.programs || []
-
-            console.log('ответ: ', programsData);
 
             setPrograms(programsData);
 

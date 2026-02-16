@@ -1,5 +1,15 @@
 import './styles/ProgramCard.css'
+import { useNavigate } from 'react-router-dom';
+import ProgramDetailsPage from "../../pages/ProgramDetailsPage";
 const ProgramCard = ({program}) => {
+    const navigate = useNavigate();
+
+    const openDetailsPage = (program) => {
+        const source = program.source || 'hse';
+        const basePath = source === 'hse' ? '/programs/hse' : '/programs/vuz';
+
+        navigate(`${basePath}/${program.id}`, { state: { program } })
+    }
 
     return (
         <div className="program-card">
@@ -24,7 +34,7 @@ const ProgramCard = ({program}) => {
                     <span className="info-value">{program.cost ? `${program.cost} ₽` : 'No information'}</span>
                 </div>
             </div>
-            <button className="card-actions">
+            <button className="card-actions" onClick= {() => openDetailsPage(program)}>
                 <div className="view-details">
                   View Details
                 </div>

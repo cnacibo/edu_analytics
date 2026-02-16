@@ -149,6 +149,12 @@
   min-width: 130px;
 }
 
+.filter-input:focus {
+  outline: none;
+  border-color: #dd2d4a;
+  background: white;
+}
+
 .filter-input::placeholder {
   color: #aaa;
   font-size: 13px;
