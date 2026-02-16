@@ -1,0 +1,103 @@
+.sidebar {
+  height: 100vh;
+  background-color: #870e1d;
+  color: white;
+  transition: width 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar.open {
+  width: 240px;
+}
+
+.sidebar.closed {
+  width: 60px;
+}
+
+.toggle-btn {
+  background: #870e1d;
+  color: white;
+  border: none;
+  border-bottom: 1px solid white;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  text-align: center;
+  transition: background 0.2s;
+  height: 50px;
+}
+
+.toggle-btn:hover {
+  background: #5c0a15;
+}
+
+.sidebar-header {
+  padding: 20px 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar-header h3 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.sidebar-menu {
+  flex: 1;
+  padding: 15px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.menu-item {
+  background: transparent;
+  border: none;
+  color: #ecf0f1;
+  padding: 12px 15px;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  transition: background 0.2s;
+  font-size: 14px;
+  border-radius: 0;
+  margin: 0 10px;
+}
+
+.menu-item:hover {
+  background: white;
+  color: #870e1d;
+  border-radius: 4px;
+}
+
+.menu-item.active {
+  background: #3498db;
+}
+
+.menu-icon {
+  font-size: 20px;
+  min-width: 24px;
+  text-align: center;
+}
+
+.menu-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 500;
+}
+
+.sidebar-footer {
+  padding: 15px;
+  border-top: 1px solid white;
+}
