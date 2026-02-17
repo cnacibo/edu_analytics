@@ -1,33 +1,33 @@
 .program-container {
-    padding: 20px;
-    max-width: 1400px;
-    margin: 0 auto;
-    min-height: 100%;
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+  min-height: 100%;
 }
 
 .save-button {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 20px;
-    border: 2px solid #ddd;
-    background: white;
-    color: #dd2d4a;
-    border-radius: 12px;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border: 2px solid #ddd;
+  background: white;
+  color: #dd2d4a;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
 
 .save-icon {
-    font-size: 18px;
+  font-size: 18px;
 }
 
 .save-button-container {
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-    height: 44px;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  height: 44px;
 }

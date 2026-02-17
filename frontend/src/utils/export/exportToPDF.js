@@ -140,7 +140,7 @@ export const exportToPDF = (dataToExport) => {
       fillColor: [245, 245, 245],
     },
     margin: { left: marginLeft, right: marginLeft },
-    didDrawPage: function (data) {
+    didDrawPage: function () {
       const pageNumber = doc.internal.getNumberOfPages();
       doc.setFontSize(8);
       doc.setTextColor(120, 120, 120);

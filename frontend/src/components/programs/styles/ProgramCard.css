@@ -64,20 +64,20 @@
 }
 
 .info-row {
-    margin-bottom: 1px;
+  margin-bottom: 1px;
 }
 
 .info-label {
-    font-weight: 500;
-    color: #666;
-    min-width: 80px;
-    margin-right: 8px;
-    font-size: 13px;
+  font-weight: 500;
+  color: #666;
+  min-width: 80px;
+  margin-right: 8px;
+  font-size: 13px;
 }
 
 .info-value {
-    color: black;
-    font-weight: 600;
+  color: black;
+  font-weight: 600;
 }
 
 .card-actions {

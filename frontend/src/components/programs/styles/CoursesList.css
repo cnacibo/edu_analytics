@@ -1,10 +1,10 @@
 .courses-list-container {
-    width: 100%;
-    margin-top: 24px;
+  width: 100%;
+  margin-top: 24px;
 }
 
 .cl-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: 24px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 24px;
 }

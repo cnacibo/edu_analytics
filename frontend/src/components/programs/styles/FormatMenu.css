@@ -1,52 +1,52 @@
 .format-menu {
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
-    overflow: hidden;
-    animation: slideDown 0.2s ease;
-    width: fit-content;
-    display: flex;
-    flex-direction: row;
-    height: 44px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  animation: slideDown 0.2s ease;
+  width: fit-content;
+  display: flex;
+  flex-direction: row;
+  height: 44px;
 }
 
 @keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateX(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .format-menu button {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    width: 100%;
-    padding: 12px 20px;
-    border: none;
-    border-right: 1px solid #ddd;
-    background: white;
-    color: #333;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-align: left;
-    border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 20px;
+  border: none;
+  border-right: 1px solid #ddd;
+  background: white;
+  color: #333;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+  border-bottom: 1px solid #f0f0f0;
 }
 
 .format-menu button:hover {
-    font-weight: 700;
-    color: #870e1d;
-    padding-left: 24px;
+  font-weight: 700;
+  color: #870e1d;
+  padding-left: 24px;
 }
 
 .format-icon {
-    font-size: 18px;
-    width: 24px;
-    text-align: center;
+  font-size: 18px;
+  width: 24px;
+  text-align: center;
 }

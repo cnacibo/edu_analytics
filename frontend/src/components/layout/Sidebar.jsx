@@ -6,17 +6,16 @@ const Sidebar = ({ onItemClick, onToggle }) => {
 
   const menuItems = [
     { text: 'Dashboard', icon: '📊', path: '/' },
-    { text: 'Programs', icon: '📚', path: '/programs'},
+    { text: 'Programs', icon: '📚', path: '/programs' },
   ];
 
   const toggleSidebar = () => {
-      const newState = !isOpen;
+    const newState = !isOpen;
     setIsOpen(newState);
     if (onToggle) {
-        onToggle(newState);
+      onToggle(newState);
     }
   };
-
 
   return (
     <div className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
@@ -38,19 +37,17 @@ const Sidebar = ({ onItemClick, onToggle }) => {
             onClick={() => onItemClick(item)}
             title={!isOpen ? item.text : ''}
           >
-            {isOpen &&
-                <>
+            {isOpen && (
+              <>
                 <span className="menu-icon">{item.icon}</span>
                 <span className="menu-text">{item.text}</span>
-                </>
-            }
+              </>
+            )}
           </button>
         ))}
       </nav>
 
-      {isOpen && (
-        <div className="sidebar-footer"></div>
-      )}
+      {isOpen && <div className="sidebar-footer"></div>}
     </div>
   );
 };

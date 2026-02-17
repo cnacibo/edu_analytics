@@ -63,7 +63,7 @@
 
 .primary-btn,
 .secondary-btn,
-.source-btn{
+.source-btn {
   padding: 12px 24px;
   border-radius: 8px;
   font-size: 14px;
@@ -109,8 +109,8 @@
   display: flex;
   box-sizing: border-box;
   padding: 0 5px;
-  border-left: 2px solid #ADB5BD;
-  border-right: 2px solid #ADB5BD;
+  border-left: 2px solid #adb5bd;
+  border-right: 2px solid #adb5bd;
   height: 50px;
 }
 
@@ -160,8 +160,8 @@
   font-size: 13px;
 }
 
-.filter-input[type="number"]::-webkit-inner-spin-button,
-.filter-input[type="number"]::-webkit-outer-spin-button {
+.filter-input[type='number']::-webkit-inner-spin-button,
+.filter-input[type='number']::-webkit-outer-spin-button {
   opacity: 0.8;
   height: 300px;
 }
