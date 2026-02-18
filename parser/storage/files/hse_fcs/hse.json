@@ -1,0 +1,270 @@
+{
+  "scraped_at": "2026-01-07T22:23:34.650353",
+  "total_items": 24,
+  "data": [
+    {
+      "id": 1,
+      "name": "Дизайн и разработка информационных продуктов",
+      "url": "https://www.hse.ru/ba/drip/",
+      "level": "Бакалавр",
+      "cost": 780000,
+      "budget_places": null,
+      "paid_places": 70,
+      "foreign_places": null,
+      "number_of_program": "09.03.04"
+    },
+    {
+      "id": 2,
+      "name": "Компьютерные науки и анализ данных",
+      "url": "https://www.hse.ru/ba/compds/",
+      "level": "Бакалавр",
+      "cost": 550000,
+      "budget_places": null,
+      "paid_places": 150,
+      "foreign_places": 10,
+      "number_of_program": "01.03.02"
+    },
+    {
+      "id": 3,
+      "name": "Прикладная математика и информатика",
+      "url": "https://www.hse.ru/ba/ami/",
+      "level": "Бакалавр",
+      "cost": 850000,
+      "budget_places": 180,
+      "paid_places": 220,
+      "foreign_places": 10,
+      "number_of_program": "01.03.02"
+    },
+    {
+      "id": 4,
+      "name": "Прикладной анализ данных",
+      "url": "https://www.hse.ru/ba/data/",
+      "level": "Бакалавр",
+      "cost": 850000,
+      "budget_places": null,
+      "paid_places": 220,
+      "foreign_places": 10,
+      "number_of_program": "01.03.02"
+    },
+    {
+      "id": 5,
+      "name": "Программная инженерия",
+      "url": "https://www.hse.ru/ba/se/",
+      "level": "Бакалавр",
+      "cost": 800000,
+      "budget_places": 160,
+      "paid_places": 125,
+      "foreign_places": 10,
+      "number_of_program": "09.03.04"
+    },
+    {
+      "id": 6,
+      "name": "Разработка игр и цифровых продуктов",
+      "url": "https://digital.hse.ru",
+      "level": "Бакалавр",
+      "cost": 850000,
+      "budget_places": null,
+      "paid_places": 100,
+      "foreign_places": null,
+      "number_of_program": "09.03.04"
+    },
+    {
+      "id": 7,
+      "name": "Экономика и анализ данных",
+      "url": "https://www.hse.ru/ba/eda",
+      "level": "Бакалавр",
+      "cost": 790000,
+      "budget_places": 45,
+      "paid_places": 130,
+      "foreign_places": 5,
+      "number_of_program": "38.03.01"
+    },
+    {
+      "id": 8,
+      "name": "Анализ данных в биологии и медицине",
+      "url": "https://www.hse.ru/ma/adbm",
+      "level": "Магистр",
+      "cost": null,
+      "budget_places": 25,
+      "paid_places": 10,
+      "foreign_places": null,
+      "number_of_program": null
+    },
+    {
+      "id": 9,
+      "name": "Анализ данных в девелопменте",
+      "url": "https://www.hse.ru/ma/development/",
+      "level": "Магистр",
+      "cost": null,
+      "budget_places": null,
+      "paid_places": 35,
+      "foreign_places": null,
+      "number_of_program": null
+    },
+    {
+      "id": 10,
+      "name": "Аналитика больших данных (полностью онлайн)",
+      "url": "https://www.hse.ru/ma/bigdata-analytics/",
+      "level": "Магистр",
+      "cost": 490000.0,
+      "budget_places": null,
+      "paid_places": 200,
+      "foreign_places": 5,
+      "number_of_program": "01.04.02"
+    },
+    {
+      "id": 11,
+      "name": "Инженерия данных (полностью онлайн)",
+      "url": "https://www.hse.ru/ma/data-engineering/",
+      "level": "Магистр",
+      "cost": 470000.0,
+      "budget_places": null,
+      "paid_places": 150,
+      "foreign_places": 5,
+      "number_of_program": "09.04.04"
+    },
+    {
+      "id": 12,
+      "name": "Искусственный интеллект (ранее - Машинное обучение и высоконагруженные системы, полностью онлайн)",
+      "url": "https://www.hse.ru/ma/mlds/",
+      "level": "Магистр",
+      "cost": 520000.0,
+      "budget_places": null,
+      "paid_places": 350,
+      "foreign_places": 5,
+      "number_of_program": "01.04.02"
+    },
+    {
+      "id": 13,
+      "name": "Искусственный интеллект в маркетинге и управлении продуктом (полностью онлайн)",
+      "url": "https://www.hse.ru/ma/ai-productmanagement/",
+      "level": "Магистр",
+      "cost": 520000.0,
+      "budget_places": null,
+      "paid_places": 160,
+      "foreign_places": 5,
+      "number_of_program": "01.04.02"
+    },
+    {
+      "id": 14,
+      "name": "Исследования и предпринимательство в искусственном интеллекте",
+      "url": "https://www.hse.ru/ma/ipii/",
+      "level": "Магистр",
+      "cost": null,
+      "budget_places": null,
+      "paid_places": 40,
+      "foreign_places": null,
+      "number_of_program": null
+    },
+    {
+      "id": 15,
+      "name": "Магистр по наукам о данных (полностью онлайн)",
+      "url": "https://www.hse.ru/ma/mds/",
+      "level": "Магистр",
+      "cost": 490000.0,
+      "budget_places": null,
+      "paid_places": 200,
+      "foreign_places": 20,
+      "number_of_program": "01.04.02"
+    },
+    {
+      "id": 16,
+      "name": "Математика машинного обучения",
+      "url": "https://www.hse.ru/ma/sltheory/",
+      "level": "Магистр",
+      "cost": 490000.0,
+      "budget_places": 20,
+      "paid_places": 5,
+      "foreign_places": 1,
+      "number_of_program": "01.04.02"
+    },
+    {
+      "id": 17,
+      "name": "Машинное обучение в цифровом продукте",
+      "url": "https://www.hse.ru/ma/mldg",
+      "level": "Магистр",
+      "cost": null,
+      "budget_places": null,
+      "paid_places": 35,
+      "foreign_places": null,
+      "number_of_program": null
+    },
+    {
+      "id": 18,
+      "name": "Науки о данных (Data Science)",
+      "url": "https://www.hse.ru/ma/datasci/",
+      "level": "Магистр",
+      "cost": 490000.0,
+      "budget_places": 36,
+      "paid_places": 15,
+      "foreign_places": 10,
+      "number_of_program": "01.04.02"
+    },
+    {
+      "id": 19,
+      "name": "Продуктовый подход и аналитика данных в HR-менеджменте",
+      "url": "https://www.hse.ru/ma/ppadhr/",
+      "level": "Магистр",
+      "cost": null,
+      "budget_places": null,
+      "paid_places": 40,
+      "foreign_places": null,
+      "number_of_program": null
+    },
+    {
+      "id": 20,
+      "name": "Системная и программная инженерия",
+      "url": "https://www.hse.ru/ma/se/",
+      "level": "Магистр",
+      "cost": 490000.0,
+      "budget_places": 25,
+      "paid_places": 10,
+      "foreign_places": 5,
+      "number_of_program": "09.04.04"
+    },
+    {
+      "id": 21,
+      "name": "Системное программирование",
+      "url": "https://www.hse.ru/ma/sp/",
+      "level": "Магистр",
+      "cost": null,
+      "budget_places": 15,
+      "paid_places": 5,
+      "foreign_places": null,
+      "number_of_program": null
+    },
+    {
+      "id": 22,
+      "name": "Современные компьютерные науки",
+      "url": "https://www.hse.ru/ma/mcs",
+      "level": "Магистр",
+      "cost": null,
+      "budget_places": 52,
+      "paid_places": 5,
+      "foreign_places": null,
+      "number_of_program": null
+    },
+    {
+      "id": 23,
+      "name": "Финансовые технологии",
+      "url": "https://www.hse.ru/ma/alfafintech/",
+      "level": "Магистр",
+      "cost": 490000.0,
+      "budget_places": null,
+      "paid_places": null,
+      "foreign_places": null,
+      "number_of_program": "01.04.02"
+    },
+    {
+      "id": 24,
+      "name": "Финансовые технологии и анализ данных",
+      "url": "https://www.hse.ru/ma/fintech",
+      "level": "Магистр",
+      "cost": 490000.0,
+      "budget_places": null,
+      "paid_places": 70,
+      "foreign_places": 3,
+      "number_of_program": "01.04.02"
+    }
+  ]
+}
