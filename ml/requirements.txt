@@ -1,0 +1,4 @@
+pandas
+yake==0.4.8
+nltk
+pymorphy2
