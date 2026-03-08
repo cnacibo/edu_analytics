@@ -6,7 +6,7 @@ from app.db.crud import (
     get_hse_program_courses,
     get_hse_programs,
 )
-from app.services.shared import validate_search_query
+from app.services.shared import validate_query
 from fastapi import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -15,6 +15,7 @@ async def get_hse_programs_service(
     db: AsyncSession,
     max_cost: Optional[int] = None,
     q: Optional[str] = None,
+    study_type: Optional[str] = None,
     page: int = 1,
     size: int = 100,
 ):
@@ -32,7 +33,18 @@ async def get_hse_programs_service(
 
     validated_q = None
     if q:
-        validated_q = validate_search_query(q)
+        validated_q = validate_query(q)
+
+    validated_study_type = None
+    if study_type:
+        validated_study_type = validate_query(study_type)
+
+    if validated_study_type:
+        if validated_study_type.lower() not in ["бакалавриат", "специалитет", "магистратура"]:
+            raise HTTPException(
+                status_code=400,
+                detail="Вид образования может быть только бакалавриат, специалитет, магистратура",
+            )
 
     response = await get_hse_programs(
         db=db,
@@ -40,6 +52,7 @@ async def get_hse_programs_service(
         size=size,
         q=validated_q,
         max_cost=max_cost,
+        study_type=validated_study_type,
     )
 
     programs = response["programs"]

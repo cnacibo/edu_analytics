@@ -12,8 +12,16 @@ router = APIRouter()
 async def get_vuzopedia_programs(
     db: AsyncSession = Depends(get_db),
     max_cost: Optional[int] = Query(None, description="Максимальная стоимость"),
-    min_score: Optional[int] = Query(None, description="Минимальный проходной балл"),
+    max_budget_score: Optional[int] = Query(
+        None, description="Максимальный проходной балл на бюджет"
+    ),
+    max_paid_score: Optional[int] = Query(
+        None, description="Максимальный проходной балл на платное"
+    ),
     q: Optional[str] = Query(None, description="Поисковый запрос"),
+    study_type: Optional[str] = Query(
+        None, description="Вид обучения (бакалавриат/ специалитет и тд)"
+    ),
     page: int = Query(1, description="Номер страницы"),
     size: int = Query(100, description="Размер страницы"),
 ):
@@ -22,7 +30,9 @@ async def get_vuzopedia_programs(
     return await vuzopedia_service.get_vuzopedia_programs_service(
         db=db,
         max_cost=max_cost,
-        min_score=min_score,
+        max_budget_score=max_budget_score,
+        max_paid_score=max_paid_score,
+        study_type=study_type,
         q=q,
         page=page,
         size=size,
