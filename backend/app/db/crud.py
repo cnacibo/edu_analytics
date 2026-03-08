@@ -10,8 +10,10 @@ async def get_vuzopedia_programs(
     page: int = 1,
     size: int = 100,
     q: Optional[str] = None,
-    min_score: Optional[int] = None,
+    max_budget_score: Optional[int] = None,
+    max_paid_score: Optional[int] = None,
     max_cost: Optional[float] = None,
+    study_type: Optional[str] = None,
 ) -> Dict[str, Any]:
     """Получить программы Vuzopedia с фильтрацией"""
     stmt = select(VuzopediaProgram)
@@ -20,8 +22,14 @@ async def get_vuzopedia_programs(
     if q:
         filters.append(VuzopediaProgram.name.ilike(f"%{q}%"))
 
-    if min_score is not None:
-        filters.append(VuzopediaProgram.min_budget_score >= min_score)
+    if study_type:
+        filters.append(func.lower(VuzopediaProgram.study_type) == study_type.lower())
+
+    if max_budget_score is not None:
+        filters.append(VuzopediaProgram.min_budget_score <= max_budget_score)
+
+    if max_paid_score is not None:
+        filters.append(VuzopediaProgram.min_paid_score <= max_paid_score)
 
     if max_cost is not None:
         filters.append(VuzopediaProgram.cost <= max_cost)
