@@ -1,0 +1,170 @@
+.yandex-map-container {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.map-legend {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(5px);
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+  min-width: 200px;
+}
+
+.legend-title {
+  font-weight: 600;
+  color: #212529;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e9ecef;
+  font-size: 14px;
+  text-align: center;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  font-size: 13px;
+  color: #495057;
+}
+
+.legend-marker {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.expensive-marker {
+  background: #f16a8c;
+}
+
+.cheap-marker {
+  background: #457b9d;
+}
+
+.map-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  border-radius: 16px;
+  backdrop-filter: blur(2px);
+}
+
+.balloon-container {
+  padding: 12px;
+  max-width: 220px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.balloon-title {
+  margin: 0 0 8px 0;
+  color: #212529;
+  font-size: 16px;
+  font-weight: 600;
+  border-bottom: 1px solid black;
+  padding-bottom: 6px;
+}
+
+.balloon-title.expensive {
+  border-bottom: 1px solid #f16a8c;
+}
+
+.balloon-title.cheap {
+  border-bottom: 1px solid #457b9d;
+}
+
+.balloon-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.balloon-detail-item {
+  margin: 0;
+  font-size: 13px;
+  color: #495057;
+  display: flex;
+  align-items: center;
+}
+
+.balloon-detail-label {
+  font-weight: 600;
+  color: #212529;
+  margin-right: 8px;
+}
+
+.balloon-detail-value {
+  color: #495057;
+}
+
+.balloon-badge {
+  margin-top: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 12px;
+  text-align: center;
+  letter-spacing: 0.3px;
+}
+
+.balloon-badge.expensive {
+  background: rgba(245, 156, 188, 0.4);
+  color: #f26a90;
+  border: 1px solid rgba(245, 156, 188, 1);
+}
+
+.balloon-badge.cheap {
+  background: rgba(203, 238, 242, 0.4);
+  color: #457b9d;
+  border: 1px solid rgba(203, 238, 242, 1);
+}
+
+.ymaps-2-1-79-balloon__close {
+  top: 12px !important;
+  right: 12px !important;
+  background: rgba(0, 0, 0, 0.05) !important;
+  border-radius: 50% !important;
+  width: 24px !important;
+  height: 24px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: background 0.2s !important;
+}
+
+.ymaps-2-1-79-copyright,
+.ymaps-2-1-79-copyrights-panel,
+.ymaps-2-1-79-copyright__wrap,
+.ymaps-2-1-79-copyright__text,
+.ymaps-2-1-79-copyright__link,
+.ymaps-2-1-79-copyright__logo,
+[class*="copyright"] {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+}

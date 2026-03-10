@@ -57,9 +57,22 @@ const DashboardPage = () => {
       <div className="graphics-row">
         <div className="graphics-card">
           <h3 className="graphics-title">Кем стать после</h3>
+          <p
+            style={{
+              fontSize: '25px',
+              fontWeight: '500',
+              color: '#6c757d',
+              margin: '230px 0',
+              textAlign: 'center',
+            }}
+          >
+            В разработке...
+          </p>
         </div>
         <div className="graphics-card">
-          <h3 className="graphics-title">Распределение программ по стране</h3>
+          <h3 className="graphics-title">
+            Распределение программ по стране (средняя стоимость: 390 000 ₽)
+          </h3>
           <MapDashboard></MapDashboard>
         </div>
       </div>
