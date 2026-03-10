@@ -56,11 +56,10 @@ const DashboardPage = () => {
       </div>
       <div className="graphics-row">
         <div className="graphics-card">
-          <h3 className="graphics-title">Распределение программ по сферам</h3>
-          <PieChartDashboard></PieChartDashboard>
+          <h3 className="graphics-title">Кем стать после</h3>
         </div>
         <div className="graphics-card">
-          <h3 className="graphics-title">Распределение университетов по стране</h3>
+          <h3 className="graphics-title">Распределение программ по стране</h3>
           <MapDashboard></MapDashboard>
         </div>
       </div>

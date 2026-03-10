@@ -15,7 +15,7 @@ const SortedProgramsList = () => {
       id: 2,
       name: 'Искусственный интеллект',
       sphere: 'IT',
-      level: 'Магистратура',
+      level: 'Бакалавриат',
       university: 'МФТИ',
       cost: 680000,
       score: 290,
