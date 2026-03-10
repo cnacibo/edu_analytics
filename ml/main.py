@@ -7,5 +7,5 @@
 from file_manager import process_csv_file
 
 if __name__ == "__main__":
-    input_file = "../parser/storage/files/hse_programs/hse_programs.csv"
+    input_file = "../parser/storage/files/hse_courses/hse_course.csv"
     process_csv_file(input_file)
