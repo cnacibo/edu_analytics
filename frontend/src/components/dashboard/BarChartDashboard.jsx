@@ -60,7 +60,6 @@ const spheresOrder = [
   { key: 'creative', name: 'Творческие' },
 ];
 
-// Prepare data for Recharts
 const chartData = spheresOrder.map((sphere) => ({
   name: sphere.name,
   bachelor: stats.costByLevelAndSphere[sphere.key].bachelor,
