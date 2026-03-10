@@ -1,0 +1,239 @@
+{
+  "scraped_at": "2026-03-04T22:13:19.070207",
+  "total_items": 26,
+  "data": [
+    {
+      "id": 1,
+      "name": "Дизайн и разработка информационных продуктов",
+      "code": "09.03.04",
+      "cost": 950.0,
+      "study_type": "Бакалавр",
+      "url": "https://www.hse.ru/ba/drip/",
+      "paid_places": 90
+    },
+    {
+      "id": 2,
+      "name": "Компьютерные науки и анализ данных",
+      "code": "01.03.02",
+      "cost": 640.0,
+      "study_type": "Бакалавр",
+      "url": "https://www.hse.ru/ba/compds/",
+      "paid_places": 150,
+      "foreigners_places": 10
+    },
+    {
+      "id": 3,
+      "name": "Прикладная математика и информатика",
+      "code": "01.03.04",
+      "cost": 700.0,
+      "study_type": "Бакалавр",
+      "url": "https://www.hse.ru/ba/ami/",
+      "budget_places": 195,
+      "paid_places": 220,
+      "foreigners_places": 29
+    },
+    {
+      "id": 4,
+      "name": "Прикладной анализ данных",
+      "code": "01.03.04",
+      "cost": null,
+      "study_type": "Бакалавр",
+      "url": "https://www.hse.ru/ba/data/",
+      "paid_places": 220,
+      "foreigners_places": 10
+    },
+    {
+      "id": 5,
+      "name": "Программная инженерия",
+      "code": "09.03.04",
+      "cost": 980.0,
+      "study_type": "Бакалавр",
+      "url": "https://www.hse.ru/ba/se/",
+      "budget_places": 160,
+      "paid_places": 125,
+      "foreigners_places": 24
+    },
+    {
+      "id": 6,
+      "name": "Проектирование интеллектуальных робототехнических систем",
+      "code": "09.03.04",
+      "cost": 950.0,
+      "study_type": "Бакалавр",
+      "url": "https://www.hse.ru/ba/dirs/",
+      "budget_places": 25,
+      "paid_places": 35
+    },
+    {
+      "id": 7,
+      "name": "Разработка игр и цифровых продуктов",
+      "code": "54.03.01",
+      "cost": 900.0,
+      "study_type": "Бакалавр",
+      "url": "https://digital.hse.ru"
+    },
+    {
+      "id": 8,
+      "name": "Экономика и анализ данных",
+      "code": "01.03.04",
+      "cost": null,
+      "study_type": "Бакалавр",
+      "url": "https://www.hse.ru/ba/eda",
+      "budget_places": 60,
+      "paid_places": 110,
+      "foreigners_places": 9
+    },
+    {
+      "id": 9,
+      "name": "Анализ данных в биологии и медицине",
+      "code": "01.04.02",
+      "cost": 470.0,
+      "study_type": "Магистр",
+      "url": "https://www.hse.ru/ma/adbm",
+      "budget_places": 25
+    },
+    {
+      "id": 10,
+      "name": "Анализ данных в девелопменте",
+      "code": "01.04.02",
+      "cost": 450.0,
+      "study_type": "Магистр",
+      "url": "https://www.hse.ru/ma/development/",
+      "budget_places": 20
+    },
+    {
+      "id": 11,
+      "name": "Аналитика больших данных (полностью онлайн)",
+      "code": "01.04.02",
+      "cost": 490.0,
+      "study_type": "Магистр",
+      "url": "https://www.hse.ru/ma/bigdata-analytics/"
+    },
+    {
+      "id": 12,
+      "name": "Инженерия данных (полностью онлайн)",
+      "code": "09.04.04",
+      "cost": 470.0,
+      "study_type": "Магистр",
+      "url": "https://www.hse.ru/ma/data-engineering/"
+    },
+    {
+      "id": 13,
+      "name": "Искусственный интеллект",
+      "code": "01.04.02",
+      "cost": 520.0,
+      "study_type": "Магистр",
+      "url": "https://www.hse.ru/ma/mlds/"
+    },
+    {
+      "id": 14,
+      "name": "Искусственный интеллект в маркетинге и управлении продуктом (полностью онлайн)",
+      "code": "01.04.02",
+      "cost": 490.0,
+      "study_type": "Магистр",
+      "url": "https://www.hse.ru/ma/ai-productmanagement/"
+    },
+    {
+      "id": 15,
+      "name": "Искусственный интеллект и продуктовый подход в HR-менеджменте (ранее - Продуктовый подход и аналитика данных в HR-менеджменте)",
+      "code": "01.04.02",
+      "cost": 490.0,
+      "study_type": "Магистр",
+      "url": "https://www.hse.ru/ma/ppadhr/"
+    },
+    {
+      "id": 16,
+      "name": "Исследования и предпринимательство в искусственном интеллекте",
+      "code": "01.04.02",
+      "cost": 500.0,
+      "study_type": "Магистр",
+      "url": "https://www.hse.ru/ma/ipii/"
+    },
+    {
+      "id": 17,
+      "name": "Математика машинного обучения",
+      "code": "01.04.02",
+      "cost": 490.0,
+      "study_type": "Магистр",
+      "url": "https://www.hse.ru/ma/sltheory/",
+      "budget_places": 20
+    },
+    {
+      "id": 18,
+      "name": "Машинное обучение в цифровом продукте",
+      "code": "01.04.02",
+      "cost": 600.0,
+      "study_type": "Магистр",
+      "url": "https://www.hse.ru/ma/mldg"
+    },
+    {
+      "id": 19,
+      "name": "Науки о данных (Data Science)",
+      "code": "01.04.02",
+      "cost": 490.0,
+      "study_type": "Магистр",
+      "url": "https://www.hse.ru/ma/datasci/",
+      "budget_places": 36,
+      "foreigners_places": 20
+    },
+    {
+      "id": 20,
+      "name": "Прикладные нейросетевые технологии (полностью онлайн)",
+      "code": "01.04.02",
+      "cost": 490.0,
+      "study_type": "Магистр",
+      "url": "https://www.hse.ru/ma/mds/"
+    },
+    {
+      "id": 21,
+      "name": "Системная и программная инженерия",
+      "code": "09.04.04",
+      "cost": 490.0,
+      "study_type": "Магистр",
+      "url": "https://www.hse.ru/ma/se/",
+      "budget_places": 25
+    },
+    {
+      "id": 22,
+      "name": "Системное программирование",
+      "code": "09.04.04",
+      "cost": 490.0,
+      "study_type": "Магистр",
+      "url": "https://www.hse.ru/ma/sp/",
+      "budget_places": 20
+    },
+    {
+      "id": 23,
+      "name": "Современные компьютерные науки",
+      "code": "01.04.02",
+      "cost": 490.0,
+      "study_type": "Магистр",
+      "url": "https://www.hse.ru/ma/mcs",
+      "budget_places": 38
+    },
+    {
+      "id": 24,
+      "name": "Умные устройства: аппаратная разработка",
+      "code": "01.04.02",
+      "cost": null,
+      "study_type": "Магистр",
+      "url": "https://www.hse.ru/ma/sdhd/",
+      "budget_places": 15
+    },
+    {
+      "id": 25,
+      "name": "Финансовые технологии",
+      "code": null,
+      "cost": null,
+      "study_type": "Магистр",
+      "url": "https://www.hse.ru/ma/alfafintech/"
+    },
+    {
+      "id": 26,
+      "name": "Финансовые технологии и анализ данных",
+      "code": "01.04.02",
+      "cost": 490.0,
+      "study_type": "Магистр",
+      "url": "https://www.hse.ru/ma/fintech"
+    }
+  ]
+}
