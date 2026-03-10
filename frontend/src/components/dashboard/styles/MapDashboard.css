@@ -158,7 +158,7 @@
 .ymaps-2-1-79-copyright__text,
 .ymaps-2-1-79-copyright__link,
 .ymaps-2-1-79-copyright__logo,
-[class*="copyright"] {
+[class*='copyright'] {
   display: none !important;
   opacity: 0 !important;
   visibility: hidden !important;
