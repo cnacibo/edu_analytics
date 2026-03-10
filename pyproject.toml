@@ -48,10 +48,10 @@ build-backend = "setuptools.build_meta"
 packages = []
 
 [tool.black]
-line-length = 120
+line-length = 100
 
 [tool.ruff]
-line-length = 120
+line-length = 100
 exclude = ["venv",".venv","build","dist"]
 
 [tool.ruff.lint]
@@ -59,4 +59,4 @@ select = ["E","F","W","I"]
 
 [tool.isort]
 profile = "black"
-line_length = 120
+line_length = 100
