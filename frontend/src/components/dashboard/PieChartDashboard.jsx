@@ -24,7 +24,7 @@ const PieChartDashboard = () => {
 
   return (
     <div className="pie-chart-container">
-      <ResponsiveContainer>
+      <ResponsiveContainer width="100%" height={400}>
         <PieChart margin={{ top: 0, right: 20, left: 20, bottom: 30 }}>
           <Pie
             data={sphereData}

@@ -71,7 +71,7 @@ const chartData = spheresOrder.map((sphere) => ({
 const BarChartDashboard = () => {
   return (
     <div className="bar-chart-container">
-      <ResponsiveContainer>
+      <ResponsiveContainer width="100%" height={400}>
         <BarChart data={chartData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
           <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={false} />
           <XAxis
