@@ -23,6 +23,9 @@ ml = [
     "scikit-learn>=1.3.0",
     "networkx>=3.0",
     "matplotlib>=3.7.0",
+    "yake==0.4.8",
+    "nltk",
+    "pymorphy2",
 ]
 parser = [
     "beautifulsoup4>=4.12.0",
