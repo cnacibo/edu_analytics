@@ -13,6 +13,9 @@ async def get_hse_programs(
     db: AsyncSession = Depends(get_db),
     max_cost: Optional[int] = Query(None, description="Максимальная стоимость"),
     q: Optional[str] = Query(None, description="Поисковый запрос"),
+    study_type: Optional[str] = Query(
+        None, description="Вид обучения (бакалавриат/ специалитет и тд)"
+    ),
     page: int = Query(1, description="Номер страницы"),
     size: int = Query(100, description="Размер страницы"),
 ):
@@ -22,6 +25,7 @@ async def get_hse_programs(
         db=db,
         max_cost=max_cost,
         q=q,
+        study_type=study_type,
         page=page,
         size=size,
     )

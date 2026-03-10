@@ -1,15 +1,11 @@
 module.exports = {
-  extends: [
-    'react-app',
-    'react-app/jest',
-    'plugin:prettier/recommended'
-  ],
+  extends: ['react-app', 'react-app/jest', 'plugin:prettier/recommended'],
   rules: {
     'prettier/prettier': [
       'error',
       {
-        endOfLine: 'auto'
-      }
+        endOfLine: 'auto',
+      },
     ],
 
     'no-console': ['warn', { allow: ['warn', 'error'] }],
@@ -19,7 +15,7 @@ module.exports = {
   },
   settings: {
     react: {
-      version: 'detect'
-    }
-  }
+      version: 'detect',
+    },
+  },
 };

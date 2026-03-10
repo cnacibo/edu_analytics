@@ -3,8 +3,8 @@ import re
 from fastapi import HTTPException
 
 
-def validate_search_query(q: str) -> str:
-    """Валидация поискового запроса"""
+def validate_query(q: str) -> str:
+    """Валидация текстового запроса"""
     if not q:
         return q
 
@@ -24,7 +24,7 @@ def validate_search_query(q: str) -> str:
     for pattern in sql_patterns:
         if re.search(pattern, q, re.IGNORECASE):
             raise HTTPException(
-                status_code=400, detail="Поисковый запрос содержит недопустимые символы или слова"
+                status_code=400, detail="Запрос содержит недопустимые символы или слова"
             )
 
     q = q.strip()

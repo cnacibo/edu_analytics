@@ -1,144 +1,146 @@
 .cc-card {
-    background: white;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    transition: transform 0.2s, box-shadow 0.2s;
-    border: 1px solid #f0f0f0;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+  border: 1px solid #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .cc-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
 }
 
 .cc-header {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 20px;
-    background: rgba(203, 238, 243, 0.5);
-    border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  background: rgba(203, 238, 243, 0.5);
+  border-bottom: 1px solid #f0f0f0;
 }
 
 .cc-title-wrapper {
-    flex: 1;
-    min-width: 0;
+  flex: 1;
+  min-width: 0;
 }
 
 .cc-title {
-    margin: 0 0 6px 0;
-    font-size: 18px;
-    font-weight: 600;
-    color: #333;
-    line-height: 1.3;
+  margin: 0 0 6px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  line-height: 1.3;
 }
 
 .cc-meta {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    flex-wrap: wrap;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .cc-track {
-    font-size: 12px;
-    color: #667eea;
-    background: rgba(102, 126, 234, 0.1);
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-weight: 500;
+  font-size: 12px;
+  color: #667eea;
+  background: rgba(102, 126, 234, 0.1);
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-weight: 500;
 }
 
 .cc-language {
-    font-size: 12px;
-    color: #666;
-    background: white;
-    padding: 4px 10px;
-    border-radius: 20px;
+  font-size: 12px;
+  color: #666;
+  background: white;
+  padding: 4px 10px;
+  border-radius: 20px;
 }
 
 .cc-content {
-    padding: 20px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+  padding: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .cc-info-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-    background: #f8f9fa;
-    padding: 12px;
-    border-radius: 12px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  background: #f8f9fa;
+  padding: 12px;
+  border-radius: 12px;
 }
 
 .cc-info-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 4px;
 }
 
 .cc-info-label {
-    font-size: 11px;
-    color: #666;
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
+  font-size: 11px;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
 }
 
 .cc-info-value {
-    font-size: 14px;
-    font-weight: 600;
-    color: #333;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
 }
 
 .cc-credits {
-    color: #870e1d;
-    font-size: 16px;
+  color: #870e1d;
+  font-size: 16px;
 }
 
 .cc-status-row {
-    display: flex;
-    justify-content: flex-start;
+  display: flex;
+  justify-content: flex-start;
 }
 
 .cc-status-badge {
-    display: inline-block;
-    padding: 6px 16px;
-    border-radius: 30px;
-    color: white;
-    font-size: 13px;
-    font-weight: 500;
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 30px;
+  color: white;
+  font-size: 13px;
+  font-weight: 500;
 }
 
 .cc-section {
-    border-top: 1px solid #f0f0f0;
-    padding-top: 16px;
+  border-top: 1px solid #f0f0f0;
+  padding-top: 16px;
 }
 
 .cc-section-title {
-    font-size: 14px;
-    font-weight: 600;
-    color: #555;
-    margin-bottom: 8px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .cc-results,
 .cc-content-text {
-    margin: 0;
-    font-size: 14px;
-    line-height: 1.6;
-    color: #444;
-    background: #f8f9fa;
-    padding: 12px;
-    border-radius: 8px;
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #444;
+  background: #f8f9fa;
+  padding: 12px;
+  border-radius: 8px;
 }
