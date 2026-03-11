@@ -9,9 +9,11 @@ done
 echo "Running migrations..."
 alembic upgrade head
 
-if [ -f /app/parser/storage/vuzopedia_programs.csv ] || [ "$FORCE_LOAD_DATA" = "true" ]; then
+if [ -n "$(ls -A /app/storage/files)" ] || [ "$FORCE_LOAD_DATA" = "true" ]; then
     echo "Loading initial data..."
-    python scripts/load_data.py
+    python -u scripts/load_data.py 2>&1 | tee /tmp/load.log
+    cat /tmp/load.log
+    echo "Exit code: $?"
 else
     echo "No data files found, skipping data loading"
 fi
