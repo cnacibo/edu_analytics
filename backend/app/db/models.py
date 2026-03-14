@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, Numeric, String, Text
+from sqlalchemy import Column, Float, ForeignKey, Integer, Numeric, String, Text
 from sqlalchemy.orm import declarative_base, relationship
 
 Base = declarative_base()
@@ -16,6 +16,7 @@ class VuzopediaProgram(Base):
     code = Column(String(50))
     sphere = Column(Text)
     career_prospects = Column(Text)
+    budget_places = Column(Integer, default=0)
 
     # cities_universities = relationship("CityUniversityVuzopediaProgram", back_populates="program")
 
@@ -31,6 +32,7 @@ class HseProgram(Base):
     budget_places = Column(Integer, default=0)
     paid_places = Column(Integer, default=0)
     foreigners_places = Column(Integer, default=0)
+    url = Column(Text)
 
     courses = relationship("HseCourse", back_populates="program")
 
@@ -41,14 +43,15 @@ class HseCourse(Base):
     id = Column(Integer, primary_key=True, index=True)
     program_id = Column(Integer, ForeignKey("hse_program.id"), nullable=False)
     title = Column(Text, nullable=False)
-    year = Column(Integer)
+    year = Column(String(50))
     module = Column(String(50))
     status = Column(String(50))
     track = Column(Text)
     content = Column(Text)
     results = Column(Text)
     language = Column(String(50))
-    credits = Column(Integer)
+    credits = Column(Float)
+    url = Column(Text)
 
     program = relationship("HseProgram", back_populates="courses")
 

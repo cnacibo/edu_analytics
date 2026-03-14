@@ -14,6 +14,7 @@ RUN pip install ".[backend]"
 COPY backend/alembic ./alembic
 COPY backend/alembic.ini .
 COPY backend/app/ ./app/
+COPY backend/scripts/ ./scripts/
 COPY backend/entrypoint.sh .
 
 RUN chmod +x entrypoint.sh
