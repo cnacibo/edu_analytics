@@ -1,6 +1,5 @@
 import './styles/ProgramCard.css';
 import { useNavigate } from 'react-router-dom';
-import ProgramDetailsPage from '../../pages/ProgramDetailsPage';
 const ProgramCard = ({ program }) => {
   const navigate = useNavigate();
 
@@ -10,6 +9,7 @@ const ProgramCard = ({ program }) => {
 
     navigate(`${basePath}/${program.id}`, { state: { program } });
   };
+  const source = program.source || 'hse';
 
   return (
     <div className="program-card">
@@ -17,7 +17,12 @@ const ProgramCard = ({ program }) => {
         <div className="card-avatar">📚</div>
         <div className="card-title">
           <h3 className="program-name">{program.name}</h3>
-          <p className="program-study-type">{program.study_type || 'No information'}</p>
+          {source === 'hse' && (
+            <p className="program-header-info">{program.study_type || 'No information'}</p>
+          )}
+          {source === 'vuz' && (
+            <p className="program-header-info">{program.sphere || 'No information'}</p>
+          )}
         </div>
       </div>
       <div className="card-content">

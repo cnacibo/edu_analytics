@@ -20,7 +20,7 @@ const ProgramDetailsPage = () => {
   const [coursesError, setCoursesError] = useState(null);
   const [pagination, setPagination] = useState({
     page: 1,
-    size: 4,
+    size: 10,
     total: 0,
     pages: 0,
   });
@@ -126,7 +126,7 @@ const ProgramDetailsPage = () => {
         <div className="pdp-title-wrapper">
           <h1 className="pdp-title">{program.name}</h1>
           <div className="pdp-meta">
-            <span className="pdp-type">{program.study_type}</span>
+            {sourceHSE && <span className="pdp-type">{program.study_type}</span>}
             <span className="pdp-badge">{sourceHSE ? 'НИУ ВШЭ' : 'Vuzopedia'}</span>
           </div>
         </div>

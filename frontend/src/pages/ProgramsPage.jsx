@@ -17,7 +17,7 @@ const ProgramsPage = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [pagination, setPagination] = useState({
     page: 1,
-    size: 10,
+    size: 20,
     total: 0,
     pages: 0,
   });
