@@ -86,7 +86,10 @@ class BaseScraper(ABC):
                 print(f"[{self.name}] Парсинг вернул None")
                 return []
             print(f"[{self.name}] Парсинг завершен за {elapsed:.2f} секунд")
-            print(f"[{self.name}] Собрано элементов: " f"{len(result) if isinstance(result, list) else 'N/A'}")
+            print(
+                f"[{self.name}] Собрано элементов: "
+                f"{len(result) if isinstance(result, list) else 'N/A'}"
+            )
 
             return result
         except Exception as e:

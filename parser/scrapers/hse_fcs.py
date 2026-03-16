@@ -244,7 +244,8 @@ class HSEFCSGraper(BaseScraper):
                 if price_key.startswith("name:"):
                     cached_name = price_data.get("program_name", "").lower()
                     if url_slug and (
-                        url_slug.replace("-", " ") in cached_name or cached_name in url_slug.replace("-", " ")
+                        url_slug.replace("-", " ") in cached_name
+                        or cached_name in url_slug.replace("-", " ")
                     ):
                         price = price_data.get("price")
                         code = price_data.get("code")
@@ -330,11 +331,14 @@ class HSEFCSGraper(BaseScraper):
         if not soup:
             return {}
 
-        places_header = soup.find("div", class_=lambda c: c and "b-program-item_places" in c.split())
+        places_header = soup.find(
+            "div", class_=lambda c: c and "b-program-item_places" in c.split()
+        )
         if not places_header:
             places_header = soup.find("div", class_="features-list")
             if not places_header or (
-                "бюджетных мест" not in places_header.get_text() and "платных мест" not in places_header.get_text()
+                "бюджетных мест" not in places_header.get_text()
+                and "платных мест" not in places_header.get_text()
             ):
                 logger.debug("Не найден блок с информацией о местах")
                 return {}
@@ -363,7 +367,11 @@ class HSEFCSGraper(BaseScraper):
             number = int(match.group(1))
             text_lower = text.lower()
 
-            if "бюджетных мест" in text_lower and "иностранцев" not in text_lower and "стипендий" not in text_lower:
+            if (
+                "бюджетных мест" in text_lower
+                and "иностранцев" not in text_lower
+                and "стипендий" not in text_lower
+            ):
                 budget = number
             elif (
                 ("бюджетных мест" in text_lower and "иностранцев" in text_lower)

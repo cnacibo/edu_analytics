@@ -19,9 +19,9 @@ async def get_vuzopedia_programs(
         None, description="Максимальный проходной балл на платное"
     ),
     q: Optional[str] = Query(None, description="Поисковый запрос"),
-    study_type: Optional[str] = Query(
-        None, description="Вид обучения (бакалавриат/ специалитет и тд)"
-    ),
+    # study_type: Optional[str] = Query(
+    #     None, description="Вид обучения (бакалавриат/ специалитет и тд)"
+    # ),
     page: int = Query(1, description="Номер страницы"),
     size: int = Query(100, description="Размер страницы"),
 ):
@@ -32,7 +32,7 @@ async def get_vuzopedia_programs(
         max_cost=max_cost,
         max_budget_score=max_budget_score,
         max_paid_score=max_paid_score,
-        study_type=study_type,
+        study_type=None,
         q=q,
         page=page,
         size=size,

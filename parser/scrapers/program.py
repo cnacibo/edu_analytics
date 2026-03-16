@@ -177,7 +177,9 @@ class HSEProgramScraper(BaseScraper):
 
     def _extract_credits(self, soup):
         """Извлечение кредитов по дисцпилине"""
-        credit_block = soup.find("div", class_="b-program_small", string=re.compile(r"Кредиты", re.IGNORECASE))
+        credit_block = soup.find(
+            "div", class_="b-program_small", string=re.compile(r"Кредиты", re.IGNORECASE)
+        )
         if credit_block:
             parent = credit_block.find_parent("div", class_="b-program__header-info-block3")
             if parent:
