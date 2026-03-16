@@ -14,7 +14,9 @@ class VyzoPediaScraper(BaseScraper):
         self.master_base_url = "https://vuzopedia.ru/program/magistratura"
         self.program_counter = 1
 
-    def parse(self, program_type="bachelor", max_pages=None, max_programs=None, retry_on_timeout=True):
+    def parse(
+        self, program_type="bachelor", max_pages=None, max_programs=None, retry_on_timeout=True
+    ):
         """
         Парсит страницы с программами
 
@@ -51,7 +53,8 @@ class VyzoPediaScraper(BaseScraper):
                     break
                 if retry_count < max_retries:
                     logger.warning(
-                        f"Повторная попытка загрузки страницы {page_num} " f"({retry_count + 1}/{max_retries})"
+                        f"Повторная попытка загрузки страницы {page_num} "
+                        f"({retry_count + 1}/{max_retries})"
                     )
                     time.sleep(5)
                 retry_count += 1
@@ -66,7 +69,9 @@ class VyzoPediaScraper(BaseScraper):
                 break
 
             all_programs.extend(page_programs)
-            logger.info(f"Страница {page_num}: {len(page_programs)} программ. Всего: {len(all_programs)}")
+            logger.info(
+                f"Страница {page_num}: {len(page_programs)} программ. Всего: {len(all_programs)}"
+            )
 
             if max_programs and len(all_programs) >= max_programs:
                 all_programs = all_programs[:max_programs]

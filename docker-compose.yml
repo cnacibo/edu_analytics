@@ -20,6 +20,7 @@ services:
       - ./backend/alembic.ini:/app/alembic.ini
       - ./backend/alembic:/app/alembic
       - ./pyproject.toml:/app/pyproject.toml
+      - ./storage/files:/app/storage/files:ro
     networks:
       - edu-net
 
