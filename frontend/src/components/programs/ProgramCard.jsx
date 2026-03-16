@@ -1,15 +1,16 @@
 import './styles/ProgramCard.css';
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 const ProgramCard = ({ program }) => {
   const navigate = useNavigate();
-
-  const openDetailsPage = (program) => {
-    const source = program.source || 'hse';
-    const basePath = source === 'hse' ? '/programs/hse' : '/programs/vuz';
-
-    navigate(`${basePath}/${program.id}`, { state: { program } });
-  };
+  const location = useLocation();
+  const search = location.search || '';
   const source = program.source || 'hse';
+  const basePath = source === 'hse' ? '/programs/hse' : '/programs/vuz';
+
+  const openDetailsPage = () => {
+    navigate(`${basePath}/${program.id}${search}`, { state: { program } });
+  };
 
   return (
     <div className="program-card">
@@ -33,11 +34,11 @@ const ProgramCard = ({ program }) => {
         <div className="info-row">
           <span className="info-label">Стоимость:</span>
           <span className="info-value">
-            {program.cost ? `${program.cost} ₽` : 'No information'}
+            {program.cost ? `${program.cost.toLocaleString()} ₽/год` : 'No information'}
           </span>
         </div>
       </div>
-      <button className="card-actions" onClick={() => openDetailsPage(program)}>
+      <button className="card-actions" onClick={openDetailsPage}>
         <div className="view-details">View Details</div>
       </button>
     </div>

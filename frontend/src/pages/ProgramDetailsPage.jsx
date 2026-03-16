@@ -97,7 +97,10 @@ const ProgramDetailsPage = () => {
   if (loading) {
     return (
       <>
-        <button className="pdp-back-button" onClick={() => navigate('/programs')}>
+        <button
+          className="pdp-back-button"
+          onClick={() => navigate(`/programs${location.search || ''}`)}
+        >
           Назад к списку
         </button>
         <LoadingSpinner input="программы"></LoadingSpinner>
@@ -108,7 +111,10 @@ const ProgramDetailsPage = () => {
   if (error || !program) {
     return (
       <div className="program-container">
-        <button className="pdp-back-button" onClick={() => navigate('/programs')}>
+        <button
+          className="pdp-back-button"
+          onClick={() => navigate(`/programs${location.search || ''}`)}
+        >
           Назад к списку
         </button>
         <Error onRetry={fetchProgramById} message="Не удалось загрузить программу"></Error>
@@ -118,7 +124,10 @@ const ProgramDetailsPage = () => {
 
   return (
     <div className="program-details-page">
-      <button className="pdp-back-button" onClick={() => navigate('/programs')}>
+      <button
+        className="pdp-back-button"
+        onClick={() => navigate(`/programs${location.search || ''}`)}
+      >
         Назад к списку
       </button>
       <div className="pdp-header">
@@ -126,7 +135,7 @@ const ProgramDetailsPage = () => {
         <div className="pdp-title-wrapper">
           <h1 className="pdp-title">{program.name}</h1>
           <div className="pdp-meta">
-            {sourceHSE && <span className="pdp-type">{program.study_type}</span>}
+            {sourceHSE && <span className="pdp-badge">{program.study_type}</span>}
             <span className="pdp-badge">{sourceHSE ? 'НИУ ВШЭ' : 'Vuzopedia'}</span>
           </div>
         </div>
