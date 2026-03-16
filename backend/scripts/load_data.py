@@ -16,6 +16,14 @@ PROGRAM_TYPE_TO_NAME = {
 
 async def map_hse_program_row(row, i, session):
     row.pop("id", None)
+    if "cost" in row and row["cost"] and row["cost"].strip():
+        try:
+            original_cost_str = row["cost"].strip()
+            original_cost = float(original_cost_str)
+            new_cost = original_cost * 1000
+            row["cost"] = str(new_cost)
+        except (ValueError, TypeError) as e:
+            print(f"   Row {i}: error converting cost '{row['cost']}': {e}")
     return row
 
 
