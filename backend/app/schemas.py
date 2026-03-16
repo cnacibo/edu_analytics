@@ -15,7 +15,7 @@ class VuzopediaProgramRead(BaseModel):
     code: Optional[str] = None
     sphere: Optional[str] = None
     career_prospects: Optional[str] = None
-    budget_places: int = 0
+    budget_places: Optional[int] = None
 
 
 class HseProgramRead(BaseModel):
@@ -26,9 +26,9 @@ class HseProgramRead(BaseModel):
     code: Optional[str] = None
     cost: Optional[float] = None
     study_type: Optional[str] = None
-    budget_places: int = 0
-    paid_places: int = 0
-    foreigners_places: int = 0
+    budget_places: Optional[int] = None
+    paid_places: Optional[int] = None
+    foreigners_places: Optional[int] = None
     url: Optional[str] = None
 
 
@@ -41,7 +41,6 @@ class HseCourseRead(BaseModel):
     year: Optional[str] = None
     module: Optional[str] = None
     status: Optional[str] = None
-    track: Optional[str] = None
     content: Optional[str] = None
     results: Optional[str] = None
     language: Optional[str] = None
