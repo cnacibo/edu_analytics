@@ -34,7 +34,6 @@ async def map_course_row(row, i, session):
     else:
         print(f"⚠️  Warning: Unknown program_type '{prog_type}' at row {i}")
     row.pop("program_type", None)
-    row.pop("url", None)
     row.pop("id", None)
     return row
 
