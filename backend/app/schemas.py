@@ -28,6 +28,7 @@ class HseProgramRead(BaseModel):
     budget_places: int = 0
     paid_places: int = 0
     foreigners_places: int = 0
+    url: Optional[str] = None
 
 
 class HseCourseRead(BaseModel):
@@ -36,11 +37,12 @@ class HseCourseRead(BaseModel):
     id: int
     program_id: int
     title: str
-    year: Optional[int] = None
+    year: Optional[str] = None
     module: Optional[str] = None
     status: Optional[str] = None
     track: Optional[str] = None
     content: Optional[str] = None
     results: Optional[str] = None
     language: Optional[str] = None
-    credits: Optional[int] = None
+    credits: Optional[float] = None
+    url: Optional[str] = None
