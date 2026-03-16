@@ -65,18 +65,12 @@
   align-items: center;
 }
 
-.pdp-type {
+.pdp-badge {
   padding: 6px 16px;
   background: rgba(255, 255, 255, 0.2);
   border-radius: 30px;
   font-size: 14px;
   font-weight: 500;
-}
-.pdp-badge {
-  padding: 4px 12px;
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 20px;
-  font-size: 13px;
 }
 
 .pdp-info-grid {
