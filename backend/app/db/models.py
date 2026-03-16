@@ -16,7 +16,7 @@ class VuzopediaProgram(Base):
     code = Column(String(50))
     sphere = Column(Text)
     career_prospects = Column(Text)
-    budget_places = Column(Integer, default=0)
+    budget_places = Column(Integer)
 
     # cities_universities = relationship("CityUniversityVuzopediaProgram", back_populates="program")
 
@@ -29,9 +29,9 @@ class HseProgram(Base):
     code = Column(String(50))
     cost = Column(Numeric(10, 2))
     study_type = Column(String(50))
-    budget_places = Column(Integer, default=0)
-    paid_places = Column(Integer, default=0)
-    foreigners_places = Column(Integer, default=0)
+    budget_places = Column(Integer)
+    paid_places = Column(Integer)
+    foreigners_places = Column(Integer)
     url = Column(Text)
 
     courses = relationship("HseCourse", back_populates="program")
@@ -46,7 +46,6 @@ class HseCourse(Base):
     year = Column(String(50))
     module = Column(String(50))
     status = Column(String(50))
-    track = Column(Text)
     content = Column(Text)
     results = Column(Text)
     language = Column(String(50))
