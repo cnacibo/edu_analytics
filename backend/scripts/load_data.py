@@ -41,7 +41,6 @@ async def map_course_row(row, i, session):
 
 async def map_vuzopedia_row(row, i, session):
     row.pop("id", None)
-    row.pop("budget_places", None)
     return row
 
 
