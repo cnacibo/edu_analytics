@@ -23,6 +23,9 @@ const CourseCard = ({ course }) => {
           <div className="cc-meta">
             <span className="cc-track">{course.track || 'Нет информации о специализации'}</span>
             <span className="cc-language">{course.language || 'Русский'}</span>
+            <a href={course.url} target="_blank" rel="noopener noreferrer" className="cc-link">
+              🔗 Сайт курса
+            </a>
           </div>
         </div>
       </div>
