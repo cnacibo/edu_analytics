@@ -135,8 +135,20 @@ const ProgramDetailsPage = () => {
         <div className="pdp-title-wrapper">
           <h1 className="pdp-title">{program.name}</h1>
           <div className="pdp-meta">
-            {sourceHSE && <span className="pdp-badge">{program.study_type}</span>}
             <span className="pdp-badge">{sourceHSE ? 'НИУ ВШЭ' : 'Vuzopedia'}</span>
+            {sourceHSE && (
+              <>
+                <span className="pdp-badge">{program.study_type}</span>
+                <a
+                  href={program.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="pdp-badge pdp-link"
+                >
+                  🔗 Сайт программы
+                </a>
+              </>
+            )}
           </div>
         </div>
         {sourceHSE && <button className="pdp-graph-button">Построить граф</button>}

@@ -191,3 +191,13 @@
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
+
+.pdp-link {
+  text-decoration: none;
+  color: #0066cc;
+  transition: color 0.2s;
+}
+
+.pdp-link:hover {
+  color: #004499;
+}
