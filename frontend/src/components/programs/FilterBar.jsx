@@ -7,10 +7,10 @@ const FilterBar = ({ filters, onInputChange, onFilterChange, onSourceChange, sou
   const handleClear = () => {
     const clearedFilters = {
       q: '',
+      max_cost: '',
       max_budget_score: '',
-      min_score: '',
-      study_type: '',
       max_paid_score: '',
+      study_type: '',
     };
     onInputChange(clearedFilters);
     onFilterChange(clearedFilters);
