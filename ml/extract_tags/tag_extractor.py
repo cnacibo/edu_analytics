@@ -21,7 +21,7 @@ import re
 from typing import List, Set, Tuple
 
 import nltk
-import pymorphy2
+import pymorphy3
 import yake
 
 try:
@@ -39,7 +39,7 @@ class TagExtractor:
         self.yake_extractor = yake.KeywordExtractor(
             lan=language, n=max_ngram, dedupLim=0.5, top=num_keywords, windowsSize=1
         )
-        self.morph = pymorphy2.MorphAnalyzer()
+        self.morph = pymorphy3.MorphAnalyzer()
         self.stop_words = set(stopwords.words("russian"))
 
         self.garbage_phrases = {
