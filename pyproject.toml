@@ -25,7 +25,11 @@ ml = [
     "matplotlib>=3.7.0",
     "yake==0.4.8",
     "nltk",
-    "pymorphy2",
+    "pymorphy3",
+    "plotly>=5.14.0",
+    "sentence-transformers>=2.2.0",
+    "torch>=2.0.0",
+    "scipy>=1.10.0",
 ]
 parser = [
     "beautifulsoup4>=4.12.0",

@@ -5,10 +5,11 @@
 - Сохранение результат в файл tags.csv.
 """
 
-from pathlib import Path
+import os
 
 import pandas as pd
-from tag_extractor import TagExtractor
+
+from ml.extract_tags.tag_extractor import TagExtractor
 
 
 def process_csv_file(input_file: str, output_file: str = None):
@@ -50,9 +51,8 @@ def process_csv_file(input_file: str, output_file: str = None):
 
     for idx, row in df.iterrows():
         description = row[results_col]
-
+        # проверка на пропуск
         if pd.isna(description) or not isinstance(description, str) or not description.strip():
-            print("  Пустое описание, пропуск")
             all_tags.append([])
             continue
 
@@ -62,8 +62,8 @@ def process_csv_file(input_file: str, output_file: str = None):
     df["tags_str"] = df["tags"].apply(lambda x: ", ".join(x) if x else "")
 
     if output_file is None:
-        script_dir = Path(__file__).parent
-        output_file = script_dir / "tags.csv"
+        script_dir = os.path.dirname(__file__)
+        output_file = os.path.join(script_dir, "..", "tags.csv")
 
     if title_col is None:
         title_col = content_col
