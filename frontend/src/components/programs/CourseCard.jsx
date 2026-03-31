@@ -10,10 +10,6 @@ const CourseCard = ({ course }) => {
         return '#6c757d';
     }
   };
-  const getYearLabel = (year) => {
-    const years = ['1-й курс', '2-й курс', '3-й курс', '4-й курс'];
-    return years[year - 1] || `${year}-й курс`;
-  };
 
   return (
     <div className="cc-card">
@@ -23,6 +19,9 @@ const CourseCard = ({ course }) => {
           <div className="cc-meta">
             <span className="cc-track">{course.track || 'Нет информации о специализации'}</span>
             <span className="cc-language">{course.language || 'Русский'}</span>
+            <a href={course.url} target="_blank" rel="noopener noreferrer" className="cc-link">
+              🔗 Сайт курса
+            </a>
           </div>
         </div>
       </div>
@@ -35,7 +34,7 @@ const CourseCard = ({ course }) => {
           </div>
           <div className="cc-info-item">
             <span className="cc-info-label">Год</span>
-            <span className="cc-info-value">{getYearLabel(course.year)}</span>
+            <span className="cc-info-value">{course.year}</span>
           </div>
           <div className="cc-info-item">
             <span className="cc-info-label">Модуль</span>

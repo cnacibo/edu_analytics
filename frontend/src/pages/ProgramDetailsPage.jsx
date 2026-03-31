@@ -20,7 +20,7 @@ const ProgramDetailsPage = () => {
   const [coursesError, setCoursesError] = useState(null);
   const [pagination, setPagination] = useState({
     page: 1,
-    size: 4,
+    size: 10,
     total: 0,
     pages: 0,
   });
@@ -97,7 +97,10 @@ const ProgramDetailsPage = () => {
   if (loading) {
     return (
       <>
-        <button className="pdp-back-button" onClick={() => navigate('/programs')}>
+        <button
+          className="pdp-back-button"
+          onClick={() => navigate(`/programs${location.search || ''}`)}
+        >
           Назад к списку
         </button>
         <LoadingSpinner input="программы"></LoadingSpinner>
@@ -108,7 +111,10 @@ const ProgramDetailsPage = () => {
   if (error || !program) {
     return (
       <div className="program-container">
-        <button className="pdp-back-button" onClick={() => navigate('/programs')}>
+        <button
+          className="pdp-back-button"
+          onClick={() => navigate(`/programs${location.search || ''}`)}
+        >
           Назад к списку
         </button>
         <Error onRetry={fetchProgramById} message="Не удалось загрузить программу"></Error>
@@ -118,7 +124,10 @@ const ProgramDetailsPage = () => {
 
   return (
     <div className="program-details-page">
-      <button className="pdp-back-button" onClick={() => navigate('/programs')}>
+      <button
+        className="pdp-back-button"
+        onClick={() => navigate(`/programs${location.search || ''}`)}
+      >
         Назад к списку
       </button>
       <div className="pdp-header">
@@ -126,8 +135,20 @@ const ProgramDetailsPage = () => {
         <div className="pdp-title-wrapper">
           <h1 className="pdp-title">{program.name}</h1>
           <div className="pdp-meta">
-            <span className="pdp-type">{program.study_type}</span>
             <span className="pdp-badge">{sourceHSE ? 'НИУ ВШЭ' : 'Vuzopedia'}</span>
+            {sourceHSE && (
+              <>
+                <span className="pdp-badge">{program.study_type}</span>
+                <a
+                  href={program.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="pdp-badge pdp-link"
+                >
+                  🔗 Сайт программы
+                </a>
+              </>
+            )}
           </div>
         </div>
         {sourceHSE && <button className="pdp-graph-button">Построить граф</button>}

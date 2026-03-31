@@ -1,53 +1,26 @@
 import './styles/FilterBar.css';
-import { useEffect, useState } from 'react';
-const FilterBar = ({ onSearch, onSourceChange, onFilterChange, filters, source }) => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedFilters, setSelectedFilters] = useState(filters);
-  const [localSource, setLocalSource] = useState(source);
-
-  useEffect(() => {
-    setLocalSource(source);
-  }, [source]);
-
-  useEffect(() => {
-    if (filters) {
-      setSelectedFilters({
-        max_cost: filters.max_cost || '',
-        min_score: filters.min_score || '',
-      });
-    }
-  }, [filters]);
-
+const FilterBar = ({ filters, onInputChange, onFilterChange, onSourceChange, source }) => {
   const handleSearch = () => {
-    const allFilters = {
-      q: searchQuery,
-      max_cost: selectedFilters.max_cost ? Number(selectedFilters.max_cost) : '',
-      min_score: selectedFilters.min_score ? Number(selectedFilters.min_score) : '',
-    };
-    onFilterChange(allFilters);
-    onSearch(searchQuery);
+    onFilterChange();
   };
 
   const handleClear = () => {
-    setSearchQuery('');
-    setSelectedFilters({
-      max_cost: '',
-      min_score: '',
-    });
-    onFilterChange({
+    const clearedFilters = {
       q: '',
       max_cost: '',
-      min_score: '',
-    });
-    onSearch('');
+      max_budget_score: '',
+      max_paid_score: '',
+      study_type: '',
+    };
+    onInputChange(clearedFilters);
+    onFilterChange(clearedFilters);
   };
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
-    setSelectedFilters((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    onInputChange({
+      [name]: value === '' ? '' : value,
+    });
   };
 
   const handleKeyPress = (e) => {
@@ -56,28 +29,27 @@ const FilterBar = ({ onSearch, onSourceChange, onFilterChange, filters, source }
     }
   };
   const changeSource = () => {
-    const newValue = !localSource;
-    setLocalSource(newValue);
+    const newValue = !source;
     onSourceChange(newValue);
   };
 
   return (
     <div className="filter-bar">
-      <div className="search-section">
+      <div className="search-row">
         <div className="search-container">
           <div className="search-input-wrapper">
             <input
               type="text"
               className="search-input"
               placeholder="Search programs by name..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              value={filters.q || ''}
+              onChange={(e) => onInputChange({ q: e.target.value })}
               onKeyPress={handleKeyPress}
             />
-            {searchQuery && (
+            {filters.q && (
               <button
                 className="clear-search-btn"
-                onClick={() => setSearchQuery('')}
+                onClick={() => onInputChange({ q: '' })}
                 aria-label="Clear search"
               >
                 ✕
@@ -85,58 +57,86 @@ const FilterBar = ({ onSearch, onSourceChange, onFilterChange, filters, source }
             )}
           </div>
         </div>
-        <div className="filters">
-          <div className="filters-row">
-            <div className="filter-item">
-              <label htmlFor="max_cost">Макс. стоимость:</label>
-              <input
-                type="number"
-                id="max_cost"
-                name="max_cost"
-                className="filter-input"
-                placeholder="От 0 до 10 млн ₽"
-                value={selectedFilters.max_cost}
-                onChange={handleFilterChange}
-                min="0"
-                step="100000"
-                max="10000000"
-              />
-            </div>
-            {/*починить*/}
-            {!localSource && (
-              <div className="filter-item">
-                <label htmlFor="min_score">Мин. балл:</label>
-                <input
-                  type="number"
-                  id="min_score"
-                  name="min_score"
-                  className="filter-input"
-                  placeholder="От 0 до 500"
-                  value={selectedFilters.min_score}
-                  onChange={handleFilterChange}
-                  min="0"
-                  step="10"
-                  max="500"
-                />
-              </div>
-            )}
-          </div>
-          <div className="choose-source">
-            <button className="source-btn" onClick={changeSource}>
-              {localSource ? 'НИУ ВШЭ' : 'Vuzopedia'}
-            </button>
-          </div>
-        </div>
         <div className="search-buttons">
-          <button className="search-btn primary-btn" onClick={handleSearch}>
+          <button className="source-btn" onClick={changeSource}>
+            {source ? 'НИУ ВШЭ' : 'Vuzopedia'}
+          </button>
+          <button className="search-btn" onClick={handleSearch}>
             <span className="btn-icon">🔍</span>
             Search
           </button>
-          <button className="clear-btn secondary-btn" onClick={handleClear}>
+          <button className="clear-btn" onClick={handleClear}>
             <span className="btn-icon">🗑️</span>
             Clear
           </button>
         </div>
+      </div>
+      <div className="filters-row">
+        <div className="filter-item">
+          <label htmlFor="max_cost">Макс. стоимость:</label>
+          <input
+            type="number"
+            id="max_cost"
+            name="max_cost"
+            className="filter-input"
+            placeholder="От 0 до 10 млн ₽"
+            value={filters.max_cost || ''}
+            onChange={handleFilterChange}
+            min="0"
+            step="100000"
+            max="10000000"
+          />
+        </div>
+        {!source && (
+          <div className="filter-item">
+            <label htmlFor="max_budget_score">Макс. балл на бюджет:</label>
+            <input
+              type="number"
+              id="max_budget_score"
+              name="max_budget_score"
+              className="filter-input"
+              placeholder="От 0 до 500"
+              value={filters.max_budget_score || ''}
+              onChange={handleFilterChange}
+              min="0"
+              step="20"
+              max="500"
+            />
+          </div>
+        )}
+        {!source && (
+          <div className="filter-item">
+            <label htmlFor="max_paid_score">Макс. балл на платное:</label>
+            <input
+              type="number"
+              id="max_paid_score"
+              name="max_paid_score"
+              className="filter-input"
+              placeholder="От 0 до 500"
+              value={filters.max_paid_score || ''}
+              onChange={handleFilterChange}
+              min="0"
+              step="20"
+              max="500"
+            />
+          </div>
+        )}
+        {source && (
+          <div className="filter-item">
+            <label htmlFor="study_type">Вид обучения:</label>
+            <select
+              id="study_type"
+              name="study_type"
+              className="filter-select"
+              value={filters.study_type || ''}
+              onChange={handleFilterChange}
+            >
+              <option value="">Все</option>
+              <option value="бакалавр">Бакалавриат</option>
+              <option value="магистр">Магистратура</option>
+            </select>
+          </div>
+        )}
       </div>
     </div>
   );

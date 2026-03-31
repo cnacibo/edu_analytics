@@ -8,6 +8,7 @@ import LoadingSpinner from '../components/common/LoadingSpinner';
 import Error from '../components/common/Error';
 import { exportPrograms } from '../utils/export/exportPrograms';
 import FormatMenu from '../components/programs/FormatMenu';
+import { useSearchParams } from 'react-router-dom';
 
 const ProgramsPage = () => {
   const [programs, setPrograms] = useState([]);
@@ -15,18 +16,44 @@ const ProgramsPage = () => {
   const [error, setError] = useState(null);
   const [sourceHSE, setSourceHSE] = useState(true);
   const [showMenu, setShowMenu] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
   const [pagination, setPagination] = useState({
     page: 1,
-    size: 10,
+    size: 20,
     total: 0,
     pages: 0,
   });
 
   const [filters, setFilters] = useState({
-    max_cost: '',
-    min_score: '',
     q: '',
+    max_cost: '',
+    max_budget_score: '',
+    max_paid_score: '',
+    study_type: '',
   });
+
+  const [inputFilters, setInputFilters] = useState({
+    q: '',
+    max_cost: '',
+    max_budget_score: '',
+    max_paid_score: '',
+    study_type: '',
+  });
+
+  useEffect(() => {
+    const q = searchParams.get('q') ?? '';
+    const max_cost = searchParams.get('max_cost') ?? '';
+    const max_budget_score = searchParams.get('max_budget_score') ?? '';
+    const max_paid_score = searchParams.get('max_paid_score') ?? '';
+    const study_type = searchParams.get('study_type') ?? '';
+    const page = Number(searchParams.get('page') ?? 1);
+    const source = searchParams.get('source') ?? (sourceHSE ? 'hse' : 'vuz');
+
+    setInputFilters({ q, max_cost, max_budget_score, max_paid_score, study_type });
+    setFilters({ q, max_cost, max_budget_score, max_paid_score, study_type });
+    setPagination((prev) => ({ ...prev, page }));
+    setSourceHSE(source === 'hse');
+  }, [searchParams]);
 
   useEffect(() => {
     fetchPrograms();
@@ -50,8 +77,16 @@ const ProgramsPage = () => {
         params.max_cost = filters.max_cost;
       }
 
-      if (!sourceHSE && filters.min_score) {
-        params.min_score = filters.min_score;
+      if (!sourceHSE && filters.max_budget_score) {
+        params.max_budget_score = filters.max_budget_score;
+      }
+
+      if (!sourceHSE && filters.max_paid_score) {
+        params.max_paid_score = filters.max_paid_score;
+      }
+
+      if (sourceHSE && filters.study_type) {
+        params.study_type = filters.study_type;
       }
 
       Object.keys(params).forEach((key) => {
@@ -85,32 +120,50 @@ const ProgramsPage = () => {
     }
   };
 
-  const handleSearch = (searchQuery) => {
-    setFilters((prev) => ({
-      ...prev,
-      q: searchQuery,
-    }));
+  const handleFilterChange = (newFilters = inputFilters) => {
+    setFilters((prev) => ({ ...prev, ...newFilters }));
     setPagination((prev) => ({ ...prev, page: 1 }));
+    const next = {
+      ...Object.fromEntries(searchParams.entries()),
+      ...newFilters,
+      page: 1,
+      source: sourceHSE ? 'hse' : 'vuz',
+    };
+
+    Object.keys(next).forEach((k) => {
+      if (next[k] === '' || next[k] == null) delete next[k];
+    });
+    setSearchParams(next);
   };
 
-  const handleFilterChange = (newFilters) => {
-    setFilters((prev) => ({
-      ...prev,
-      ...newFilters,
-    }));
-    setPagination((prev) => ({
-      ...prev,
-      page: 1,
-    }));
+  const handleInputChange = (partial) => {
+    setInputFilters((prev) => ({ ...prev, ...partial }));
   };
 
   const handleSourceChange = (newSourceValue) => {
     setSourceHSE(newSourceValue);
     setPagination((prev) => ({ ...prev, page: 1 }));
+    const next = {
+      ...Object.fromEntries(searchParams.entries()),
+      source: newSourceValue ? 'hse' : 'vuz',
+      page: 1,
+    };
+    Object.keys(next).forEach((k) => {
+      if (next[k] === '' || next[k] == null) delete next[k];
+    });
+    setSearchParams(next);
   };
 
   const handlePageChange = (newPage) => {
     setPagination((prev) => ({ ...prev, page: newPage }));
+    const next = {
+      ...Object.fromEntries(searchParams.entries()),
+      page: newPage,
+    };
+    Object.keys(next).forEach((k) => {
+      if (next[k] === '' || next[k] == null) delete next[k];
+    });
+    setSearchParams(next);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -130,8 +183,16 @@ const ProgramsPage = () => {
           params.max_cost = filters.max_cost;
         }
 
-        if (!sourceHSE && filters.min_score) {
-          params.min_score = filters.min_score;
+        if (!sourceHSE && filters.max_budget_score) {
+          params.max_budget_score = filters.max_budget_score;
+        }
+
+        if (!sourceHSE && filters.max_paid_score) {
+          params.max_paid_score = filters.max_paid_score;
+        }
+
+        if (sourceHSE && filters.study_type) {
+          params.study_type = filters.study_type;
         }
 
         Object.keys(params).forEach((key) => {
@@ -173,10 +234,10 @@ const ProgramsPage = () => {
   return (
     <div className="programs-page">
       <FilterBar
-        onSearch={handleSearch}
-        onSourceChange={handleSourceChange}
+        filters={inputFilters}
+        onInputChange={handleInputChange}
         onFilterChange={handleFilterChange}
-        filters={filters}
+        onSourceChange={handleSourceChange}
         source={sourceHSE}
       ></FilterBar>
       <div className="save-button-container">
