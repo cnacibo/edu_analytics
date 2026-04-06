@@ -1,3 +1,4 @@
+from app.services import statistics_service
 from fastapi import APIRouter
 
 router = APIRouter()
@@ -5,19 +6,19 @@ router = APIRouter()
 
 @router.get("/metrics/vuz_programs_count")
 async def get_vuz_programs_count():
-    return 100
+    return await statistics_service.get_vuz_programs_count_service()
 
 
 @router.get("/metrics/vuz_programs_avg_cost")
 async def get_vuz_programs_avg_cost():
-    return 100000
+    return await statistics_service.get_vuz_programs_avg_cost_service()
 
 
 @router.get("/metrics/vuz_programs_min_score_paid")
 async def get_vuz_programs_min_score_paid():
-    return 10
+    return await statistics_service.get_vuz_programs_min_score_paid_service()
 
 
 @router.get("/metrics/vuz_programs_max_score_budget")
 async def get_vuz_programs_max_score_budget():
-    return 1000
+    return await statistics_service.get_vuz_programs_max_score_budget_service()
