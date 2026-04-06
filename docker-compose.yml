@@ -16,10 +16,7 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ./backend/app:/app/app
-      - ./backend/alembic.ini:/app/alembic.ini
-      - ./backend/alembic:/app/alembic
-      - ./pyproject.toml:/app/pyproject.toml
+      - ./backend/app:/app/app # удалить эту строку после завершения разработки
       - ./storage/files:/app/storage/files:ro
     networks:
       - edu-net

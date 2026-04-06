@@ -14,11 +14,11 @@ async def get_vuz_programs_avg_cost():
     return await statistics_service.get_vuz_programs_avg_cost_service()
 
 
-@router.get("/metrics/vuz_programs_min_score_paid")
+@router.get("/metrics/vuz_programs_min_paid_score")
 async def get_vuz_programs_min_score_paid():
-    return await statistics_service.get_vuz_programs_min_score_paid_service()
+    return await statistics_service.get_vuz_programs_min_paid_score_service()
 
 
-@router.get("/metrics/vuz_programs_max_score_budget")
+@router.get("/metrics/vuz_programs_max_budget_score")
 async def get_vuz_programs_max_score_budget():
-    return await statistics_service.get_vuz_programs_max_score_budget_service()
+    return await statistics_service.get_vuz_programs_max_budget_score_service()

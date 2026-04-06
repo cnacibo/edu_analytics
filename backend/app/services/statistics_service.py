@@ -1,14 +1,49 @@
+from ml.analysis.analysis_service import AnalysisService
+
+_analysis_service = None
+
+
+def get_analysis_service():
+    global _analysis_service
+    if _analysis_service is None:
+        _analysis_service = AnalysisService()
+    return _analysis_service
+
+
 async def get_vuz_programs_count_service():
-    return {"status": "success 1"}
+    try:
+        service = get_analysis_service()
+        programs_count = service.get_all_programs()
+        return {"status": "success", "data": {"total_programs": programs_count, "source": "vuz"}}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
 
 
 async def get_vuz_programs_avg_cost_service():
-    return {"status": "success 2"}
+    try:
+        service = get_analysis_service()
+        avg_cost = service.get_average_cost()
+        return {"status": "success", "data": {"average_cost": round(avg_cost, 0), "source": "vuz"}}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
 
 
-async def get_vuz_programs_min_score_paid_service():
-    return {"status": "success 3"}
+async def get_vuz_programs_min_paid_score_service():
+    try:
+        service = get_analysis_service()
+        min_paid_score = service.get_min_paid_score()
+        return {"status": "success", "data": {"min_paid_score": min_paid_score, "source": "vuz"}}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
 
 
-async def get_vuz_programs_max_score_budget_service():
-    return {"status": "success 4"}
+async def get_vuz_programs_max_budget_score_service():
+    try:
+        service = get_analysis_service()
+        max_budget_score = service.get_max_budget_score()
+        return {
+            "status": "success",
+            "data": {"max_budget_score": max_budget_score, "source": "vuz"},
+        }
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
