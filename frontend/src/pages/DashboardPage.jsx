@@ -4,14 +4,37 @@ import PieChartDashboard from '../components/dashboard/PieChartDashboard';
 import SortedProgramsList from '../components/dashboard/SortedProgramsList';
 import StatisticsCard from '../components/dashboard/StatisticsCard';
 import MapDashboard from '../components/dashboard/MapDashboard';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { vuzopediaApi } from '../api';
 
 const DashboardPage = () => {
-  const stats = {
-    totalPrograms: 8526,
-    avgCost: 550000,
-    minScore: 120,
-    maxScore: 390,
+  const [stats, setStats] = useState({
+    totalPrograms: 0,
+    avgCost: 0,
+    minScore: 0,
+    maxScore: 0,
+  });
+
+  useEffect(() => {
+    fetchStats();
+  }, []);
+
+  const fetchStats = async () => {
+    try {
+      const totalProgramsResponse = await vuzopediaApi.getTotalPrograms();
+      const avgCostResponse = await vuzopediaApi.getAvgCost();
+      const minScoreResponse = await vuzopediaApi.getMinScore();
+      const maxScoreResponse = await vuzopediaApi.getMaxScore();
+
+      setStats({
+        totalPrograms: totalProgramsResponse.data.total_programs,
+        avgCost: avgCostResponse.data.average_cost,
+        minScore: minScoreResponse.data.min_paid_score,
+        maxScore: maxScoreResponse.data.max_budget_score,
+      });
+    } catch (error) {
+      console.error('Error fetching stats:', error);
+    }
   };
 
   return (
