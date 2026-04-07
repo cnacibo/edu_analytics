@@ -1,12 +1,14 @@
+import logging
 import os
 import sys
 import time
 
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-
 from scrapers.hse_fcs import HSEFCSGraper
 
 from .base_runner import BaseRunner
+
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+logger = logging.getLogger(__name__)
 
 
 class HSERunner(BaseRunner):
@@ -25,7 +27,7 @@ class HSERunner(BaseRunner):
         elapsed_time = time.time() - start_time
 
         if not programs:
-            print("HSE: Нет данных")
+            logger.error("HSE: Нет данных")
             return
 
         output_dir = self.get_output_dir()
@@ -36,4 +38,4 @@ class HSERunner(BaseRunner):
         scraper.save_to_file(programs, json_file, format="json")
         scraper.save_to_file(programs, csv_file, format="csv")
 
-        print(f"HSE: {len(programs)} программ, {elapsed_time:.2f} сек")
+        logger.info(f"HSE: {len(programs)} программ, {elapsed_time:.2f} сек")

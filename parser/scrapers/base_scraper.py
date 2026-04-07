@@ -1,9 +1,14 @@
+import logging
 import time
 from abc import ABC, abstractmethod
 from datetime import datetime
+from pathlib import Path
 
 import requests
 from bs4 import BeautifulSoup
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+logger = logging.getLogger(__name__)
 
 
 class BaseScraper(ABC):
@@ -52,16 +57,16 @@ class BaseScraper(ABC):
             return BeautifulSoup(response.text, "lxml")
 
         except requests.exceptions.Timeout:
-            print(f"[{self.name}] Таймаут при загрузке {url}")
+            logger.error(f"[{self.name}] Таймаут при загрузке {url}")
             return None
         except requests.exceptions.HTTPError as e:
-            print(f"[{self.name}] HTTP ошибка {e.response.status_code} при загрузке {url}")
+            logger.error(f"[{self.name}] HTTP ошибка {e.response.status_code} при загрузке {url}")
             return None
         except requests.exceptions.RequestException as e:
-            print(f"[{self.name}] Ошибка сети: {e}")
+            logger.error(f"[{self.name}] Ошибка сети: {e}")
             return None
         except Exception as e:
-            print(f"[{self.name}] Неожиданная ошибка при загрузке {url}: {e}")
+            logger.error(f"[{self.name}] Неожиданная ошибка при загрузке {url}: {e}")
             return None
 
     @abstractmethod
@@ -75,7 +80,7 @@ class BaseScraper(ABC):
         """
         Запускает парсинг и возвращает данные.
         """
-        print(f"[{self.name}] Запуск парсинга...")
+        logger.info(f"[{self.name}] Запуск парсинга...")
         start_time = datetime.now()
 
         try:
@@ -83,36 +88,34 @@ class BaseScraper(ABC):
             elapsed = (datetime.now() - start_time).total_seconds()
 
             if result is None:
-                print(f"[{self.name}] Парсинг вернул None")
+                logger.error(f"[{self.name}] Парсинг вернул None")
                 return []
-            print(f"[{self.name}] Парсинг завершен за {elapsed:.2f} секунд")
-            print(
-                f"[{self.name}] Собрано элементов: "
-                f"{len(result) if isinstance(result, list) else 'N/A'}"
-            )
+            logger.info(f"[{self.name}] Парсинг завершен за {elapsed:.2f} секунд")
 
             return result
         except Exception as e:
-            print(f"[{self.name}] Ошибка при выполнении парсинга: {e}")
+            logger.error(f"[{self.name}] Ошибка при выполнении парсинга: {e}")
             raise
 
     def save_to_file(self, data, filename, format="json"):
         """
         Сохраняет данные в файл
 
-        Args:
+        Параметры:
             data: Данные для сохранения
             filename: Имя файла
             format: Формат ('json', 'csv')
         """
         from storage.file_manager import FileManager
 
+        path = Path(filename)
+        if not path.is_absolute() and "storage" not in str(path):
+            path = PROJECT_ROOT / "storage" / "files" / path
+
         if format == "json":
-            FileManager.save_json(data, filename)
+            FileManager.save_json(data, str(path))
         elif format == "csv":
-            FileManager.save_csv(data, filename)
-        elif format == "parquet":
-            FileManager.save_parquet(data, filename)
+            FileManager.save_csv(data, str(path))
         else:
             raise ValueError(f"Неподдерживаемый формат: {format}")
 

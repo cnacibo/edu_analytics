@@ -1,3 +1,4 @@
+import logging
 import os
 import sys
 import time
@@ -7,6 +8,8 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from scrapers.program import HSEProgramScraper
 
 from .base_runner import BaseRunner
+
+logger = logging.getLogger(__name__)
 
 
 class HSEProgramRunner(BaseRunner):
@@ -25,7 +28,7 @@ class HSEProgramRunner(BaseRunner):
         elapsed_time = time.time() - start_time
 
         if not programs:
-            print("HSE: Нет данных")
+            logging.error("HSE: Нет данных")
             return
         output_dir = self.get_output_dir()
 
@@ -35,4 +38,4 @@ class HSEProgramRunner(BaseRunner):
         scraper.save_to_file(programs, json_file, format="json")
         scraper.save_to_file(programs, csv_file, format="csv")
 
-        print(f"HSE: {len(programs)} программ, {elapsed_time:.2f} сек")
+        logger.info(f"HSE: {len(programs)} программ, {elapsed_time:.2f} сек")
