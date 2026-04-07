@@ -1,5 +1,5 @@
 import './styles/PieChartDashboard.css';
-import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, Label } from 'recharts';
+import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import React, { useEffect, useState } from 'react';
 import { vuzopediaApi } from '../../api';
 import LoadingSpinner from '../common/LoadingSpinner';
@@ -57,13 +57,6 @@ const PieChartDashboard = () => {
             {sphereData.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={COLORS[index]} />
             ))}
-            <Label
-              value={sphereData.reduce((sum, item) => sum + item.count, 0)}
-              position="center"
-              fill="#333"
-              fontSize={20}
-              fontWeight="bold"
-            />
           </Pie>
 
           <Tooltip

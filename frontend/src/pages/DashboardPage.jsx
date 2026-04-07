@@ -68,7 +68,7 @@ const DashboardPage = () => {
           <BarChartDashboard></BarChartDashboard>
         </div>
         <div className="graphics-card">
-          <h3 className="graphics-title">Распределение программ по сферам</h3>
+          <h3 className="graphics-title">Самые популярные сферы</h3>
           <PieChartDashboard></PieChartDashboard>
         </div>
 
