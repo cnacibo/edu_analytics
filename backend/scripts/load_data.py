@@ -1,7 +1,7 @@
 import csv
 from pathlib import Path
 
-from app.db.models import HseCourse, HseProgram, VuzopediaProgram
+from app.db.models import City, CityVuzopediaProgram, HseCourse, HseProgram, VuzopediaProgram
 from app.db.session import AsyncSessionLocal
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -58,6 +58,94 @@ async def map_vuzopedia_master_row(row, i, session):
     return row
 
 
+async def load_cities_and_relations_to_db(session: AsyncSession):
+    print("\nLoading cities and relations to DB...")
+    files = [
+        ("program_cities", "programs_cities_bachelor.csv"),
+        ("program_cities", "programs_cities_master.csv"),
+    ]
+    city_cache: dict[str, int] = {}
+    relation_cache: set[tuple[int, int]] = set()
+    created_cities = 0
+    created_relations = 0
+
+    table_name_city = City.__tablename__
+    table_name_city_vuz = CityVuzopediaProgram.__tablename__
+
+    await session.execute(
+        text(
+            f"TRUNCATE TABLE {table_name_city_vuz}, {table_name_city} " f"RESTART IDENTITY CASCADE"
+        )
+    )
+    print(f"   Truncated tables {table_name_city_vuz} and {table_name_city}")
+
+    for dir_name, file_name in files:
+        file_path = DATA_DIR / dir_name / file_name
+
+        if not file_path.exists():
+            print(f"File {file_path} not found, skipping...")
+            continue
+
+        print(f"\nProcessing {file_name}...")
+        with open(file_path, "r", encoding="utf-8-sig") as f:
+            reader = csv.DictReader(f)
+            rows = list(reader)
+            print(f"📊 Read {len(rows)} rows from CSV")
+            if not rows:
+                print("⚠️ No rows to insert")
+                continue
+
+            for i, row in enumerate(rows):
+                program_name = row.get("program_name", "").strip()
+                city_name = row.get("city", "").strip()
+                lat_str = row.get("latitude", "").strip()
+                lon_str = row.get("longitude", "").strip()
+
+                if not program_name or not city_name:
+                    continue
+
+                result_program = await session.execute(
+                    text("SELECT id FROM vuzopedia_program WHERE name = :name"),
+                    {"name": program_name},
+                )
+                prog_row = result_program.first()
+                if not prog_row:
+                    print(f"⚠️ Program not found: '{program_name}'")
+                    continue
+                program_id = prog_row.id
+
+                if city_name in city_cache:
+                    city_id = city_cache[city_name]
+                else:
+                    result_city = await session.execute(
+                        text("SELECT id FROM city WHERE name = :name"), {"name": city_name}
+                    )
+                    city_id = result_city.first()
+                    if not city_id:
+                        lat = float(lat_str) if lat_str else None
+                        lon = float(lon_str) if lon_str else None
+                        city = City(name=city_name, latitude=lat, longitude=lon)
+                        session.add(city)
+                        await session.flush()
+                        city_id = city.id
+                        created_cities += 1
+                    city_cache[city_name] = city_id
+
+                key = (city_id, program_id)
+                if key not in relation_cache:
+                    relation_cache.add(key)
+                    session.add(
+                        CityVuzopediaProgram(
+                            city_id=city_id,
+                            vuzopedia_program_id=program_id,
+                        )
+                    )
+                    created_relations += 1
+        print(f"Successfully loaded {file_name}")
+    await session.commit()
+    print(f"\n➕ Added {created_cities} cities and {created_relations} relations")
+
+
 async def load_csv_to_db(
     dir_name: str,
     file_name: str,
@@ -74,7 +162,7 @@ async def load_csv_to_db(
 
     table_name = model_class.__tablename__
 
-    print(f"Loading {file_name} to {table_name}...")
+    print(f"\nLoading {file_name} to {table_name}...")
 
     if truncate_first:
         await session.execute(text(f"TRUNCATE TABLE {table_name} RESTART IDENTITY CASCADE"))
@@ -176,6 +264,7 @@ async def load_all_data():
                 extra_mapping=map_vuzopedia_master_row,
                 truncate_first=False,
             )
+            await load_cities_and_relations_to_db(session)
             print("All data loaded successfully!")
 
         except Exception as e:
