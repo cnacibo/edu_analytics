@@ -47,3 +47,24 @@ async def get_vuz_programs_max_budget_score_service():
         }
     except Exception as e:
         return {"status": "error", "message": str(e)}
+
+
+async def get_top_programs_vuz_by_cost_service():
+    try:
+        service = get_analysis_service()
+        top_programs = service.get_top_ten_programs()  # ошибка в методе
+        return {"status": "success", "data": {"top_programs": top_programs, "source": "vuz"}}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
+
+async def get_avg_cost_top10_vuz_service():
+    try:
+        service = get_analysis_service()
+        avg_cost_top10 = service.get_avg_cost_top10()
+        return {
+            "status": "success",
+            "data": {"avg_cost_top10": round(avg_cost_top10, 0), "source": "vuz"},
+        }
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
