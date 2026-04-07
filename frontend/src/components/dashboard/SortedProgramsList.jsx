@@ -153,7 +153,6 @@ const SortedProgramsList = () => {
       </div>
 
       <div className="top-programs-footer">
-        <span className="top-total-count">Всего программ: 8,526</span>
         <span className="top-avg-cost">
           Средняя стоимость в топ-10:{' '}
           {Math.round(
