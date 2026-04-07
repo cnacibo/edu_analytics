@@ -206,3 +206,12 @@
   position: absolute;
   z-index: 10;
 }
+
+.top-programs-list::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 10px;
+}
+
+.top-programs-list::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
