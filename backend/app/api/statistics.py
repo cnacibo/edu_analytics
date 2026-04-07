@@ -29,6 +29,11 @@ async def get_vuz_programs_max_score_budget():
 #     return await statistics_service.get_top_programs_vuz_by_cost_service()
 
 
-@router.get("/cost/avg_cost_top10_vuz")
+@router.get("/cost/vuz_avg_cost_top10")
 async def get_avg_cost_top10_vuz():
     return await statistics_service.get_avg_cost_top10_vuz_service()
+
+
+@router.get("/spheres/vuz_spheres_distribution")
+async def get_vuz_spheres_distribution():
+    return await statistics_service.get_vuz_spheres_distribution_service()

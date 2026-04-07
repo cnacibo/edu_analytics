@@ -68,3 +68,15 @@ async def get_avg_cost_top10_vuz_service():
         }
     except Exception as e:
         return {"status": "error", "message": str(e)}
+
+
+async def get_vuz_spheres_distribution_service():
+    try:
+        service = get_analysis_service()
+        spheres_distribution = service.get_pie_chart()
+        return {
+            "status": "success",
+            "data": {"spheres_distribution": spheres_distribution, "source": "vuz"},
+        }
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
