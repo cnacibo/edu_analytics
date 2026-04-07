@@ -85,6 +85,22 @@ class ApiService {
     }
     return response.json();
   }
+
+  async get_sphere_data() {
+    const url = new URL(`${this.base_url}/stats/spheres/vuz_spheres_distribution`);
+    const response = await fetch(url, {
+      method: 'GET',
+      mode: 'cors',
+      credentials: 'omit',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.json();
+  }
 }
 
 const api = new ApiService();
@@ -102,4 +118,5 @@ export const vuzopediaApi = {
   getAvgCost: () => api.get_vuz_programs_stats('avg_cost'),
   getMinScore: () => api.get_vuz_programs_stats('min_score'),
   getMaxScore: () => api.get_vuz_programs_stats('max_score'),
+  getSphereData: () => api.get_sphere_data(),
 };
