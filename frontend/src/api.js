@@ -101,6 +101,22 @@ class ApiService {
     }
     return response.json();
   }
+
+  async get_avg_cost_top10() {
+    const url = new URL(`${this.base_url}/stats/cost/vuz_avg_cost_top10`);
+    const response = await fetch(url, {
+      method: 'GET',
+      mode: 'cors',
+      credentials: 'omit',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.json();
+  }
 }
 
 const api = new ApiService();
@@ -119,4 +135,5 @@ export const vuzopediaApi = {
   getMinScore: () => api.get_vuz_programs_stats('min_score'),
   getMaxScore: () => api.get_vuz_programs_stats('max_score'),
   getSphereData: () => api.get_sphere_data(),
+  getAvgCostTopTen: () => api.get_avg_cost_top10(),
 };
