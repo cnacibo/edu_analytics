@@ -46,13 +46,25 @@ async def map_course_row(row, i, session):
     return row
 
 
-async def map_vuzopedia_row(row, i, session):
+async def map_vuzopedia_bachelor_row(row, i, session):
     row.pop("id", None)
+    row["study_type"] = "Бакалавр"
+    return row
+
+
+async def map_vuzopedia_master_row(row, i, session):
+    row.pop("id", None)
+    row["study_type"] = "Магистр"
     return row
 
 
 async def load_csv_to_db(
-    dir_name: str, file_name: str, model_class, session: AsyncSession, extra_mapping=None
+    dir_name: str,
+    file_name: str,
+    model_class,
+    session: AsyncSession,
+    extra_mapping=None,
+    truncate_first: bool = True,
 ):
     file_path = DATA_DIR / dir_name / file_name
 
@@ -64,7 +76,9 @@ async def load_csv_to_db(
 
     print(f"Loading {file_name} to {table_name}...")
 
-    await session.execute(text(f"TRUNCATE TABLE {table_name} RESTART IDENTITY CASCADE"))
+    if truncate_first:
+        await session.execute(text(f"TRUNCATE TABLE {table_name} RESTART IDENTITY CASCADE"))
+        print(f"   Truncated table {table_name}")
 
     with open(file_path, "r", encoding="utf-8-sig") as f:
         reader = csv.DictReader(f)
@@ -148,11 +162,19 @@ async def load_all_data():
                 "hse_courses", "hse_course.csv", HseCourse, session, extra_mapping=map_course_row
             )
             await load_csv_to_db(
-                "vuzopedia",
-                "vuzopedia_program.csv",
+                "vuzopedia_programs",
+                "vuzopedia_bachelor_programs.csv",
                 VuzopediaProgram,
                 session,
-                extra_mapping=map_vuzopedia_row,
+                extra_mapping=map_vuzopedia_bachelor_row,
+            )
+            await load_csv_to_db(
+                "vuzopedia_programs",
+                "vuzopedia_master_programs.csv",
+                VuzopediaProgram,
+                session,
+                extra_mapping=map_vuzopedia_master_row,
+                truncate_first=False,
             )
             print("All data loaded successfully!")
 

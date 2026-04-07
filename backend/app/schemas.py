@@ -16,6 +16,7 @@ class VuzopediaProgramRead(BaseModel):
     sphere: Optional[str] = None
     career_prospects: Optional[str] = None
     budget_places: Optional[int] = None
+    paid_places: Optional[int] = None
 
 
 class HseProgramRead(BaseModel):
