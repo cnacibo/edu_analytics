@@ -1,5 +1,5 @@
 import uvicorn
-from app.api import hse_analysis, vuzopedia_analysis
+from app.api import hse_analysis, statistics, vuzopedia_analysis
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -8,8 +8,9 @@ app = FastAPI(
     description="Веб-приложение для анализа образовательных программ",
 )
 
-app.include_router(hse_analysis.router, prefix="/hse", tags=["HSE Analysis"])
-app.include_router(vuzopedia_analysis.router, prefix="/vuzopedia", tags=["Vuzopedia Analysis"])
+app.include_router(hse_analysis.router, prefix="/api/hse", tags=["HSE Analysis"])
+app.include_router(vuzopedia_analysis.router, prefix="/api/vuzopedia", tags=["Vuzopedia Analysis"])
+app.include_router(statistics.router, prefix="/api/stats", tags=["Programs Statistics"])
 
 app.add_middleware(
     CORSMiddleware,

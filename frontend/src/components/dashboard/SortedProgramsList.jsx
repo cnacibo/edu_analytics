@@ -1,6 +1,21 @@
 import './styles/SortedProgramsList.css';
+import { useEffect, useState } from 'react';
+import { vuzopediaApi } from '../../api';
 
 const SortedProgramsList = () => {
+  const [avgCostTopTen, setAvgCostTopTen] = useState(0);
+  useEffect(() => {
+    fetchAvgCostTopTen();
+  }, []);
+
+  const fetchAvgCostTopTen = async () => {
+    try {
+      const avgCostTopTenResponse = await vuzopediaApi.getAvgCostTopTen();
+      setAvgCostTopTen(avgCostTopTenResponse.data.avg_cost_top10);
+    } catch (error) {
+      console.error('Error fetching avg cost for top ten:', error);
+    }
+  };
   const topPrograms = [
     {
       id: 1,
@@ -153,13 +168,8 @@ const SortedProgramsList = () => {
       </div>
 
       <div className="top-programs-footer">
-        <span className="top-total-count">Всего программ: 8,526</span>
         <span className="top-avg-cost">
-          Средняя стоимость в топ-10:{' '}
-          {Math.round(
-            topPrograms.reduce((sum, p) => sum + p.cost, 0) / topPrograms.length
-          ).toLocaleString()}{' '}
-          ₽
+          Средняя стоимость в топ-10: {avgCostTopTen.toLocaleString()} ₽
         </span>
       </div>
     </div>

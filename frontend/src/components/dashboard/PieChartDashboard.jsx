@@ -1,26 +1,44 @@
 import './styles/PieChartDashboard.css';
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { vuzopediaApi } from '../../api';
+import LoadingSpinner from '../common/LoadingSpinner';
+import Error from '../common/Error';
 
 const PieChartDashboard = () => {
-  const stats = {
-    spheres: {
-      it: 5134,
-      economics: 1876,
-      humanities: 1643,
-      engineering: 1542,
-      science: 1331,
-    },
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [sphereData, setSphereData] = useState(null);
+
+  useEffect(() => {
+    fetchSphereData();
+  }, []);
+
+  const fetchSphereData = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const sphereDataResponse = await vuzopediaApi.getSphereData();
+      setSphereData(sphereDataResponse.data.spheres_distribution);
+    } catch (error) {
+      setError(error.message);
+      console.error('Error fetching stats:', error);
+    } finally {
+      setLoading(false);
+    }
   };
-  const sphereData = [
-    { name: 'IT', value: stats.spheres.it },
-    { name: 'Экономика', value: stats.spheres.economics },
-    { name: 'Гуманитарные', value: stats.spheres.humanities },
-    { name: 'Инженерия', value: stats.spheres.engineering },
-    { name: 'Естественные науки', value: stats.spheres.science },
-  ];
 
   const COLORS = ['#f39cbb', '#f16a8c', '#870e1d', '#dd2d4a', '#457b9d'];
+
+  if (loading) {
+    return <LoadingSpinner input="графика"></LoadingSpinner>;
+  }
+
+  if (error || sphereData.length === 0) {
+    return (
+      <Error onRetry={fetchSphereData} message="Не удалось загрузить данные для графика"></Error>
+    );
+  }
 
   return (
     <div className="pie-chart-container">
@@ -32,8 +50,8 @@ const PieChartDashboard = () => {
             cy="50%"
             innerRadius={55}
             outerRadius={95}
-            dataKey="value"
-            nameKey="name"
+            dataKey="count"
+            nameKey="sphere"
             label
           >
             {sphereData.map((entry, index) => (
@@ -63,6 +81,7 @@ const PieChartDashboard = () => {
             )}
           />
           <Legend
+            align="left"
             wrapperStyle={{
               fontSize: '13px',
               fontWeight: 600,
