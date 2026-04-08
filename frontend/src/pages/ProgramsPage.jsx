@@ -85,7 +85,7 @@ const ProgramsPage = () => {
         params.max_paid_score = filters.max_paid_score;
       }
 
-      if (sourceHSE && filters.study_type) {
+      if (filters.study_type) {
         params.study_type = filters.study_type;
       }
 
@@ -191,7 +191,7 @@ const ProgramsPage = () => {
           params.max_paid_score = filters.max_paid_score;
         }
 
-        if (sourceHSE && filters.study_type) {
+        if (filters.study_type) {
           params.study_type = filters.study_type;
         }
 
