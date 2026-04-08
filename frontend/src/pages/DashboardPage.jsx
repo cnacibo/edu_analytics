@@ -94,7 +94,8 @@ const DashboardPage = () => {
         </div>
         <div className="graphics-card">
           <h3 className="graphics-title">
-            Распределение программ по стране (средняя стоимость: 390 000 ₽)
+            Распределение программ по стране (средняя стоимость:{' '}
+            {stats.avgCost === 0 ? '-' : stats.avgCost.toLocaleString()} ₽)
           </h3>
           <MapDashboard></MapDashboard>
         </div>

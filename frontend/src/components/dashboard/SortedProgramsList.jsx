@@ -1,11 +1,18 @@
 import './styles/SortedProgramsList.css';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { vuzopediaApi } from '../../api';
+import LoadingSpinner from '../common/LoadingSpinner';
+import Error from '../common/Error';
 
 const SortedProgramsList = () => {
   const [avgCostTopTen, setAvgCostTopTen] = useState(0);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [topPrograms, setTopPrograms] = useState(null);
+
   useEffect(() => {
     fetchAvgCostTopTen();
+    fetchTopPrograms();
   }, []);
 
   const fetchAvgCostTopTen = async () => {
@@ -16,98 +23,20 @@ const SortedProgramsList = () => {
       console.error('Error fetching avg cost for top ten:', error);
     }
   };
-  const topPrograms = [
-    {
-      id: 1,
-      name: 'Программная инженерия',
-      sphere: 'IT',
-      level: 'Магистратура',
-      university: 'ВШЭ',
-      cost: 700000,
-      score: 285,
-    },
-    {
-      id: 2,
-      name: 'Искусственный интеллект',
-      sphere: 'IT',
-      level: 'Бакалавриат',
-      university: 'МФТИ',
-      cost: 680000,
-      score: 290,
-    },
-    {
-      id: 3,
-      name: 'Нефтегазовое дело',
-      sphere: 'Инженерия',
-      level: 'Специалитет',
-      university: 'РГУ нефти и газа',
-      cost: 650000,
-      score: 260,
-    },
-    {
-      id: 4,
-      name: 'Лечебное дело',
-      sphere: 'Медицина',
-      level: 'Специалитет',
-      university: 'Сеченовский университет',
-      cost: 630000,
-      score: 295,
-    },
-    {
-      id: 5,
-      name: 'Прикладная математика',
-      sphere: 'Наука',
-      level: 'Магистратура',
-      university: 'МГУ',
-      cost: 620000,
-      score: 275,
-    },
-    {
-      id: 6,
-      name: 'Международный бизнес',
-      sphere: 'Экономика',
-      level: 'Магистратура',
-      university: 'РАНХиГС',
-      cost: 600000,
-      score: 265,
-    },
-    {
-      id: 7,
-      name: 'Информационная безопасность',
-      sphere: 'IT',
-      level: 'Специалитет',
-      university: 'Бауманка',
-      cost: 590000,
-      score: 270,
-    },
-    {
-      id: 8,
-      name: 'Биотехнологии',
-      sphere: 'Наука',
-      level: 'Магистратура',
-      university: 'СПбГУ',
-      cost: 580000,
-      score: 255,
-    },
-    {
-      id: 9,
-      name: 'Архитектура',
-      sphere: 'Творческие',
-      level: 'Специалитет',
-      university: 'МАРХИ',
-      cost: 570000,
-      score: 245,
-    },
-    {
-      id: 10,
-      name: 'Политология',
-      sphere: 'Гуманитарные',
-      level: 'Бакалавриат',
-      university: 'МГИМО',
-      cost: 560000,
-      score: 260,
-    },
-  ];
+
+  const fetchTopPrograms = async () => {
+    setLoading(true);
+    setError(false);
+    try {
+      const avgCostTopTenResponse = await vuzopediaApi.getTopProgramsByCost();
+      setTopPrograms(avgCostTopTenResponse.data.top_programs);
+    } catch (error) {
+      console.error('Error fetching top ten programs:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const getLevelColor = (level) => {
     const colors = {
       Специалитет: {
@@ -131,6 +60,16 @@ const SortedProgramsList = () => {
     );
   };
 
+  if (loading) {
+    return <LoadingSpinner input="списка"></LoadingSpinner>;
+  }
+
+  if (error || topPrograms.length === 0) {
+    return (
+      <Error onRetry={fetchTopPrograms()} message="Не удалось загрузить данные для списка"></Error>
+    );
+  }
+
   return (
     <div className="top-programs-container">
       <div className="top-programs-list">
@@ -150,16 +89,20 @@ const SortedProgramsList = () => {
                   <span className="top-program-cost">{program.cost.toLocaleString()} ₽</span>
                 </div>
                 <div className="top-extra-details">
-                  <span className="top-program-score">Баллы: {program.score}</span>
-                  <span
-                    className="top-program-level"
-                    style={{
-                      backgroundColor: getLevelColor(program.level).background,
-                      color: getLevelColor(program.level).text,
-                    }}
-                  >
-                    {program.level}
-                  </span>
+                  {program.min_budget_score && (
+                    <span className="top-program-score">Баллы: {program.min_budget_score}</span>
+                  )}
+                  {program.level && (
+                    <span
+                      className="top-program-level"
+                      style={{
+                        backgroundColor: getLevelColor(program.level).background,
+                        color: getLevelColor(program.level).text,
+                      }}
+                    >
+                      {program.level}
+                    </span>
+                  )}
                 </div>
               </div>
             </div>
