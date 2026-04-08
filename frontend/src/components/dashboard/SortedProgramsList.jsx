@@ -39,16 +39,12 @@ const SortedProgramsList = () => {
 
   const getLevelColor = (level) => {
     const colors = {
-      Специалитет: {
-        background: '#f39dbc',
-        text: 'black',
-      },
       Бакалавриат: {
         background: '#cceff1',
         text: 'black',
       },
       Магистратура: {
-        background: '#880d1f',
+        background: '#f39dbc',
         text: 'white',
       },
     };
