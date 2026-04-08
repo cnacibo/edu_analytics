@@ -1,7 +1,7 @@
 from typing import Optional
 
 from app.db.session import get_db
-from app.schemas import HseCourseRead, HseProgramRead
+from app.schemas import HseCourseRead, HseCoursesRead, HseProgramRead, HseProgramsRead
 from app.services import hse_service
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -9,7 +9,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 router = APIRouter()
 
 
-@router.get("/")
+@router.get("/", response_model=HseProgramsRead)
 async def get_hse_programs(
     db: AsyncSession = Depends(get_db),
     max_cost: Optional[int] = Query(None, description="Максимальная стоимость"),
@@ -41,7 +41,7 @@ async def get_hse_program_by_id(
     return await hse_service.get_hse_program_by_id_service(program_id=program_id, db=db)
 
 
-@router.get("/{program_id}/courses")
+@router.get("/{program_id}/courses", response_model=HseCoursesRead)
 async def get_hse_program_courses(
     program_id: int,
     db: AsyncSession = Depends(get_db),
