@@ -1,3 +1,4 @@
+import math
 import os
 from typing import Any, Dict, List, Optional
 
@@ -9,7 +10,11 @@ class AnalysisService:
         if input_path is None:
             script_dir = os.path.dirname(__file__)
             self.input_path = os.path.normpath(
-                os.path.join(script_dir, "../..", "storage/files/vuzopedia/vuzopedia_program.csv")
+                os.path.join(
+                    script_dir,
+                    "../..",
+                    "storage/files/vuzopedia_programs/vuzopedia_bachelor_programs.csv",
+                )
             )
         else:
             self.input_path = input_path
@@ -58,7 +63,13 @@ class AnalysisService:
         Возвращает список словарей с топ-10 программами по стоимости.
         """
         top10_df = self._get_top_n_programs(10)
-        return top10_df.to_dict(orient="records")
+        records = top10_df.to_dict(orient="records")
+
+        for record in records:
+            for key, value in record.items():
+                if isinstance(value, float) and (math.isnan(value) or math.isinf(value)):
+                    record[key] = None
+        return records
 
     def get_avg_cost_top10(self) -> float:
         """
