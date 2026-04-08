@@ -1,6 +1,7 @@
 from typing import Optional
 
 from app.db.session import get_db
+from app.schemas import HseCourseRead, HseProgramRead
 from app.services import hse_service
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -31,7 +32,7 @@ async def get_hse_programs(
     )
 
 
-@router.get("/{program_id}")
+@router.get("/{program_id}", response_model=HseProgramRead)
 async def get_hse_program_by_id(
     program_id: int,
     db: AsyncSession = Depends(get_db),
@@ -56,7 +57,7 @@ async def get_hse_program_courses(
     )
 
 
-@router.get("/courses/{course_id}")
+@router.get("/courses/{course_id}", response_model=HseCourseRead)
 async def get_hse_course_by_id(
     course_id: int,
     db: AsyncSession = Depends(get_db),

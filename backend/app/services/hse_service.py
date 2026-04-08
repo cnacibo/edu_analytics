@@ -6,6 +6,7 @@ from app.db.crud import (
     get_hse_program_courses,
     get_hse_programs,
 )
+from app.schemas import HseCourseRead, HseProgramRead
 from app.services.shared import validate_query
 from fastapi import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -76,7 +77,7 @@ async def get_hse_program_by_id_service(program_id: int, db: AsyncSession):
     if not program:
         raise HTTPException(status_code=404, detail=f"Программа с ID {program_id} не найдена")
 
-    return program
+    return HseProgramRead.model_validate(program)
 
 
 async def get_hse_program_courses_service(
@@ -132,4 +133,4 @@ async def get_hse_course_by_id_service(
     if not course:
         raise HTTPException(status_code=404, detail=f"Дисциплина с ID {course_id} не найдена")
 
-    return course
+    return HseCourseRead.model_validate(course)
