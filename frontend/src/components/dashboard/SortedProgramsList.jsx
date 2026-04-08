@@ -70,7 +70,7 @@ const SortedProgramsList = () => {
     <div className="top-programs-container">
       <div className="top-programs-list">
         {topPrograms.map((program, index) => (
-          <div key={program.id} className="top-program-item">
+          <div key={index} className="top-program-item">
             <div className="top-program-rank">
               <span className={`top-rank-badge top-rank-${index + 1}`}>{index + 1}</span>
             </div>
