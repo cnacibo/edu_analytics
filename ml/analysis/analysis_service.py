@@ -91,12 +91,3 @@ class AnalysisService:
         grouped = data.groupby("sphere").size().reset_index(name="count")
         top10 = grouped.sort_values("count", ascending=False).head(5)
         return top10.to_dict(orient="records")
-
-
-def main():
-    service = AnalysisService()
-    print(service.get_top_ten_programs())
-
-
-if __name__ == "__main__":
-    main()
