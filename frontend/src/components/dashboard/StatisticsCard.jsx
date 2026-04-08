@@ -6,7 +6,7 @@ const StatisticsCard = ({ label, value, cardStyleName, suffix = '' }) => {
       <div className="stat-content">
         <span className="stat-label">{label}</span>
         <span className="stat-value">
-          {value.toLocaleString()}
+          {value}
           {suffix}
         </span>
       </div>

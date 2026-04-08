@@ -42,23 +42,23 @@ const DashboardPage = () => {
       <div className="stats-grid">
         <StatisticsCard
           label="Всего программ"
-          value={stats.totalPrograms}
+          value={stats.totalPrograms === 0 ? '-' : stats.totalPrograms.toLocaleString()}
           cardStyleName="total-programs"
         ></StatisticsCard>
         <StatisticsCard
           label="Средняя стоимость"
-          value={stats.avgCost}
+          value={stats.avgCost === 0 ? '-' : stats.avgCost.toLocaleString()}
           cardStyleName="avg-cost"
           suffix=" ₽"
         ></StatisticsCard>
         <StatisticsCard
           label="Минимальный балл на платку"
-          value={stats.minScore}
+          value={stats.minScore === 0 ? '-' : stats.minScore.toLocaleString()}
           cardStyleName="min-score"
         ></StatisticsCard>
         <StatisticsCard
           label="Максимальный балл на бюджет"
-          value={stats.maxScore}
+          value={stats.maxScore === 0 ? '-' : stats.maxScore.toLocaleString()}
           cardStyleName="max-score"
         ></StatisticsCard>
       </div>

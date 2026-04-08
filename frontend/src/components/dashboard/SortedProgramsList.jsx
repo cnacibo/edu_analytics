@@ -169,7 +169,7 @@ const SortedProgramsList = () => {
 
       <div className="top-programs-footer">
         <span className="top-avg-cost">
-          Средняя стоимость в топ-10: {avgCostTopTen.toLocaleString()} ₽
+          Средняя стоимость в топ-10: {avgCostTopTen === 0 ? '-' : avgCostTopTen.toLocaleString()} ₽
         </span>
       </div>
     </div>
