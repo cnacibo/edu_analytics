@@ -6,6 +6,7 @@ from app.db.crud import (
     get_hse_program_courses,
     get_hse_programs,
 )
+from app.schemas import HseCourseRead, HseCoursesRead, HseProgramRead, HseProgramsRead
 from app.services.shared import validate_query
 from fastapi import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -56,16 +57,17 @@ async def get_hse_programs_service(
     )
 
     programs = response["programs"]
+    programs_pydantic = [HseProgramRead.model_validate(p) for p in programs]
     total = response["total"]
 
-    return {
-        "programs": programs,
-        "page": page,
-        "size": size,
-        "count": len(programs),
-        "total": total,
-        "total_pages": (total + size - 1) // size if total else 0,
-    }
+    return HseProgramsRead(
+        programs=programs_pydantic,
+        page=page,
+        size=size,
+        count=len(programs_pydantic),
+        total=total,
+        total_pages=(total + size - 1) // size if total else 0,
+    )
 
 
 async def get_hse_program_by_id_service(program_id: int, db: AsyncSession):
@@ -76,7 +78,7 @@ async def get_hse_program_by_id_service(program_id: int, db: AsyncSession):
     if not program:
         raise HTTPException(status_code=404, detail=f"Программа с ID {program_id} не найдена")
 
-    return program
+    return HseProgramRead.model_validate(program)
 
 
 async def get_hse_program_courses_service(
@@ -106,16 +108,17 @@ async def get_hse_program_courses_service(
     )
 
     courses = response["courses"]
+    courses_pydantic = [HseCourseRead.model_validate(c) for c in courses]
     total = response["total"]
 
-    return {
-        "courses": courses,
-        "page": page,
-        "size": size,
-        "count": len(courses),
-        "total": total,
-        "total_pages": (total + size - 1) // size if total else 0,
-    }
+    return HseCoursesRead(
+        courses=courses_pydantic,
+        page=page,
+        size=size,
+        count=len(courses_pydantic),
+        total=total,
+        total_pages=(total + size - 1) // size if total else 0,
+    )
 
 
 async def get_hse_course_by_id_service(
@@ -132,4 +135,4 @@ async def get_hse_course_by_id_service(
     if not course:
         raise HTTPException(status_code=404, detail=f"Дисциплина с ID {course_id} не найдена")
 
-    return course
+    return HseCourseRead.model_validate(course)

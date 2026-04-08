@@ -1,6 +1,7 @@
 from typing import Optional
 
 from app.db.crud import get_vuzopedia_program_by_id, get_vuzopedia_programs
+from app.schemas import VuzopediaProgramRead, VuzopediaProgramsRead
 from app.services.shared import validate_query
 from fastapi import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -65,16 +66,17 @@ async def get_vuzopedia_programs_service(
     )
 
     programs = response["programs"]
+    programs_pydantic = [VuzopediaProgramRead.model_validate(p) for p in programs]
     total = response["total"]
 
-    return {
-        "programs": programs,
-        "page": page,
-        "size": size,
-        "count": len(programs),
-        "total": total,
-        "total_pages": (total + size - 1) // size if total else 0,
-    }
+    return VuzopediaProgramsRead(
+        programs=programs_pydantic,
+        page=page,
+        size=size,
+        count=len(programs_pydantic),
+        total=total,
+        total_pages=(total + size - 1) // size if total else 0,
+    )
 
 
 async def get_vuzopedia_program_by_id_service(
@@ -88,4 +90,4 @@ async def get_vuzopedia_program_by_id_service(
     if not program:
         raise HTTPException(status_code=404, detail=f"Программа с ID {program_id} не найдена")
 
-    return program
+    return VuzopediaProgramRead.model_validate(program)

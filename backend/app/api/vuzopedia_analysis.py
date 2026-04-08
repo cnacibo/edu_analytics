@@ -1,6 +1,7 @@
 from typing import Optional
 
 from app.db.session import get_db
+from app.schemas import VuzopediaProgramRead, VuzopediaProgramsRead
 from app.services import vuzopedia_service
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -8,7 +9,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 router = APIRouter()
 
 
-@router.get("/")
+@router.get("/", response_model=VuzopediaProgramsRead)
 async def get_vuzopedia_programs(
     db: AsyncSession = Depends(get_db),
     max_cost: Optional[int] = Query(None, description="Максимальная стоимость"),
@@ -39,7 +40,7 @@ async def get_vuzopedia_programs(
     )
 
 
-@router.get("/{program_id}")
+@router.get("/{program_id}", response_model=VuzopediaProgramRead)
 async def get_vuzopedia_program_by_id(
     program_id: int,
     db: AsyncSession = Depends(get_db),

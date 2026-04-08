@@ -17,8 +17,10 @@ class VuzopediaProgram(Base):
     sphere = Column(Text)
     career_prospects = Column(Text)
     budget_places = Column(Integer)
+    paid_places = Column(Integer)
+    url = Column(Text)
 
-    # cities_universities = relationship("CityUniversityVuzopediaProgram", back_populates="program")
+    cities = relationship("CityVuzopediaProgram", back_populates="program")
 
 
 class HseProgram(Base):
@@ -55,31 +57,22 @@ class HseCourse(Base):
     program = relationship("HseProgram", back_populates="courses")
 
 
-# class City(Base):
-#     __tablename__ = "city"
-#
-#     id = Column(Integer, primary_key=True, index=True)
-#     name = Column(String)
-#
-#     universities_programs = relationship("CityUniversityVuzopediaProgram", back_populates="city")
-#
-#
-# class University(Base):
-#     __tablename__ = "university"
-#
-#     id = Column(Integer, primary_key=True, index=True)
-#     name = Column(String)
-#
-#     cities_programs = relationship("CityUniversityVuzopediaProgram", back_populates="university")
-#
-#
-# class CityUniversityVuzopediaProgram(Base):
-#     __tablename__ = "city_university_vuzopedia_program"
-#
-#     city_id = Column(Integer, ForeignKey("city.id"), primary_key=True)
-#     university_id = Column(Integer, ForeignKey("university.id"), primary_key=True)
-#     vuzopedia_program_id = Column(Integer, ForeignKey("vuzopedia_program.id"), primary_key=True)
-#
-#     city = relationship("City", back_populates="universities_programs")
-#     university = relationship("University", back_populates="cities_programs")
-#     program = relationship("VuzopediaProgram", back_populates="cities_universities")
+class City(Base):
+    __tablename__ = "city"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String)
+    latitude = Column(Float)
+    longitude = Column(Float)
+
+    programs = relationship("CityVuzopediaProgram", back_populates="city")
+
+
+class CityVuzopediaProgram(Base):
+    __tablename__ = "city_vuzopedia_program"
+
+    city_id = Column(Integer, ForeignKey("city.id"), primary_key=True)
+    vuzopedia_program_id = Column(Integer, ForeignKey("vuzopedia_program.id"), primary_key=True)
+
+    city = relationship("City", back_populates="programs")
+    program = relationship("VuzopediaProgram", back_populates="cities")
