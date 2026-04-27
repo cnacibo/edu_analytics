@@ -6,6 +6,7 @@ import LoadingSpinner from '../components/common/LoadingSpinner';
 import Error from '../components/common/Error';
 import FilterPanel from '../components/graph/FilterPanel';
 import Instructions from '../components/graph/Instructions';
+import GraphAnalysis from '../components/graph/GraphAnalysis';
 
 const TYPE_COLORS = {
   direction: '#f39cbb',
@@ -32,6 +33,7 @@ const KnowledgeGraphPage = () => {
   });
   const [minDegree, setMinDegree] = useState(0);
   const [showInstructions, setShowInstructions] = useState(false);
+  const [showAnalysis, setShowAnalysis] = useState(false);
 
   useEffect(() => {
     fetchGraphData();
@@ -128,6 +130,30 @@ const KnowledgeGraphPage = () => {
     [edgeShapes]
   );
 
+  const graphStats = useMemo(() => {
+    if (!graph || !graph.nodes || !graph.nodes.length) return null;
+
+    const topNodes = [...graph.nodes]
+      .filter((n) => activeTypes[n.type] && n.type === 'subject') // учитываем фильтр типов
+      .sort((a, b) => (nodeDegreeMap[b.label] || 0) - (nodeDegreeMap[a.label] || 0))
+      .slice(0, 5);
+
+    const typeStats = {};
+    for (const type of ['direction', 'subject', 'tag']) {
+      const nodesOfType = graph.nodes.filter((n) => n.type === type);
+      if (nodesOfType.length === 0) continue;
+      const totalDegree = nodesOfType.reduce((sum, n) => sum + (nodeDegreeMap[n.label] || 0), 0);
+      typeStats[type] = (totalDegree / nodesOfType.length).toFixed(1);
+    }
+
+    const typeCounts = {};
+    for (const type of ['direction', 'subject', 'tag']) {
+      typeCounts[type] = graph.nodes.filter((n) => n.type === type && activeTypes[n.type]).length;
+    }
+
+    return { topNodes, typeStats, typeCounts };
+  }, [graph, nodeDegreeMap, activeTypes]);
+
   const handleTypeToggle = (type) => {
     setActiveTypes((prev) => ({ ...prev, [type]: !prev[type] }));
   };
@@ -150,13 +176,23 @@ const KnowledgeGraphPage = () => {
             onMinDegreeChange={setMinDegree}
             onShowInstructions={() => setShowInstructions(true)}
           ></FilterPanel>
-          <button
-            className="help-button"
-            onClick={() => setShowInstructions(true)}
-            title="Как работать с графом"
-          >
-            ?
-          </button>
+          <div className="filter-control-buttons">
+            <button
+              className="help-button text-button"
+              onClick={() => setShowAnalysis(true)}
+              title="Анализ графа"
+              style={{ marginLeft: 8 }}
+            >
+              Статистика графа
+            </button>
+            <button
+              className="help-button round-button"
+              onClick={() => setShowInstructions(true)}
+              title="Как работать с графом"
+            >
+              ?
+            </button>
+          </div>
         </div>
       </div>
       <div className="graph-area">
@@ -169,6 +205,14 @@ const KnowledgeGraphPage = () => {
         />
       </div>
       {showInstructions && <Instructions onToggleInstructions={setShowInstructions}></Instructions>}
+      {showAnalysis && (
+        <GraphAnalysis
+          graphStats={graphStats}
+          nodeDegreeMap={nodeDegreeMap}
+          TYPE_LABELS={TYPE_LABELS}
+          onClose={() => setShowAnalysis(false)}
+        />
+      )}
     </div>
   );
 };
