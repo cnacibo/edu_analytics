@@ -82,7 +82,7 @@ const DashboardPage = () => {
       </div>
       <div className="graphics-row">
         <div className="graphics-card">
-          <h3 className="graphics-title title-with-border">Распределение карьерных направлений</h3>
+          <h3 className="graphics-title title-with-border">Популярные карьерные направления</h3>
           <ProspectsCloud></ProspectsCloud>
         </div>
         <div className="graphics-card">
@@ -90,7 +90,7 @@ const DashboardPage = () => {
             Распределение программ по стране (средняя стоимость:{' '}
             {stats.avgCost === 0 ? '-' : stats.avgCost.toLocaleString()} ₽)
           </h3>
-          <MapDashboard></MapDashboard>
+          <MapDashboard avgCost={stats.avgCost}></MapDashboard>
         </div>
       </div>
     </div>

@@ -1,63 +1,42 @@
 import './styles/MapDashboard.css';
-import React, { useCallback, useMemo, useState, useRef } from 'react';
+import React, { useCallback, useMemo, useState, useRef, useEffect } from 'react';
 import { YMaps, Map, Placemark, ZoomControl } from '@pbe/react-yandex-maps';
 import LoadingSpinner from '../common/LoadingSpinner';
 import Error from '../common/Error';
+import { mapApi } from '../../api';
 
-const programs = [
-  {
-    id: 1,
-    name: 'МГУ им. Ломоносова',
-    city: 'Москва',
-    coords: [55.703, 37.528],
-    cost: 420000,
-  },
-  {
-    id: 2,
-    name: 'МГТУ им. Баумана',
-    city: 'Москва',
-    coords: [57.766, 37.683],
-    cost: 380000,
-  },
-  {
-    id: 3,
-    name: 'СПбГУ',
-    city: 'Санкт-Петербург',
-    coords: [59.941, 30.298],
-    cost: 400000,
-  },
-  {
-    id: 4,
-    name: 'НГУ',
-    city: 'Новосибирск',
-    coords: [54.843, 83.094],
-    cost: 320000,
-  },
-  {
-    id: 5,
-    name: 'КФУ',
-    city: 'Казань',
-    coords: [55.79, 49.121],
-    cost: 330000,
-  },
-  {
-    id: 6,
-    name: 'УрФУ',
-    city: 'Екатеринбург',
-    coords: [56.844, 60.652],
-    cost: 310000,
-  },
-];
-
-const AVG_COST = 390000;
-
-const MapDashboard = () => {
+const MapDashboard = ({ avgCost }) => {
   const [loading, setLoading] = useState(true);
   const [mapLoaded, setMapLoaded] = useState(false);
   const [error, setError] = useState(null);
+  const [programs, setPrograms] = useState([]);
   const mapRef = useRef(null);
 
   const YANDEX_MAPS_API_KEY = process.env.REACT_APP_YANDEX_MAPS_API_KEY;
+
+  useEffect(() => {
+    fetchMapData();
+  }, []);
+
+  const fetchMapData = async () => {
+    try {
+      const bachelorResponse = await mapApi.getMapBachelorData();
+      const masterResponse = await mapApi.getMapMasterData();
+
+      const bachelorData = bachelorResponse.data.bachelor_programs_map || [];
+      const masterData = masterResponse.data.master_programs_map || [];
+
+      const transform = (list) =>
+        list.map((item) => ({
+          ...item,
+          coords: [item.latitude, item.longitude],
+        }));
+
+      setPrograms([...transform(bachelorData), ...transform(masterData)]);
+    } catch (error) {
+      console.error('Error fetching programs for map:', error);
+    }
+  };
 
   const handleMapLoad = () => {
     setMapLoaded(true);
@@ -89,37 +68,66 @@ const MapDashboard = () => {
   );
 
   const getPlacemarkOptions = useCallback(
-    (cost) => ({
-      iconColor: cost > AVG_COST ? '#f16a8c' : '#457b9d',
-      preset: cost > AVG_COST ? 'islands#redDotIcon' : 'islands#blueDotIcon',
-      hideIconOnBalloonOpen: false,
-      balloonCloseButton: true,
-      modules: ['balloon', 'hint'],
-    }),
-    []
+    (program) => {
+      if (program.cost === null || program.cost === undefined) {
+        return {
+          iconColor: '#9e9e9e',
+          preset: 'islands#grayIcon',
+          hideIconOnBalloonOpen: false,
+          balloonCloseButton: true,
+        };
+      }
+
+      const isExpensive = program.cost > avgCost;
+      return {
+        iconColor: isExpensive ? '#f16a8c' : '#457b9d',
+        preset: isExpensive ? 'islands#redDotIcon' : 'islands#blueDotIcon',
+        hideIconOnBalloonOpen: false,
+        balloonCloseButton: true,
+      };
+    },
+    [avgCost]
   );
 
-  const createBalloonContent = useCallback((program) => {
-    const costClass = program.cost > AVG_COST ? 'expensive' : 'cheap';
-    return `
-    <div class="balloon-container">
-      <h3 class="balloon-title ${costClass}">${program.name}</h3>
-      <div class="balloon-details">
-        <p class="balloon-detail-item">
-          <span class="balloon-detail-label">📍 Город:</span>
-          <span class="balloon-detail-value">${program.city}</span>
-        </p>
-        <p class="balloon-detail-item">
-          <span class="balloon-detail-label">💰 Стоимость:</span>
-          <span class="balloon-detail-value">${program.cost.toLocaleString()} ₽/год</span>
-        </p>
+  const createBalloonContent = useCallback(
+    (program) => {
+      const costValue =
+        program.cost !== null && program.cost !== undefined
+          ? program.cost.toLocaleString()
+          : 'не указана';
+      const costClass =
+        program.cost !== null && program.cost !== undefined
+          ? program.cost > avgCost
+            ? 'expensive'
+            : 'cheap'
+          : 'unknown';
+      const costBadge =
+        program.cost !== null && program.cost !== undefined
+          ? program.cost > avgCost
+            ? 'Дороже среднего'
+            : 'Дешевле среднего'
+          : 'Стоимость неизвестна';
+      return `
+      <div class="balloon-container">
+        <h3 class="balloon-title ${costClass}">${program.name}</h3>
+        <div class="balloon-details">
+          <p class="balloon-detail-item">
+            <span class="balloon-detail-label">📍 Город:</span>
+            <span class="balloon-detail-value">${program.city}</span>
+          </p>
+          <p class="balloon-detail-item">
+            <span class="balloon-detail-label">💰 Стоимость:</span>
+            <span class="balloon-detail-value">${costValue} ₽/год</span>
+          </p>
+        </div>
+        <div class="balloon-badge ${costClass}">
+          ${costBadge}
+        </div>
       </div>
-      <div class="balloon-badge ${costClass}">
-        ${program.cost > AVG_COST ? 'Дороже среднего' : 'Дешевле среднего'}
-      </div>
-    </div>
-  `;
-  }, []);
+    `;
+    },
+    [avgCost]
+  );
 
   const handlePlacemarkClick = (program) => {
     if (mapRef.current) {
@@ -155,7 +163,7 @@ const MapDashboard = () => {
               <Placemark
                 key={program.id}
                 geometry={program.coords}
-                options={getPlacemarkOptions(program.cost)}
+                options={getPlacemarkOptions(program)}
                 properties={{
                   hintContent: program.name,
                 }}
