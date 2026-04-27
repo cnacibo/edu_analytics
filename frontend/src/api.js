@@ -191,6 +191,33 @@ class ApiService {
     }
     return response.json();
   }
+
+  async get_vuz_programs_map(study_type) {
+    let url;
+    switch (study_type) {
+      case 'bachelor':
+        url = new URL(`${this.base_url}/stats/map/vuz_programs_map_bachelor`);
+        break;
+      case 'master':
+        url = new URL(`${this.base_url}/stats/map/vuz_programs_map_master`);
+        break;
+      default:
+        url = new URL(`${this.base_url}/stats/map/vuz_programs_map_bachelor`);
+    }
+    const response = await fetch(url, {
+      method: 'GET',
+      mode: 'cors',
+      credentials: 'omit',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.json();
+  }
 }
 
 const api = new ApiService();
@@ -226,4 +253,9 @@ export const prospectsApi = {
 
 export const graphApi = {
   getGraphData: () => api.get_graph_data(),
+};
+
+export const mapApi = {
+  getMapBachelorData: () => api.get_vuz_programs_map('bachelor'),
+  getMapMasterData: () => api.get_vuz_programs_map('master'),
 };
