@@ -163,10 +163,16 @@ export const hseApi = {
 export const vuzopediaApi = {
   getPrograms: (params) => api.get_programs('vuzopedia', params),
   getProgram: (program_id) => api.get_program('vuzopedia', program_id),
+};
+
+export const statsApi = {
   getTotalPrograms: () => api.get_vuz_programs_stats('total_programs'),
   getAvgCost: () => api.get_vuz_programs_stats('avg_cost'),
   getMinScore: () => api.get_vuz_programs_stats('min_score'),
   getMaxScore: () => api.get_vuz_programs_stats('max_score'),
+};
+
+export const chartsApi = {
   getSphereData: () => api.get_sphere_data(),
   getTopProgramsByCost: () => api.get_top_programs_vuz_by_cost(),
   getAvgCostTopTen: () => api.get_avg_cost_top10(),

@@ -5,7 +5,7 @@ import SortedProgramsList from '../components/dashboard/SortedProgramsList';
 import StatisticsCard from '../components/dashboard/StatisticsCard';
 import MapDashboard from '../components/dashboard/MapDashboard';
 import React, { useEffect, useState } from 'react';
-import { vuzopediaApi } from '../api';
+import { statsApi } from '../api';
 
 const DashboardPage = () => {
   const [stats, setStats] = useState({
@@ -21,10 +21,10 @@ const DashboardPage = () => {
 
   const fetchStats = async () => {
     try {
-      const totalProgramsResponse = await vuzopediaApi.getTotalPrograms();
-      const avgCostResponse = await vuzopediaApi.getAvgCost();
-      const minScoreResponse = await vuzopediaApi.getMinScore();
-      const maxScoreResponse = await vuzopediaApi.getMaxScore();
+      const totalProgramsResponse = await statsApi.getTotalPrograms();
+      const avgCostResponse = await statsApi.getAvgCost();
+      const minScoreResponse = await statsApi.getMinScore();
+      const maxScoreResponse = await statsApi.getMaxScore();
 
       setStats({
         totalPrograms: totalProgramsResponse.data.total_programs,
