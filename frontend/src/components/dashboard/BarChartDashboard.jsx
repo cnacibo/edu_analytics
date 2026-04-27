@@ -9,69 +9,54 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
-import React from 'react';
-
-const stats = {
-  costByLevelAndSphere: {
-    it: {
-      bachelor: 600000,
-      master: 700000,
-      specialist: 650000,
-    },
-    economics: {
-      bachelor: 450000,
-      master: 550000,
-      specialist: 500000,
-    },
-    humanities: {
-      bachelor: 380000,
-      master: 450000,
-      specialist: 400000,
-    },
-    engineering: {
-      bachelor: 550000,
-      master: 650000,
-      specialist: 600000,
-    },
-    science: {
-      bachelor: 500000,
-      master: 600000,
-      specialist: 550000,
-    },
-    medicine: {
-      bachelor: 480000,
-      master: 580000,
-      specialist: 530000,
-    },
-    creative: {
-      bachelor: 350000,
-      master: 420000,
-      specialist: 380000,
-    },
-  },
-};
-const spheresOrder = [
-  { key: 'it', name: 'IT' },
-  { key: 'economics', name: 'Экономика' },
-  { key: 'humanities', name: 'Гуманитарные' },
-  { key: 'engineering', name: 'Инженерия' },
-  { key: 'science', name: 'Естественные науки' },
-  { key: 'medicine', name: 'Медицина' },
-  { key: 'creative', name: 'Творческие' },
-];
-
-const chartData = spheresOrder.map((sphere) => ({
-  name: sphere.name,
-  bachelor: stats.costByLevelAndSphere[sphere.key].bachelor,
-  master: stats.costByLevelAndSphere[sphere.key].master,
-  specialist: stats.costByLevelAndSphere[sphere.key].specialist,
-}));
+import React, { useEffect, useState } from 'react';
+import { vuzopediaApi } from '../../api';
+import LoadingSpinner from '../common/LoadingSpinner';
+import Error from '../common/Error';
 
 const BarChartDashboard = () => {
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [barChartData, setBarChartData] = useState([]);
+
+  useEffect(() => {
+    fetchBarChartData();
+  }, []);
+
+  const fetchBarChartData = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const sphereCostResponse = await vuzopediaApi.getSphereCostData();
+      const rawData = sphereCostResponse.data.spheres_level_cost_dist;
+      const charData = Object.entries(rawData).map(([sphere, costs]) => ({
+        name: sphere,
+        bachelor: costs.bachelor,
+        master: costs.master,
+      }));
+      setBarChartData(charData);
+    } catch (error) {
+      setError(error.message);
+      console.error('Error fetching stats:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return <LoadingSpinner input="графика"></LoadingSpinner>;
+  }
+
+  if (error || barChartData.length === 0) {
+    return (
+      <Error onRetry={fetchBarChartData} message="Не удалось загрузить данные для графика"></Error>
+    );
+  }
+
   return (
     <div className="bar-chart-container">
       <ResponsiveContainer width="100%" height={400}>
-        <BarChart data={chartData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+        <BarChart data={barChartData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
           <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={false} />
           <XAxis
             dataKey="name"
@@ -119,7 +104,6 @@ const BarChartDashboard = () => {
           />
           <Bar dataKey="bachelor" fill="#f39cbb" name="Бакалавриат" radius={[4, 4, 0, 0]} />
           <Bar dataKey="master" fill="#cbeef3" name="Магистратура" radius={[4, 4, 0, 0]} />
-          <Bar dataKey="specialist" fill="#870e1d" name="Специалитет" radius={[4, 4, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>
     </div>

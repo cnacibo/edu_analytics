@@ -134,7 +134,7 @@ class ApiService {
     return response.json();
   }
 
-  async get_sphere_cost_data(){
+  async get_sphere_cost_data() {
     const url = new URL(`${this.base_url}/stats/spheres/vuz_spheres_level_cost_dist`);
     const response = await fetch(url, {
       method: 'GET',
