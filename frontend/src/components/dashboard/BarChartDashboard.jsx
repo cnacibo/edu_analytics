@@ -94,7 +94,11 @@ const BarChartDashboard = () => {
   return (
     <div className="bar-chart-container">
       <ResponsiveContainer width="100%" height={400}>
-        <BarChart data={barChartData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+        <BarChart
+          data={barChartData}
+          margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+          barSize={25}
+        >
           <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={false} />
           <XAxis
             dataKey="name"
@@ -129,7 +133,7 @@ const BarChartDashboard = () => {
             }}
           />
           <Bar dataKey="bachelor" fill="#f39cbb" name="Бакалавриат" radius={[4, 4, 0, 0]} />
-          <Bar dataKey="master" fill="#cbeef3" name="Магистратура" radius={[4, 4, 0, 0]} />
+          <Bar dataKey="master" fill="#dd2d4a" name="Магистратура" radius={[4, 4, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>
 
@@ -139,7 +143,7 @@ const BarChartDashboard = () => {
           Бакалавриат
         </span>
         <span className="legend-item">
-          <span className="legend-color" style={{ backgroundColor: '#cbeef3' }} />
+          <span className="legend-color" style={{ backgroundColor: '#dd2d4a' }} />
           Магистратура
         </span>
       </div>
