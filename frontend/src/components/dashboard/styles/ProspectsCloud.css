@@ -2,3 +2,8 @@
   width: 100%;
   height: 500px;
 }
+
+.prospects-cloud-container svg g {
+  transform: scale(1.4);
+  transform-origin: center;
+}

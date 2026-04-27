@@ -19,8 +19,8 @@ const ProspectsCloud = () => {
     try {
       const cloudDataResponse = await prospectsApi.getProspectsCloudData();
       const rawData = cloudDataResponse.data.wordcloud_data;
-      const words = Object.entries(rawData).map(([text, value]) => ({ text, value }));
-      setWords(words);
+      const wordArray = Object.entries(rawData).map(([text, value]) => ({ text, value }));
+      setWords(wordArray);
     } catch (error) {
       setError(error.message);
       console.error('Error fetching stats:', error);
@@ -29,7 +29,29 @@ const ProspectsCloud = () => {
     }
   };
 
-  const fontSizeMapper = (word) => Math.log2(word.value) * 20;
+  const values = words.map((w) => w.value);
+  const min = Math.min(...values);
+  const max = Math.max(...values);
+
+  const fontSize = (word) => {
+    const normalized = (word.value - min) / (max - min);
+    return 12 + Math.pow(normalized, 1.5) * 60;
+  };
+
+  const colors = [
+    '#f39cbb',
+    '#f16a8c',
+    '#870e1d',
+    '#dd2d4a',
+    '#457b9d',
+    '#90DDF0',
+    '#80CFA9',
+    '#F6CA83',
+    '#4059AD',
+    '#89BBFE',
+    '#07393C',
+    '#2C666E',
+  ];
 
   if (loading) {
     return <LoadingSpinner input=""></LoadingSpinner>;
@@ -43,12 +65,14 @@ const ProspectsCloud = () => {
     <div className="prospects-cloud-container">
       <WordCloud
         data={words}
-        width={500}
-        height={300}
+        width={600}
+        height={450}
         font="Impact"
-        fontSizeMapper={fontSizeMapper}
-        rotate={() => 0}
-        padding={5}
+        fontWeight="bold"
+        fontSize={fontSize}
+        rotate={() => (Math.random() > 0.8 ? 90 : 0)}
+        padding={1}
+        fill={(word, index) => colors[index % colors.length]}
       />
     </div>
   );

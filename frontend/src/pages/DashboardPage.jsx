@@ -76,13 +76,13 @@ const DashboardPage = () => {
         </div>
 
         <div className="graphics-card">
-          <h3 className="graphics-title">Самые дорогие программы</h3>
+          <h3 className="graphics-title title-with-border">Самые дорогие программы</h3>
           <SortedProgramsList></SortedProgramsList>
         </div>
       </div>
       <div className="graphics-row">
         <div className="graphics-card">
-          <h3 className="graphics-title">Кем стать после</h3>
+          <h3 className="graphics-title title-with-border">Распределение карьерных направлений</h3>
           <ProspectsCloud></ProspectsCloud>
         </div>
         <div className="graphics-card">
