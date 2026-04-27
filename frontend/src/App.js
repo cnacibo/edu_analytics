@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import DashboardPage from './pages/DashboardPage';
 import ProgramsPage from './pages/ProgramsPage';
 import ProgramDetailsPage from './pages/ProgramDetailsPage';
+import KnowledgeGraphPage from './pages/KnowledgeGraphPage';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/programs/hse/:id" element={<ProgramDetailsPage />} />
           <Route path="/programs/vuz/:id" element={<ProgramDetailsPage />} />
           <Route path="/programs" element={<ProgramsPage />} />
+          <Route path="/graph" element={<KnowledgeGraphPage />} />
         </Routes>
       </MainLayout>
     </Router>

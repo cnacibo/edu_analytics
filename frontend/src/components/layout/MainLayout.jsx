@@ -10,6 +10,7 @@ const MainLayout = ({ children }) => {
   const pageTitles = {
     '/': 'Dashboard',
     '/programs': 'Programs',
+    '/graph': 'Knowledge Graph',
   };
   const [currentPage, setCurrentPage] = useState(pageTitles[location.pathname]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);

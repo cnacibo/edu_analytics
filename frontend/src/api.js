@@ -167,6 +167,30 @@ class ApiService {
     }
     return response.json();
   }
+
+  async get_graph_data(program_id = -1) {
+    let url;
+    switch (program_id) {
+      case -1:
+        url = new URL(`${this.base_url}/hse/graph`);
+        break;
+      default:
+        url = new URL(`${this.base_url}/hse/graph/${program_id}`);
+    }
+    const response = await fetch(url, {
+      method: 'GET',
+      mode: 'cors',
+      credentials: 'omit',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.json();
+  }
 }
 
 const api = new ApiService();
@@ -198,4 +222,8 @@ export const chartsApi = {
 
 export const prospectsApi = {
   getProspectsCloudData: () => api.get_career_prospects_data(),
+};
+
+export const graphApi = {
+  getGraphData: () => api.get_graph_data(),
 };

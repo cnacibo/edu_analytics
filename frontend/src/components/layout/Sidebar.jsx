@@ -7,6 +7,7 @@ const Sidebar = ({ onItemClick, onToggle }) => {
   const menuItems = [
     { text: 'Dashboard', icon: '📊', path: '/' },
     { text: 'Programs', icon: '📚', path: '/programs' },
+    { text: 'Knowledge Graph', icon: '🌐', path: '/graph' },
   ];
 
   const toggleSidebar = () => {
