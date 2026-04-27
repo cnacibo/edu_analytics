@@ -1,0 +1,89 @@
+.modal-content {
+  background: white;
+  border-radius: 20px;
+  max-width: 700px;
+  width: 90%;
+  padding: 28px 32px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+}
+
+.analysis-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.analysis-grid-stats {
+    display: flex;
+    gap: 20px;
+}
+
+.analysis-grid-stats > * {
+  flex: 1;
+}
+
+.analysis-card {
+  background: white;
+  border-radius: 16px;
+  padding: 16px;
+  border: 1px solid #eef0f4;
+  transition: all 0.2s ease;
+}
+
+.analysis-label {
+  display: block;
+  font-size: 12px;
+  color: #8a8f98;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.analysis-values {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.analysis-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+}
+
+.analysis-row strong {
+  font-size: 16px;
+  font-weight: 700;
+  color: #222;
+}
+
+.top-list {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.top-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 6px 10px;
+  margin-bottom: 6px;
+  font-size: 13px;
+  border: 1px solid #f0f0f0;
+  transition: all 0.2s ease;
+}
+
+.degree-badge {
+  background: #457b9d;
+  color: white;
+  border-radius: 12px;
+  padding: 2px 8px;
+  font-size: 12px;
+  font-weight: 600;
+  min-width: 28px;
+  text-align: center;
+}

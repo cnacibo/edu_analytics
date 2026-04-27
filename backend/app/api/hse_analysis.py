@@ -32,6 +32,12 @@ async def get_hse_programs(
     )
 
 
+@router.get("/graph")
+async def get_hse_program_graph():
+    """Получить граф знаний программ ПИ и ПМИ из НИУ ВШЭ"""
+    return await hse_service.get_hse_programs_graph_service()
+
+
 @router.get("/{program_id}", response_model=HseProgramRead)
 async def get_hse_program_by_id(
     program_id: int,
