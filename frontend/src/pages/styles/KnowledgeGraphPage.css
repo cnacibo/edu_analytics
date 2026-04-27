@@ -5,24 +5,47 @@
 }
 
 .filter-panel {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 16px 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  margin-bottom: 12px;
   display: flex;
-  gap: 20px;
-  padding: 10px;
-  background: #f9f9f9;
-  border-radius: 8px;
-  margin-bottom: 10px;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.filter-label {
-  margin-left: 12px;
+.filter-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.help-button {
+  background: #f0f0f0;
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #555;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
 }
-
-.degree-input {
-  margin-left: 8px;
-  width: 60px;
+.help-button:hover {
+  background: #e0e0e0;
 }
 
 .graph-area {
   flex: 1;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }

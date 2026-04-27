@@ -4,12 +4,20 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { graphApi } from '../api';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import Error from '../components/common/Error';
+import FilterPanel from '../components/graph/FilterPanel';
+import Instructions from '../components/graph/Instructions';
 
 const TYPE_COLORS = {
   direction: '#f39cbb',
   subject: '#457b9d',
   tag: '#cbeef3',
   default: '#999',
+};
+
+const TYPE_LABELS = {
+  direction: 'Программа (ПИ/ПМИ)',
+  subject: 'Предмет',
+  tag: 'Тег',
 };
 
 const KnowledgeGraphPage = () => {
@@ -23,6 +31,7 @@ const KnowledgeGraphPage = () => {
     tag: false,
   });
   const [minDegree, setMinDegree] = useState(0);
+  const [showInstructions, setShowInstructions] = useState(false);
 
   useEffect(() => {
     fetchGraphData();
@@ -98,6 +107,7 @@ const KnowledgeGraphPage = () => {
         x1: nodeMap[e.target].x,
         y1: nodeMap[e.target].y,
         line: { color: '#d0d0d0', width: 0.8 },
+        layer: 'below',
       }));
 
     return { nodesTrace, edgeShapes };
@@ -129,33 +139,26 @@ const KnowledgeGraphPage = () => {
   return (
     <div className="knowledge-graph-page">
       <div className="filter-panel">
-        <div>
-          <strong>Тип узла:</strong>
-          {['direction', 'subject', 'tag'].map((type) => (
-            <label key={type} className="filter-label">
-              <input
-                type="checkbox"
-                checked={activeTypes[type] || false}
-                onChange={() => handleTypeToggle(type)}
-              />
-              <span style={{ color: TYPE_COLORS[type] }}>● {type}</span>
-            </label>
-          ))}
-        </div>
-        <div>
-          <label>
-            <strong>Мин. связей:</strong>
-          </label>
-          <input
-            type="number"
-            min={0}
-            value={minDegree}
-            onChange={(e) => setMinDegree(parseInt(e.target.value, 10) || 0)}
-            style={{ marginLeft: 8, width: 60 }}
-          />
+        <div className="filter-controls">
+          <FilterPanel
+            activeTypes={activeTypes}
+            onTypeToggle={handleTypeToggle}
+            TYPE_COLORS={TYPE_COLORS}
+            TYPE_LABELS={TYPE_LABELS}
+            nodeDegreeMap={nodeDegreeMap}
+            minDegree={minDegree}
+            onMinDegreeChange={setMinDegree}
+            onShowInstructions={() => setShowInstructions(true)}
+          ></FilterPanel>
+          <button
+            className="help-button"
+            onClick={() => setShowInstructions(true)}
+            title="Как работать с графом"
+          >
+            ?
+          </button>
         </div>
       </div>
-
       <div className="graph-area">
         <Plot
           data={[nodesTrace]}
@@ -165,6 +168,7 @@ const KnowledgeGraphPage = () => {
           useResizeHandler={true}
         />
       </div>
+      {showInstructions && <Instructions onToggleInstructions={setShowInstructions}></Instructions>}
     </div>
   );
 };
