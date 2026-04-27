@@ -5,7 +5,8 @@ import SortedProgramsList from '../components/dashboard/SortedProgramsList';
 import StatisticsCard from '../components/dashboard/StatisticsCard';
 import MapDashboard from '../components/dashboard/MapDashboard';
 import React, { useEffect, useState } from 'react';
-import { vuzopediaApi } from '../api';
+import { statsApi } from '../api';
+import ProspectsCloud from '../components/dashboard/ProspectsCloud';
 
 const DashboardPage = () => {
   const [stats, setStats] = useState({
@@ -21,10 +22,10 @@ const DashboardPage = () => {
 
   const fetchStats = async () => {
     try {
-      const totalProgramsResponse = await vuzopediaApi.getTotalPrograms();
-      const avgCostResponse = await vuzopediaApi.getAvgCost();
-      const minScoreResponse = await vuzopediaApi.getMinScore();
-      const maxScoreResponse = await vuzopediaApi.getMaxScore();
+      const totalProgramsResponse = await statsApi.getTotalPrograms();
+      const avgCostResponse = await statsApi.getAvgCost();
+      const minScoreResponse = await statsApi.getMinScore();
+      const maxScoreResponse = await statsApi.getMaxScore();
 
       setStats({
         totalPrograms: totalProgramsResponse.data.total_programs,
@@ -75,24 +76,14 @@ const DashboardPage = () => {
         </div>
 
         <div className="graphics-card">
-          <h3 className="graphics-title">Самые дорогие программы</h3>
+          <h3 className="graphics-title title-with-border">Самые дорогие программы</h3>
           <SortedProgramsList></SortedProgramsList>
         </div>
       </div>
       <div className="graphics-row">
         <div className="graphics-card">
-          <h3 className="graphics-title">Кем стать после</h3>
-          <p
-            style={{
-              fontSize: '25px',
-              fontWeight: '500',
-              color: '#6c757d',
-              margin: '230px 0',
-              textAlign: 'center',
-            }}
-          >
-            В разработке...
-          </p>
+          <h3 className="graphics-title title-with-border">Распределение карьерных направлений</h3>
+          <ProspectsCloud></ProspectsCloud>
         </div>
         <div className="graphics-card">
           <h3 className="graphics-title">

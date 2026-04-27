@@ -42,3 +42,18 @@ async def get_vuz_spheres_distribution():
 @router.get("/spheres/vuz_spheres_level_cost_dist")
 async def get_vuz_spheres_level_cost_dist():
     return await statistics_service.get_vuz_spheres_level_cost_dist_service()
+
+
+@router.get("/map/vuz_programs_map_bachelor")
+async def get_vuz_programs_map_bachelor():
+    return await statistics_service.get_vuz_programs_map_bachelor_service()
+
+
+@router.get("/map/vuz_programs_map_master")
+async def get_vuz_programs_map_master():
+    return await statistics_service.get_vuz_programs_map_master_service()
+
+
+@router.get("/prospects/vuz_professions_wordcloud_data")
+async def get_vuz_professions_wordcloud_data():
+    return await statistics_service.get_vuz_professions_wordcloud_data_service()

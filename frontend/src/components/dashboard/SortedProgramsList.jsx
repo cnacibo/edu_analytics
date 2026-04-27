@@ -1,6 +1,6 @@
 import './styles/SortedProgramsList.css';
 import React, { useEffect, useState } from 'react';
-import { vuzopediaApi } from '../../api';
+import { chartsApi } from '../../api';
 import LoadingSpinner from '../common/LoadingSpinner';
 import Error from '../common/Error';
 
@@ -17,7 +17,7 @@ const SortedProgramsList = () => {
 
   const fetchAvgCostTopTen = async () => {
     try {
-      const avgCostTopTenResponse = await vuzopediaApi.getAvgCostTopTen();
+      const avgCostTopTenResponse = await chartsApi.getAvgCostTopTen();
       setAvgCostTopTen(avgCostTopTenResponse.data.avg_cost_top10);
     } catch (error) {
       console.error('Error fetching avg cost for top ten:', error);
@@ -28,7 +28,7 @@ const SortedProgramsList = () => {
     setLoading(true);
     setError(false);
     try {
-      const avgCostTopTenResponse = await vuzopediaApi.getTopProgramsByCost();
+      const avgCostTopTenResponse = await chartsApi.getTopProgramsByCost();
       setTopPrograms(avgCostTopTenResponse.data.top_programs);
     } catch (error) {
       console.error('Error fetching top ten programs:', error);

@@ -1,16 +1,7 @@
 import './styles/BarChartDashboard.css';
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import React, { useEffect, useState } from 'react';
-import { vuzopediaApi } from '../../api';
+import { chartsApi } from '../../api';
 import LoadingSpinner from '../common/LoadingSpinner';
 import Error from '../common/Error';
 
@@ -27,7 +18,7 @@ const BarChartDashboard = () => {
     setLoading(true);
     setError(null);
     try {
-      const sphereCostResponse = await vuzopediaApi.getSphereCostData();
+      const sphereCostResponse = await chartsApi.getSphereCostData();
       const rawData = sphereCostResponse.data.spheres_level_cost_dist;
       const charData = Object.entries(rawData).map(([sphere, costs]) => ({
         name: sphere,

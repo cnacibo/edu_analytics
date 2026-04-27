@@ -34,6 +34,12 @@
   color: #333;
 }
 
+.title-with-border {
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+}
+
 .chart-card {
   grid-column: span 2;
 }

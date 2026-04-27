@@ -1,7 +1,7 @@
 import './styles/PieChartDashboard.css';
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import React, { useEffect, useState } from 'react';
-import { vuzopediaApi } from '../../api';
+import { chartsApi } from '../../api';
 import LoadingSpinner from '../common/LoadingSpinner';
 import Error from '../common/Error';
 
@@ -18,7 +18,7 @@ const PieChartDashboard = () => {
     setLoading(true);
     setError(null);
     try {
-      const sphereDataResponse = await vuzopediaApi.getSphereData();
+      const sphereDataResponse = await chartsApi.getSphereData();
       setSphereData(sphereDataResponse.data.spheres_distribution);
     } catch (error) {
       setError(error.message);
