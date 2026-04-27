@@ -1,3 +1,4 @@
+import math
 import os
 from typing import Optional
 
@@ -65,14 +66,16 @@ class AnalysisMapService:
         bachelor_df["id"] = range(1, len(bachelor_df) + 1)
         avg_cost = bachelor_df["cost"].mean()
         bachelor_df["flag"] = bachelor_df["cost"] < avg_cost
-        return bachelor_df.to_dict(orient="records")
+        records = bachelor_df.to_dict(orient="records")
+        return self.nan_processing(records)
 
     def get_master_programs_map(self):
         master_df = self.master.copy()
         master_df["id"] = range(1, len(master_df) + 1)
         avg_cost = master_df["cost"].mean()
         master_df["flag"] = master_df["cost"] < avg_cost
-        return master_df.to_dict(orient="records")
+        records = master_df.to_dict(orient="records")
+        return self.nan_processing(records)
 
     def get_avg_cost_of_cities(self):
         required_cols = ["name", "city", "cost"]
@@ -85,7 +88,16 @@ class AnalysisMapService:
         grouped["avg_cost"] = round(grouped["avg_cost"], 2)
         grouped["program_count"] = data.groupby("city").size().values
         top10 = grouped.sort_values("program_count", ascending=False).head(30)
-        return top10.to_dict(orient="records")
+        records = top10.to_dict(orient="records")
+        return self.nan_processing(records)
+
+    @staticmethod
+    def nan_processing(records):
+        for item in records:
+            cost = item["cost"]
+            if cost is None or (isinstance(cost, float) and math.isnan(cost)):
+                item["cost"] = None
+        return records
 
     @property
     def bachelor(self):
@@ -94,3 +106,13 @@ class AnalysisMapService:
     @property
     def master(self):
         return self.df[self.df["level"] == "master"]
+
+
+def main():
+    service = AnalysisMapService()
+    a = service.get_bachelor_programs_map()
+    print(a[0:10])
+
+
+if __name__ == "__main__":
+    main()
