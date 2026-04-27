@@ -128,19 +128,21 @@ const BarChartDashboard = () => {
               fontSize: '12px',
             }}
           />
-          <Legend
-            wrapperStyle={{
-              fontSize: '13px',
-              fontWeight: 600,
-            }}
-            formatter={(value) => <span style={{ color: '#495057' }}>{value}</span>}
-            iconSize={12}
-            iconType="circle"
-          />
           <Bar dataKey="bachelor" fill="#f39cbb" name="Бакалавриат" radius={[4, 4, 0, 0]} />
           <Bar dataKey="master" fill="#cbeef3" name="Магистратура" radius={[4, 4, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>
+
+      <div className="custom-legend">
+        <span className="legend-item">
+          <span className="legend-color" style={{ backgroundColor: '#f39cbb' }} />
+          Бакалавриат
+        </span>
+        <span className="legend-item">
+          <span className="legend-color" style={{ backgroundColor: '#cbeef3' }} />
+          Магистратура
+        </span>
+      </div>
     </div>
   );
 };
