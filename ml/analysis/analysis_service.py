@@ -9,22 +9,32 @@ class AnalysisService:
     def __init__(self, input_path: Optional[str] = None):
         if input_path is None:
             script_dir = os.path.dirname(__file__)
-            self.input_path = os.path.normpath(
-                os.path.join(
-                    script_dir,
-                    "../..",
-                    "storage/files/vuzopedia_programs/vuzopedia_bachelor_programs.csv",
-                )
+            base_path = os.path.normpath(
+                os.path.join(script_dir, "../..", "storage/files/vuzopedia_programs")
             )
+            bachelor_path = os.path.join(base_path, "vuzopedia_bachelor_programs.csv")
+            master_path = os.path.join(base_path, "vuzopedia_master_programs.csv")
+
+            try:
+                df_bachelor = pd.read_csv(bachelor_path)
+                df_bachelor["level"] = "bachelor"
+
+                df_master = pd.read_csv(master_path)
+                df_master["level"] = "master"
+                self.df = pd.concat([df_bachelor, df_master], ignore_index=True)
+                self.input_path = None
+            except FileNotFoundError as e:
+                raise FileNotFoundError(f"Один из файлов не найден: {e}")
+            except Exception as e:
+                raise Exception(f"Ошибка чтения CSV: {e}")
         else:
             self.input_path = input_path
-
-        try:
-            self.df = pd.read_csv(self.input_path)
-        except FileNotFoundError:
-            raise FileNotFoundError(f"Файл не найден: {self.input_path}")
-        except Exception as e:
-            raise Exception(f"Ошибка чтения CSV: {e}")
+            try:
+                self.df = pd.read_csv(self.input_path)
+            except FileNotFoundError:
+                raise FileNotFoundError(f"Файл не найден: {self.input_path}")
+            except Exception as e:
+                raise Exception(f"Ошибка чтения CSV: {e}")
 
     def get_max_budget_score(self) -> int:
         if "min_budget_score" not in self.df.columns:
@@ -49,14 +59,17 @@ class AnalysisService:
         Возвращает DataFrame с топ-N программами по стоимости.
         Убирает строки, где стоимость неизвестна
         """
-        required_cols = ["name", "cost", "min_budget_score", "min_paid_score"]
+        required_cols = ["name", "cost", "min_budget_score", "min_paid_score", "level"]
         missing = [col for col in required_cols if col not in self.df.columns]
         if missing:
             raise ValueError(f"Отсутствуют столбцы: {missing}")
 
         data = self.df[required_cols].dropna(subset=["cost"])
-        data = data.sort_values("cost", ascending=False).head(n)
-        return data
+        data_sorted = data.sort_values("cost", ascending=False)
+        unique_programs = data_sorted.drop_duplicates(subset=["name"], keep="first")
+        top_n = unique_programs.head(n)
+
+        return top_n
 
     def get_top_ten_programs(self) -> List[Dict[str, Any]]:
         """
@@ -89,5 +102,33 @@ class AnalysisService:
             raise ValueError(f"Отсутствуют столбцы: {missing}")
         data = self.df[required_cols].dropna(subset=["sphere"])
         grouped = data.groupby("sphere").size().reset_index(name="count")
-        top10 = grouped.sort_values("count", ascending=False).head(5)
+        top10 = grouped.sort_values("count", ascending=False).head(6)
         return top10.to_dict(orient="records")
+
+    def get_bar_chart(self):
+        """
+        Возвращает список словарей:
+        {  it: {
+            bachelor: 600000,
+            master: 700000,
+            }
+        }
+        для каждой сферы средняя цена обучения по уровню программы
+        """
+        required_cols = ["sphere", "level", "cost"]
+        missing = [col for col in required_cols if col not in self.df.columns]
+        if missing:
+            raise ValueError(f"Отсутствуют столбцы: {missing}")
+        data = self.df.pivot_table(
+            index="sphere",
+            columns="level",
+            values="cost",
+            aggfunc="mean",
+            fill_value=0,
+        ).reset_index()
+        program_counts = self.df.groupby("sphere").size().reset_index(name="count")
+        data = data.merge(program_counts, on="sphere", how="left")
+        data = data.sort_values("count", ascending=False).head(7)
+        data = data.drop(columns=["count"])
+        data = data.to_dict(orient="records")
+        return {item.pop("sphere"): item for item in data}
