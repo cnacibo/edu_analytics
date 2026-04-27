@@ -64,7 +64,9 @@ const DashboardPage = () => {
       </div>
       <div className="graphics-row">
         <div className="graphics-card chart-card">
-          <h3 className="graphics-title">Средняя стоимость по сферам и уровням образования</h3>
+          <h3 className="graphics-title">
+            Средняя стоимость по сферам (популярные) и уровням образования
+          </h3>
           <BarChartDashboard></BarChartDashboard>
         </div>
         <div className="graphics-card">
