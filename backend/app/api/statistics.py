@@ -39,6 +39,6 @@ async def get_vuz_spheres_distribution():
     return await statistics_service.get_vuz_spheres_distribution_service()
 
 
-@router.get("/spheres/vuz_spheres_level_cost_corr")
-async def get_vuz_spheres_level_cost_corr():
-    return await statistics_service.get_vuz_spheres_distribution_service()
+@router.get("/spheres/vuz_spheres_level_cost_dist")
+async def get_vuz_spheres_level_cost_dist():
+    return await statistics_service.get_vuz_spheres_level_cost_dist_service()
