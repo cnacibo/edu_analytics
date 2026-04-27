@@ -43,6 +43,44 @@ const BarChartDashboard = () => {
     }
   };
 
+  const CustomXAxisTick = (props) => {
+    const { x, y, payload } = props;
+    const words = payload.value.split(' ');
+    const maxCharsPerLine = 15;
+
+    const lines = [];
+    let currentLine = words[0];
+    for (let i = 1; i < words.length; i++) {
+      if ((currentLine + ' ' + words[i]).length > maxCharsPerLine) {
+        lines.push(currentLine);
+        currentLine = words[i];
+      } else {
+        currentLine += ' ' + words[i];
+      }
+    }
+    lines.push(currentLine);
+
+    const offsetY = 5;
+
+    return (
+      <g transform={`translate(${x},${y + offsetY})`}>
+        {lines.map((line, index) => (
+          <text
+            key={index}
+            x={0}
+            y={index * 14}
+            textAnchor="end"
+            fill="#495057"
+            fontSize={12}
+            transform="rotate(-45)"
+          >
+            {line}
+          </text>
+        ))}
+      </g>
+    );
+  };
+
   if (loading) {
     return <LoadingSpinner input="графика"></LoadingSpinner>;
   }
@@ -60,13 +98,10 @@ const BarChartDashboard = () => {
           <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={false} />
           <XAxis
             dataKey="name"
-            tick={{ fill: '#495057', fontSize: 12 }}
-            axisLine={{ stroke: '#dee2e6' }}
-            tickLine={{ stroke: '#dee2e6' }}
+            tick={<CustomXAxisTick />}
             interval={0}
-            angle={-45}
-            textAnchor="end"
             height={100}
+            axisLine={false}
           />
           <YAxis
             tick={{ fill: '#6c757d', fontSize: 11 }}
