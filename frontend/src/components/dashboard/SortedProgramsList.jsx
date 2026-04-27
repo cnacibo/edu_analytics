@@ -37,21 +37,24 @@ const SortedProgramsList = () => {
     }
   };
 
-  const getLevelColor = (level) => {
+  const getLevelInfo = (level) => {
     const colors = {
-      Бакалавриат: {
+      bachelor: {
         background: '#cceff1',
         text: 'black',
+        name: 'Бакалавр',
       },
-      Магистратура: {
+      master: {
         background: '#f39dbc',
         text: 'white',
+        name: 'Магистр',
       },
     };
     return (
       colors[level] || {
         background: '#6c757d',
         text: 'white',
+        name: 'Нет информации',
       }
     );
   };
@@ -92,11 +95,11 @@ const SortedProgramsList = () => {
                     <span
                       className="top-program-level"
                       style={{
-                        backgroundColor: getLevelColor(program.level).background,
-                        color: getLevelColor(program.level).text,
+                        backgroundColor: getLevelInfo(program.level).background,
+                        color: getLevelInfo(program.level).text,
                       }}
                     >
-                      {program.level}
+                      {getLevelInfo(program.level).name}
                     </span>
                   )}
                 </div>
