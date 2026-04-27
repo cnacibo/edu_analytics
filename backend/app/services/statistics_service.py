@@ -1,6 +1,8 @@
+from ml.analysis.analysis_map_service import AnalysisMapService
 from ml.analysis.analysis_service import AnalysisService
 
 _analysis_service = None
+_map_service = None
 
 
 def get_analysis_service():
@@ -8,6 +10,13 @@ def get_analysis_service():
     if _analysis_service is None:
         _analysis_service = AnalysisService()
     return _analysis_service
+
+
+def get_map_service():
+    global _map_service
+    if _map_service is None:
+        _map_service = AnalysisMapService()
+    return _map_service
 
 
 async def get_vuz_programs_count_service():
@@ -89,6 +98,30 @@ async def get_vuz_spheres_level_cost_dist_service():
         return {
             "status": "success",
             "data": {"spheres_level_cost_dist": spheres_level_cost, "source": "vuz"},
+        }
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
+
+async def get_vuz_programs_map_bachelor_service():
+    try:
+        service = get_map_service()
+        bachelor_programs_map = service.get_bachelor_programs_map()
+        return {
+            "status": "success",
+            "data": {"bachelor_programs_map": bachelor_programs_map, "source": "vuz"},
+        }
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
+
+async def get_vuz_programs_map_master_service():
+    try:
+        service = get_map_service()
+        master_programs_map = service.get_master_programs_map()
+        return {
+            "status": "success",
+            "data": {"master_programs_map": master_programs_map, "source": "vuz"},
         }
     except Exception as e:
         return {"status": "error", "message": str(e)}
