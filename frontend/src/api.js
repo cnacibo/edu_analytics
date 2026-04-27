@@ -103,7 +103,7 @@ class ApiService {
   }
 
   async get_top_programs_vuz_by_cost() {
-    const url = new URL(`${this.base_url}/stats/cost/top_programs_vuz_by_cost`);
+    const url = new URL(`${this.base_url}/stats/cost/vuz_top_programs_by_cost`);
     const response = await fetch(url, {
       method: 'GET',
       mode: 'cors',
