@@ -150,6 +150,23 @@ class ApiService {
     }
     return response.json();
   }
+
+  async get_career_prospects_data() {
+    const url = new URL(`${this.base_url}/stats/prospects/vuz_professions_wordcloud_data`);
+    const response = await fetch(url, {
+      method: 'GET',
+      mode: 'cors',
+      credentials: 'omit',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.json();
+  }
 }
 
 const api = new ApiService();
@@ -177,4 +194,8 @@ export const chartsApi = {
   getTopProgramsByCost: () => api.get_top_programs_vuz_by_cost(),
   getAvgCostTopTen: () => api.get_avg_cost_top10(),
   getSphereCostData: () => api.get_sphere_cost_data(),
+};
+
+export const prospectsApi = {
+  getProspectsCloudData: () => api.get_career_prospects_data(),
 };
