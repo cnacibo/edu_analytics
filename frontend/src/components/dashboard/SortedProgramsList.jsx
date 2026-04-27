@@ -84,13 +84,8 @@ const SortedProgramsList = () => {
               </div>
 
               <div className="top-program-details">
-                <div className="top-main-details">
-                  <span className="top-program-cost">{program.cost.toLocaleString()} ₽</span>
-                </div>
                 <div className="top-extra-details">
-                  {program.min_budget_score && (
-                    <span className="top-program-score">Баллы: {program.min_budget_score}</span>
-                  )}
+                  <span className="top-program-cost">{program.cost.toLocaleString()} ₽</span>
                   {program.level && (
                     <span
                       className="top-program-level"
