@@ -8,7 +8,7 @@ const SortedProgramsList = () => {
   const [avgCostTopTen, setAvgCostTopTen] = useState(0);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [topPrograms, setTopPrograms] = useState(null);
+  const [topPrograms, setTopPrograms] = useState([]);
 
   useEffect(() => {
     fetchAvgCostTopTen();
@@ -62,7 +62,7 @@ const SortedProgramsList = () => {
 
   if (error || topPrograms.length === 0) {
     return (
-      <Error onRetry={fetchTopPrograms()} message="Не удалось загрузить данные для списка"></Error>
+      <Error onRetry={fetchTopPrograms} message="Не удалось загрузить данные для списка"></Error>
     );
   }
 
