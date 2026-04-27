@@ -16,6 +16,13 @@ const KnowledgeGraphPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const [activeTypes, setActiveTypes] = useState({
+    direction: true,
+    subject: true,
+    tag: false,
+  });
+  const [minDegree, setMinDegree] = useState(0);
+
   useEffect(() => {
     fetchGraphData();
   }, []);
@@ -23,25 +30,43 @@ const KnowledgeGraphPage = () => {
   const fetchGraphData = async () => {
     setLoading(true);
     setError(null);
-    setGraph([]);
     try {
       const response = await graphApi.getGraphData();
-
       setGraph(response);
-    } catch (error) {
-      console.error('Error fetching graph:', error);
+    } catch (err) {
+      console.error('Error fetching graph:', err);
+      setError(err.message || 'Ошибка загрузки');
     } finally {
       setLoading(false);
     }
   };
 
+  const nodeDegreeMap = useMemo(() => {
+    if (!graph || !graph.nodes || !graph.edges) return {};
+    const map = {};
+    graph.nodes.forEach((n) => (map[n.label] = 0));
+    graph.edges.forEach((e) => {
+      if (map[e.source] !== undefined) map[e.source] += 1;
+      if (map[e.target] !== undefined) map[e.target] += 1;
+    });
+    return map;
+  }, [graph]);
+
   const { nodesTrace, edgeShapes } = useMemo(() => {
     if (!graph || !graph.nodes || !graph.nodes.length) return { nodesTrace: null, edgeShapes: [] };
 
+    const filteredNodes = graph.nodes.filter((n) => {
+      const typeOk = activeTypes[n.type] === true;
+      const degreeOk = (nodeDegreeMap[n.label] || 0) >= minDegree;
+      return typeOk && degreeOk;
+    });
+
+    const visibleLabels = new Set(filteredNodes.map((n) => n.label));
+
     const nodesTrace = {
-      x: graph.nodes.map((n) => n.x),
-      y: graph.nodes.map((n) => n.y),
-      text: graph.nodes.map((n) => n.label),
+      x: filteredNodes.map((n) => n.x),
+      y: filteredNodes.map((n) => n.y),
+      text: filteredNodes.map((n) => n.label),
       type: 'scatter',
       mode: 'markers+text',
       textposition: 'top center',
@@ -49,7 +74,7 @@ const KnowledgeGraphPage = () => {
       textfont: { size: 10, color: '#333' },
       marker: {
         size: 14,
-        color: graph.nodes.map((n) => TYPE_COLORS[n.type] || TYPE_COLORS.default),
+        color: filteredNodes.map((n) => TYPE_COLORS[n.type] || TYPE_COLORS.default),
         line: { width: 1, color: '#fff' },
       },
       name: '',
@@ -57,13 +82,13 @@ const KnowledgeGraphPage = () => {
     };
 
     const nodeMap = {};
-    graph.nodes.forEach((n) => {
+    filteredNodes.forEach((n) => {
       nodeMap[n.label] = { x: n.x, y: n.y };
     });
 
     const edgeShapes = (graph.edges || [])
       .filter((e) => nodeMap[e.source] && nodeMap[e.target])
-      .map((e, idx) => ({
+      .map((e) => ({
         type: 'line',
         xref: 'x',
         yref: 'y',
@@ -71,17 +96,14 @@ const KnowledgeGraphPage = () => {
         y0: nodeMap[e.source].y,
         x1: nodeMap[e.target].x,
         y1: nodeMap[e.target].y,
-        line: {
-          color: '#d0d0d0',
-          width: 0.8,
-        },
+        line: { color: '#d0d0d0', width: 0.8 },
       }));
 
     return { nodesTrace, edgeShapes };
-  }, [graph]);
+  }, [graph, activeTypes, minDegree, nodeDegreeMap]);
 
-  const plotLayout = useMemo(() => {
-    return {
+  const plotLayout = useMemo(
+    () => ({
       title: 'Граф знаний',
       showlegend: false,
       hovermode: 'closest',
@@ -91,26 +113,66 @@ const KnowledgeGraphPage = () => {
       paper_bgcolor: 'white',
       plot_bgcolor: 'white',
       shapes: edgeShapes,
-    };
-  }, [edgeShapes]);
+    }),
+    [edgeShapes]
+  );
 
-  if (loading) {
-    return <LoadingSpinner input="графа"></LoadingSpinner>;
-  }
+  const handleTypeToggle = (type) => {
+    setActiveTypes((prev) => ({ ...prev, [type]: !prev[type] }));
+  };
 
-  if (error || graph.length === 0) {
-    return <Error onRetry={fetchGraphData} message="Не удалось загрузить данные графа"></Error>;
-  }
+  if (loading) return <LoadingSpinner input="графа" />;
+  if (error || !graph || !graph.nodes || graph.nodes.length === 0)
+    return <Error onRetry={fetchGraphData} message="Не удалось загрузить данные графа" />;
 
   return (
-    <div className="knowledge-graph-container" style={{ height: '80vh' }}>
-      <Plot
-        data={[nodesTrace]}
-        layout={plotLayout}
-        config={{ responsive: true, displayModeBar: false }}
-        style={{ width: '100%', height: '100%' }}
-        useResizeHandler={true}
-      />
+    <div style={{ display: 'flex', flexDirection: 'column', height: '90vh' }}>
+      <div
+        style={{
+          display: 'flex',
+          gap: '20px',
+          padding: '10px',
+          background: '#f9f9f9',
+          borderRadius: 8,
+          marginBottom: 10,
+        }}
+      >
+        <div>
+          <strong>Тип узла:</strong>
+          {['direction', 'subject', 'tag'].map((type) => (
+            <label key={type} style={{ marginLeft: 12, cursor: 'pointer' }}>
+              <input
+                type="checkbox"
+                checked={activeTypes[type] || false}
+                onChange={() => handleTypeToggle(type)}
+              />
+              <span style={{ color: TYPE_COLORS[type] }}>● {type}</span>
+            </label>
+          ))}
+        </div>
+        <div>
+          <label>
+            <strong>Мин. связей:</strong>
+          </label>
+          <input
+            type="number"
+            min={0}
+            value={minDegree}
+            onChange={(e) => setMinDegree(parseInt(e.target.value, 10) || 0)}
+            style={{ marginLeft: 8, width: 60 }}
+          />
+        </div>
+      </div>
+
+      <div style={{ flex: 1 }}>
+        <Plot
+          data={[nodesTrace]}
+          layout={plotLayout}
+          config={{ responsive: true, displayModeBar: false }}
+          style={{ width: '100%', height: '100%' }}
+          useResizeHandler={true}
+        />
+      </div>
     </div>
   );
 };
