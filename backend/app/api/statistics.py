@@ -52,3 +52,8 @@ async def get_vuz_programs_map_bachelor():
 @router.get("/map/vuz_programs_map_master")
 async def get_vuz_programs_map_master():
     return await statistics_service.get_vuz_programs_map_master_service()
+
+
+@router.get("/prospects/vuz_professions_wordcloud_data")
+async def get_vuz_professions_wordcloud_data():
+    return await statistics_service.get_vuz_professions_wordcloud_data_service()
