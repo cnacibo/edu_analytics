@@ -1,3 +1,5 @@
+import json
+from pathlib import Path
 from typing import Optional
 
 from app.db.crud import (
@@ -136,3 +138,9 @@ async def get_hse_course_by_id_service(
         raise HTTPException(status_code=404, detail=f"Дисциплина с ID {course_id} не найдена")
 
     return HseCourseRead.model_validate(course)
+
+
+async def get_hse_programs_graph_service():
+    graph_file = Path(__file__).parent.parent / "graph_storage" / "graph_data.json"
+    with open(graph_file, "r", encoding="utf-8") as f:
+        return json.load(f)
