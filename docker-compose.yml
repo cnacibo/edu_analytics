@@ -13,6 +13,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
       PYTHONPATH: /app
+      HEALTHCHECK_URL: ${HEALTHCHECK_URL}
     ports:
       - "8080:8080"
     volumes:
@@ -20,6 +21,12 @@ services:
       - ./storage/files:/app/storage/files:ro
     networks:
       - edu-net
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -f $${HEALTHCHECK_URL}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 
   postgres:
     image: postgres:16
@@ -41,53 +48,22 @@ services:
       retries: 5
     restart: unless-stopped
 
-#  frontend:
-#    build: ./frontend
-#    container_name: edu-analytics-frontend
-#    depends_on:
-#      - backend
-#    ports:
-#      - "3000:3000"
-#    volumes:
-#      - ./frontend:/app
-#      - /app/node_modules
-#    networks:
-#      - edu-net
-#    environment:
-#      REACT_APP_API_URL: http://backend:8000/api/v1
-#
-#  ml:
-#    build:
-#      context: .
-#      dockerfile: ./ml/Dockerfile
-#    container_name: edu-analytics-ml
-#    depends_on:
-#      - postgres
-#    environment:
-#      DATABASE_URL: postgresql://${POSTGRES_USER:-edu_user}:${POSTGRES_PASSWORD:-edu_password}@postgres:5432/${POSTGRES_DB:-edu_analytics}
-#    volumes:
-#      - ./ml:/app/ml
-#      - ./pyproject.toml:/app/pyproject.toml
-#      - ml_data:/app/ml/data
-#    networks:
-#      - edu-net
-#    command: python -m ml.training_pipeline
-#
-#  parser:
-#    build:
-#      context: .
-#      dockerfile: ./parser/Dockerfile
-#    container_name: edu-analytics-parser
-#    depends_on:
-#      - postgres
-#    environment:
-#      DATABASE_URL: postgresql://${POSTGRES_USER:-edu_user}:${POSTGRES_PASSWORD:-edu_password}@postgres:5432/${POSTGRES_DB:-edu_analytics}
-#    volumes:
-#      - ./parser:/app/parser
-#      - ./pyproject.toml:/app/pyproject.toml
-#    networks:
-#      - edu-net
-#    command: python parser/run.py
+  frontend:
+    build: ./frontend
+    container_name: edu-analytics-frontend
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      - edu-net
+    environment:
+      REACT_APP_API_URL: ${REACT_APP_API_URL}
+      REACT_APP_YANDEX_MAPS_API_KEY: ${REACT_APP_YANDEX_MAPS_API_KEY}
 
 networks:
   edu-net:
@@ -95,5 +71,3 @@ networks:
 
 volumes:
   postgres_data:
-#    driver: local
-#  ml_d
