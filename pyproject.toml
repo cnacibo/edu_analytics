@@ -30,6 +30,7 @@ ml = [
     "sentence-transformers>=2.2.0",
     "torch>=2.0.0",
     "scipy>=1.10.0",
+    "wordcloud",
 ]
 parser = [
     "beautifulsoup4>=4.12.0",
