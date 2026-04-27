@@ -52,7 +52,7 @@ class AnalysisService:
         return self.df["cost"].mean()
 
     def get_all_programs(self) -> int:
-        return 8932
+        return self.df.shape[0]
 
     def _get_top_n_programs(self, n: int = 10) -> pd.DataFrame:
         """
