@@ -6,6 +6,7 @@ import StatisticsCard from '../components/dashboard/StatisticsCard';
 import MapDashboard from '../components/dashboard/MapDashboard';
 import React, { useEffect, useState } from 'react';
 import { statsApi } from '../api';
+import ProspectsCloud from '../components/dashboard/ProspectsCloud';
 
 const DashboardPage = () => {
   const [stats, setStats] = useState({
@@ -82,17 +83,7 @@ const DashboardPage = () => {
       <div className="graphics-row">
         <div className="graphics-card">
           <h3 className="graphics-title">Кем стать после</h3>
-          <p
-            style={{
-              fontSize: '25px',
-              fontWeight: '500',
-              color: '#6c757d',
-              margin: '230px 0',
-              textAlign: 'center',
-            }}
-          >
-            В разработке...
-          </p>
+          <ProspectsCloud></ProspectsCloud>
         </div>
         <div className="graphics-card">
           <h3 className="graphics-title">
