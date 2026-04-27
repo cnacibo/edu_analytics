@@ -1,3 +1,4 @@
+import './styles/KnowledgeGraphPage.css';
 import Plot from 'react-plotly.js';
 import React, { useEffect, useMemo, useState } from 'react';
 import { graphApi } from '../api';
@@ -126,21 +127,12 @@ const KnowledgeGraphPage = () => {
     return <Error onRetry={fetchGraphData} message="Не удалось загрузить данные графа" />;
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '90vh' }}>
-      <div
-        style={{
-          display: 'flex',
-          gap: '20px',
-          padding: '10px',
-          background: '#f9f9f9',
-          borderRadius: 8,
-          marginBottom: 10,
-        }}
-      >
+    <div className="knowledge-graph-page">
+      <div className="filter-panel">
         <div>
           <strong>Тип узла:</strong>
           {['direction', 'subject', 'tag'].map((type) => (
-            <label key={type} style={{ marginLeft: 12, cursor: 'pointer' }}>
+            <label key={type} className="filter-label">
               <input
                 type="checkbox"
                 checked={activeTypes[type] || false}
@@ -164,7 +156,7 @@ const KnowledgeGraphPage = () => {
         </div>
       </div>
 
-      <div style={{ flex: 1 }}>
+      <div className="graph-area">
         <Plot
           data={[nodesTrace]}
           layout={plotLayout}

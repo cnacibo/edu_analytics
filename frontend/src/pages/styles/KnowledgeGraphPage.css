@@ -1,0 +1,28 @@
+.knowledge-graph-page {
+  display: flex;
+  flex-direction: column;
+  height: 90vh;
+}
+
+.filter-panel {
+  display: flex;
+  gap: 20px;
+  padding: 10px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.filter-label {
+  margin-left: 12px;
+  cursor: pointer;
+}
+
+.degree-input {
+  margin-left: 8px;
+  width: 60px;
+}
+
+.graph-area {
+  flex: 1;
+}
