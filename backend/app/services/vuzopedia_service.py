@@ -48,10 +48,10 @@ async def get_vuzopedia_programs_service(
         validated_study_type = validate_query(study_type)
 
     if validated_study_type:
-        if validated_study_type.lower() not in ["бакалавриат", "специалитет", "магистратура"]:
+        if validated_study_type.lower() not in ["бакалавр", "магистр"]:
             raise HTTPException(
                 status_code=400,
-                detail="Вид образования может быть только бакалавриат, специалитет, магистратура",
+                detail="Вид образования может быть только бакалавр, магистр",
             )
 
     response = await get_vuzopedia_programs(

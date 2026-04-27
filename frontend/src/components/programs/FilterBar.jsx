@@ -121,22 +121,20 @@ const FilterBar = ({ filters, onInputChange, onFilterChange, onSourceChange, sou
             />
           </div>
         )}
-        {source && (
-          <div className="filter-item">
-            <label htmlFor="study_type">Вид обучения:</label>
-            <select
-              id="study_type"
-              name="study_type"
-              className="filter-select"
-              value={filters.study_type || ''}
-              onChange={handleFilterChange}
-            >
-              <option value="">Все</option>
-              <option value="бакалавр">Бакалавриат</option>
-              <option value="магистр">Магистратура</option>
-            </select>
-          </div>
-        )}
+        <div className="filter-item">
+          <label htmlFor="study_type">Вид обучения:</label>
+          <select
+            id="study_type"
+            name="study_type"
+            className="filter-select"
+            value={filters.study_type || ''}
+            onChange={handleFilterChange}
+          >
+            <option value="">Все</option>
+            <option value="бакалавр">Бакалавриат</option>
+            <option value="магистр">Магистратура</option>
+          </select>
+        </div>
       </div>
     </div>
   );

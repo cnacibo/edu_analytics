@@ -28,7 +28,7 @@ const PieChartDashboard = () => {
     }
   };
 
-  const COLORS = ['#f39cbb', '#f16a8c', '#870e1d', '#dd2d4a', '#457b9d'];
+  const COLORS = ['#f39cbb', '#f16a8c', '#870e1d', '#dd2d4a', '#457b9d', '#cbeef3'];
 
   if (loading) {
     return <LoadingSpinner input="графика"></LoadingSpinner>;

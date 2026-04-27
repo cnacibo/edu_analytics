@@ -88,13 +88,6 @@
   gap: 6px;
 }
 
-.top-main-details {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-}
-
 .top-program-cost {
   font-size: 13px;
   font-weight: 700;
@@ -118,17 +111,6 @@
   gap: 8px;
   font-size: 11px;
   color: #6c757d;
-}
-
-.top-program-score {
-  color: #e8594c;
-  background-color: #fff5f5;
-  padding: 2px 8px;
-  border-radius: 12px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  gap: 2px;
 }
 
 .top-programs-footer {

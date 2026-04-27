@@ -18,23 +18,18 @@ const ProgramCard = ({ program }) => {
         <div className="card-avatar">📚</div>
         <div className="card-title">
           <h3 className="program-name">{program.name}</h3>
-          {source === 'hse' && (
-            <p className="program-header-info">{program.study_type || 'No information'}</p>
-          )}
-          {source === 'vuz' && (
-            <p className="program-header-info">{program.sphere || 'No information'}</p>
-          )}
+          <p className="program-header-info">{program.study_type || '-'}</p>
         </div>
       </div>
       <div className="card-content">
         <div className="info-row">
           <span className="info-label">Код:</span>
-          <span className="info-value">{program.code || 'No information'}</span>
+          <span className="info-value">{program.code || '-'}</span>
         </div>
         <div className="info-row">
           <span className="info-label">Стоимость:</span>
           <span className="info-value">
-            {program.cost ? `${program.cost.toLocaleString()} ₽/год` : 'No information'}
+            {program.cost ? `${program.cost.toLocaleString()} ₽/год` : '-'}
           </span>
         </div>
       </div>
