@@ -147,7 +147,7 @@ const ProgramDetailsPage = () => {
             </a>
           </div>
         </div>
-        {sourceHSE && <button className="pdp-graph-button">Построить граф</button>}
+        {/*{sourceHSE && <button className="pdp-graph-button">Построить граф</button>}*/}
       </div>
       <div className="pdp-info-grid">
         <div className="pdp-card">
