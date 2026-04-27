@@ -8,7 +8,7 @@ import Error from '../common/Error';
 const PieChartDashboard = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [sphereData, setSphereData] = useState(null);
+  const [sphereData, setSphereData] = useState([]);
 
   useEffect(() => {
     fetchSphereData();

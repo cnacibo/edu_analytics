@@ -80,3 +80,15 @@ async def get_vuz_spheres_distribution_service():
         }
     except Exception as e:
         return {"status": "error", "message": str(e)}
+
+
+async def get_vuz_spheres_level_cost_dist_service():
+    try:
+        service = get_analysis_service()
+        spheres_level_cost = service.get_bar_chart()
+        return {
+            "status": "success",
+            "data": {"spheres_level_cost_dist": spheres_level_cost, "source": "vuz"},
+        }
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
